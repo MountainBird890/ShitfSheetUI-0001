@@ -1,0 +1,30 @@
+.body{
+    margin: 0;
+    padding: 0;
+}
+
+
+.layout{
+    display: flex;
+    gap: 10px;
+}
+
+.side-bar{
+    background-color: aqua;
+    padding: 20px;
+    text-align: center;
+    display: grid;
+    grid-template-rows: repeat(6, 1fr);
+    gap: 5rem;
+
+    flex: 1 1 auto;
+    min-width: 0;
+}
+.list{
+    flex: 5 1 0%;
+}
+.grid{
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(1fr);
+}
