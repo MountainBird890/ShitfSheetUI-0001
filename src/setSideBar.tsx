@@ -1,7 +1,7 @@
 import { HomeOutlined, CheckOutlined, CheckSquareOutlined, UserAddOutlined, UserDeleteOutlined, UserOutlined   } from '@ant-design/icons';
 import {Menu} from 'antd';
 
-export default function sideBar(){
+export default function SideBar(){
 
 const categories = [
     {
