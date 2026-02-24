@@ -1,3 +1,14 @@
+# 各ディレクトリの説明
+MY-App
+├node_modules
+├src
+│├UI // UIデザイン層（コンポーネント配置のみ）
+││└subUI // UIデザイン（独自のロジックが必要なUIコンポーネント）
+││　├setTable.tsx
+│└App.tsx
+
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
