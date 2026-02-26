@@ -4,8 +4,6 @@ import { Button } from 'antd';
 import { useState } from 'react';
 import useData from './sampleData';
 
-
-
 function App(){
     const [data, setRow] = useState(useData());
 
@@ -20,12 +18,16 @@ function App(){
       };
 
       const AddRow =()=> {
-        console.log(data);
-        const lastKey = data.length > 0 ? data[data.length - 1].key : '0';
-        console.log(lastKey);
-        const newKey = String(Number(lastKey) + 1);
-        console.log(newKey);
-        setRow([{ ...newData, key: newKey }, ...data]);
+        setRow((data) =>{
+          // データを参照してオプショナルチェーンでnull検知(三項演算子でバリデーションチェック)
+           const refData = data[0]?.key ? data[0].key : '0'; 
+          // 数値に変換。その後文字列に変換
+          const newKey = String(Number(refData) + 1);
+          // ログ出力でデバッグ
+          console.log('追加された行のキー数',newKey);
+          // データ配列の頭にセット(オブジェクトで返す)
+          return[{...newData, key: newKey}, ...data]
+        });
       };
 
 return(
@@ -33,7 +35,7 @@ return(
         <SideBar />
     <div className="list">
         <Button onClick={AddRow}>行を追加</Button>
-        <SetTable />
+        <SetTable data={data} />
     </div>
     </div>
 )

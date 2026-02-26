@@ -13,6 +13,10 @@ interface DataType {
   suzuki: string;
 };
 
+type Prop = {
+  data: DataType;
+}
+
 export default function SetTable(){
 
   const [data, setData] = useState(useData());
@@ -27,10 +31,7 @@ export default function SetTable(){
       title: '操作',
       dataIndex: 'control',
       render: (_, record) =>(
-        <>
-        
         <Button danger onClick={()=>deleteRow(record.key)}>削除</Button>
-        </>
       )
     },
     { title: '氏名', dataIndex: 'name' },
