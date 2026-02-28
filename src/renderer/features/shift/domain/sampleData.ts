@@ -1,4 +1,4 @@
-export default function useData(){
+export default function sampleData(){
 const initialData = [
   {
     key: '1',

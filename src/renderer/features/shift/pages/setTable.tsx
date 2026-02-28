@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
 import { Table, Button } from 'antd';
 import type { TableColumnsType } from 'antd';
-import useData from './sampleData';
+
 
 interface DataType {
-  key: React.Key;
+  key: string|number,
   name: string;
   office: string;
   holiday: string;
@@ -18,14 +17,6 @@ type Prop = {
 }
 
 export default function SetTable(){
-
-  const [data, setData] = useState(useData());
-
-  const deleteRow = (key: React.Key) =>{
-      setData(data.filter(item => item.key !== key));
-    }
-  
-
     const columns: TableColumnsType<DataType> = [
     {
       title: '操作',

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type {InputName } from "./type"
+import type {InputName } from "../type"
 
 function staffName(){
     const [staff, setName]=useState("");

@@ -1,8 +1,8 @@
-import SideBar from './setSideBar';
-import SetTable from './setTable';
+import SideBar from '../pages/setSideBar';
+import SetTable from '../pages/setTable';
 import { Button } from 'antd';
 import { useState } from 'react';
-import useData from './sampleData';
+import useData from '../domain/sampleData';
 
 function App(){
     const [data, setRow] = useState(useData());
