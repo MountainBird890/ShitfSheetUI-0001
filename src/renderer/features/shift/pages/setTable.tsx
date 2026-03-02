@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { Table, Button } from 'antd';
 import type { TableColumnsType } from 'antd';
+import sampleData from "../domain/sampleData";
 
 
 interface DataType {
@@ -12,17 +14,24 @@ interface DataType {
   suzuki: string;
 };
 
-type Prop = {
-  data: DataType;
-}
-
 export default function SetTable(){
-    const columns: TableColumnsType<DataType> = [
+  const [data, setData] = useState(sampleData);
+
+  const columns: TableColumnsType<DataType> = [
     {
       title: '操作',
       dataIndex: 'control',
-      render: (_, record) =>(
-        <Button danger onClick={()=>deleteRow(record.key)}>削除</Button>
+      render: (_, record) => (
+        <Button
+          danger
+          onClick={() =>
+            setData(prev =>
+              prev.filter(item => item.key !== record.key)
+            )
+          }
+        >
+          削除
+        </Button>
       )
     },
     { title: '氏名', dataIndex: 'name' },
@@ -33,7 +42,7 @@ export default function SetTable(){
     { title: '鈴木', dataIndex: 'suzuki' },
   ];
 
-    return (
+  return (
     <Table columns={columns} dataSource={data}/>
   );
-};
+}
