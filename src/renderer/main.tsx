@@ -1,10 +1,9 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
-import Layout from './features/shift/layout.tsx'
+import Shift from './features/shift/pages/layout'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Layout />
+    <Shift />
   </StrictMode>,
 )

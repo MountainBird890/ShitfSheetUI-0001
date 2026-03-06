@@ -1,5 +1,5 @@
-export default function sampleData(){
-const initialData = [
+
+export const initialData = [
   {
     key: '1',
     name: '兵庫太郎',
@@ -128,6 +128,4 @@ const initialData = [
   },
   ];
 
-  return(initialData)
-};
 

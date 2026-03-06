@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Table, Button } from 'antd';
 import type { TableColumnsType } from 'antd';
-import sampleData from "../domain/sampleData";
+import { initialData } from '../domain/sampleData';
 
 
 interface DataType {
@@ -15,7 +15,7 @@ interface DataType {
 };
 
 export default function SetTable(){
-  const [data, setData] = useState(sampleData);
+  const [data, setData] = useState(initialData);
 
   const columns: TableColumnsType<DataType> = [
     {

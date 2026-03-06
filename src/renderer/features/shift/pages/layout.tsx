@@ -1,19 +1,15 @@
-import { useState } from "react";
-import sampleData from "../domain/sampleData";
 import SideBar from "../pages/setSideBar";
 import { Button } from "antd";
-import SetTable from "../pages/setTable";
-
+import { setAdd } from "../ui/addRow";
 
 export default function Shift(){
-  const [ data, setData ] = useState(sampleData);
 
   return(
      <div className="layout">
         <SideBar />
     <div className="list">
-        <Button onClick={AddRow}>行を追加</Button>
-        <SetTable data={data} />
+        <Button onClick={setAdd}>行を追加</Button>
+
     </div>
     </div>
   )
