@@ -1,17 +1,19 @@
 import { HomeOutlined, CheckOutlined, CheckSquareOutlined, UserAddOutlined, UserDeleteOutlined, UserOutlined   } from '@ant-design/icons';
-import {Menu} from 'antd';
+import { Layout, Menu, type MenuProps} from 'antd';
+import { Link, Outlet } from 'react-router-dom';
+
 
 export default function SideBar(){
-
-const categories = [
+    
+    const categories:MenuProps['items'] = [
     {
         key: 'main1',
-        label: 'ホーム',
+        label: <Link to="/shift">シフト表</Link>,
         icon: <HomeOutlined />
     },
     {
         key: 'main2',
-        label: '勤怠',
+        label:  <Link to="/schedule">スケジュール表</Link>,
         icon: <CheckOutlined />
     },
     {
@@ -36,5 +38,20 @@ const categories = [
     },
 ];
 
-return<Menu items={categories}/>
+const { Sider, Content } = Layout;
+
+return(
+    <Layout>
+        <Sider>
+            <Menu items={categories}/>
+        </Sider>
+        <Content>
+            <Outlet />
+        </Content>
+    </Layout>
+)
+
+
+
+
 };
