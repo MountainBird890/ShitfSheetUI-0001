@@ -1,11 +1,11 @@
-import ScheduleTable from "../ui/tableSchedule";
+import ScheduleTable from "../ui/tableScheduleForUser";
 import Date from "../ui/dateSchedule";
 
 export default function Schedule(){
     return(
     <>
-    <ScheduleTable />
     <Date />
+    <ScheduleTable />
     </>
 )
 }
