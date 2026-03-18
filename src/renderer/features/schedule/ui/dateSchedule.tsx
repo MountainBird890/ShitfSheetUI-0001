@@ -1,4 +1,4 @@
-import { DatePicker, type DatePickerProps } from 'antd';
+import { DatePicker } from 'antd';
 
 export default function Date(){
     return<DatePicker />

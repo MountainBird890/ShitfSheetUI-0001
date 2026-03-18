@@ -1,9 +1,9 @@
 import { Table } from "antd";
-import { data } from "../domain/data";
+import data from "../../../../backend/data/users/shift.json"
 import type { ColumnsType } from "antd/es/table";
 import type { DataType } from "../type";
 
-export default function ScheduleTable(){
+export default function UserColumn(){
     const userColumn:ColumnsType<DataType>= [
         { title: '利用者', dataIndex:'user'},
         { title: '介助者', dataIndex:'supporter'},
@@ -14,5 +14,9 @@ export default function ScheduleTable(){
 
 return <Table<DataType>
  columns = {userColumn}
- dataSource={data}/>
-};
+ dataSource={data.shiftdata}/>
+    };
+
+
+    
+

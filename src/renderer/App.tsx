@@ -9,7 +9,7 @@ export default function App(){
         <Routes>
             <Route path="/" element={<SideBar />}>
             <Route path="/shift" element={<Shift />}/>
-            <Route path="schedule" element={<Schedule />}/>
+            <Route path="/schedule" element={<Schedule />}/>
             </Route>
         </Routes>
         </BrowserRouter>
