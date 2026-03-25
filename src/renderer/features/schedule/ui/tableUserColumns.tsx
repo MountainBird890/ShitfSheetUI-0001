@@ -14,22 +14,20 @@ export default function UserColumn(year:number, month:number){
             const week = ['日', '月', '火', '水', '木', '金', '土'];
             
         return{
-        title: `${createDate.getDay()}(${week[createDate.getDay()]})`,
+        title: `${i+1}日(${week[createDate.getDay()]})`,
         children:[
-        { title: '利用者', dataIndex:'user'},
-        { title: '介助者', dataIndex:'supporter'},
-        { title: '開始', dataIndex:'start'},
-        { title: '終了', dataIndex:'end'},
-        { title: '種別', dataIndex:'kind'},
+        { title: '利用者', dataIndex: `day${i+1}_user` },
+        { title: '介助者', dataIndex: `day${i+1}_supporter` },
+        { title: '開始', dataIndex: `day${i+1}_start` },
+        { title: '終了', dataIndex: `day${i+1}_end` },
+        { title: '種別', dataIndex: `day${i+1}_kind` },
     ]}
 
-    const dataColumns = data.shiftdata.map(item =>{
-        Array.from({ length: dateLength },() => item.key)
-    })
 })
 return <Table<DataType>
         columns = {userColumn}
-        dataSource={data.shiftdata}/>
+        dataSource={data.shiftdata}
+        />
     };
 
     
