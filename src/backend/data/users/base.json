@@ -1,0 +1,75 @@
+{
+  "basedata": [
+    {
+      "staffId": "1",
+      "name": "兵庫太郎",
+      "schedule": [
+        { "date": "2026-04-08", "type": "warning" },
+        { "date": "2026-04-09", "type": "success" },
+        { "date": "2026-04-11", "type": "success" },
+        { "date": "2026-04-15", "type": "success" },
+        { "date": "2026-04-24", "type": "success" }
+      ],
+      "days": { "workingDays": 20, "paidLeaveDays": 2 },
+      "hours": {
+        "workingHours": 160,
+        "nightHours": 0,
+        "morningEveningHours": 0,
+        "overtimeHours": 0,
+        "emergencyPrevHours": 0,
+        "emergencySameDayHours": 0,
+        "careTrainingHours": 0
+      },
+      "counts": { "travelCount": 3000 },
+      "amounts": {
+        "drivingAllowance": 0,
+        "specialAllowance1": 0,
+        "specialAllowance2": 0,
+        "trainingAllowance": 0,
+        "bathingAllowance": 0,
+        "excretionAllowance": 0,
+        "lodgingAllowance": 0,
+        "longStayAllowance": 10000,
+        "commutingAllowance": 0,
+        "businessTripDay": 0,
+        "businessTripStay": 0,
+        "yearEndAllowance": 0,
+        "specialBonus": 0
+      }
+    },
+    {
+      "staffId": "2",
+      "name": "兵庫次郎",
+      "schedule": [
+        { "date": "2026-04-08", "type": "success" },
+        { "date": "2026-04-10", "type": "warning" }
+      ],
+      "days": { "workingDays": 22, "paidLeaveDays": 2 },
+      "hours": {
+        "workingHours": 160,
+        "nightHours": 2,
+        "morningEveningHours": 6,
+        "overtimeHours": 8,
+        "emergencyPrevHours": 0,
+        "emergencySameDayHours": 0,
+        "careTrainingHours": 0
+      },
+      "counts": { "travelCount": 3000 },
+      "amounts": {
+        "drivingAllowance": 4000,
+        "specialAllowance1": 10000,
+        "specialAllowance2": 0,
+        "trainingAllowance": 0,
+        "bathingAllowance": 15000,
+        "excretionAllowance": 0,
+        "lodgingAllowance": 0,
+        "longStayAllowance": 10000,
+        "commutingAllowance": 0,
+        "businessTripDay": 0,
+        "businessTripStay": 10000,
+        "yearEndAllowance": 0,
+        "specialBonus": 5000
+      }
+    }
+  ]
+}

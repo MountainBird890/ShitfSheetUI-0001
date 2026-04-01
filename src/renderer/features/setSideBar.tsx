@@ -8,7 +8,7 @@ export default function SideBar(){
     const categories:MenuProps['items'] = [
     {
         key: 'main1',
-        label: <Link to="/shift">シフト表</Link>,
+        label: <Link to="/shift">リスト</Link>,
         icon: <HomeOutlined />
     },
     {
@@ -18,17 +18,17 @@ export default function SideBar(){
     },
     {
         key: 'main3',
-        label: '手当',
+        label: <Link to="/calendar">カレンダー</Link>,
         icon: <CheckSquareOutlined />
     },
         {
         key: 'main4',
-        label: '常勤',
+        label: <Link to="/kinmu">勤務形態</Link>,
         icon: <UserAddOutlined />
     },
     {
         key: 'main5',
-        label: '非常勤',
+        label: <Link to="/usershift">シフト表</Link>,
         icon: <UserDeleteOutlined />
     },
     {

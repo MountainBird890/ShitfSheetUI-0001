@@ -1,12 +1,14 @@
 import { Table } from "antd";
-import data from "../../../../backend/data/users/shift.json"
+import kinmukeitai from "../../../backend/data/users/kinmukeitai.json"
 import type { ColumnsType } from "antd/es/table";
 
 
-export default function UserColumn(){
+export default function KinmuColumn(){
             
-        const userColumn:ColumnsType<any>  =[
-        { title: '', dataIndex: 'name' },
+        const keitaiColumn:ColumnsType<any>  =[
+        { title: '職種', dataIndex: 'kind' },
+        { title: '勤務形態', dataIndex: 'worktype' },
+        { title: '氏名', dataIndex: 'name' },
         { title: '1日', dataIndex: '1' },
         { title: '2日', dataIndex: '2' },
         { title: '3日', dataIndex: '3' },
@@ -41,8 +43,8 @@ export default function UserColumn(){
     ]
 
     return <Table<any>
-        columns = {userColumn}
-        dataSource={data.shiftdata}
+        columns = {keitaiColumn}
+        dataSource={kinmukeitai.kinmukeitai}
         />
 
 }
