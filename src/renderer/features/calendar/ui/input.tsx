@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
-import { Button, Modal, Input } from 'antd';
+import { Button, Modal } from 'antd';
+import { handleInput, handleLoading } from '../state/useCalendar';
+
+// useCalendar.tsxの更新関数に、↓の状態更新を置き換える
+// calendar.tsxに職員名を押せるonClickロジックを実装して、ここのreturnが返されてポップアップが表示されるロジックを書く
+// 実際に編集できるUIはまだ作ってない。編集UIコンポーネントとこのクリックポップアップコンポーネントの更新は分離させる。別アプリとして扱う。
+
+
 
 const InputUI: React.FC = () => {
-  const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
+  console.log("input.tsx is correct")
 
-  const showModal = () => {
-    setOpen(true);
-  };
+  const { loading, setLoading } = handleLoading();
+  const { open, setOpen } = handleInput();
 
+console.log("input.tsx2 is correct")
   const handleOk = () => {
     setLoading(true);
     setTimeout(() => {
@@ -16,16 +21,13 @@ const InputUI: React.FC = () => {
       setOpen(false);
     }, 3000);
   };
-
+console.log("input.tsx3 is correct")
   const handleCancel = () => {
     setOpen(false);
   };
-
+console.log("input.tsx4 is correct")
   return (
     <>
-      <Button type="primary" onClick={showModal}>
-        Open Modal with customized footer
-      </Button>
       <Modal
         open={open}
         title="佐藤様"
@@ -33,21 +35,11 @@ const InputUI: React.FC = () => {
         onCancel={handleCancel}
         footer={[
           <Button key="back" onClick={handleCancel}>
-            Return
+            戻る
           </Button>,
-          <Button key="submit" type="primary" loading={loading} onClick={handleOk}>
-            Submit
-          </Button>,
-          <Button
-            key="link"
-            href="https://google.com"
-            target="_blank"
-            type="primary"
-            loading={loading}
-            onClick={handleOk}
-          >
-            Search on Google
-          </Button>,
+          <Button loading={loading}>
+            編集
+          </Button>
         ]}
       >
         <div><p>介助者：</p><p>兵庫太郎</p></div>
@@ -58,5 +50,5 @@ const InputUI: React.FC = () => {
     </>
   );
 };
-
+console.log("input.tsx5W is correct")
 export default InputUI;

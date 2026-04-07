@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@ant-design/icons": "^6.1.0",
+    "@ant-design/icons": "6.x",
     "@sinclair/typebox": "^0.34.48",
     "antd": "^6.3.0",
     "dayjs": "^1.11.20",
