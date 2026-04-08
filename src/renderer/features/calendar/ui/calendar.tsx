@@ -1,11 +1,21 @@
 import React, { useState } from 'react';
 import type { BadgeProps, CalendarProps } from 'antd';
 import { Badge, Calendar, Modal } from 'antd';
+import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
+import 'dayjs/locale/ja';
+import jaJP from 'antd/es/calendar/locale/ja_JP';
 import baseData from '../../../../backend/data/users/base.json';
 import type { StaffWork } from '../../../../backend/data/basetype';
 import InputUI from './input';
 import { handleInput } from '../state/useCalendar';
+
+
+
+
+
+// dayjsのデフォルトロケールを日本語に設定
+dayjs.locale('ja');
 
 const data = baseData.basedata as StaffWork[];
 
@@ -56,7 +66,7 @@ const CalendarUI: React.FC = () => {
 
   return (
     <>
-      <Calendar cellRender={cellRender} />
+      <Calendar cellRender={cellRender} locale={jaJP} />
       <Modal open={open} onCancel={() => setOpen(false)} footer={null}>
         <InputUI />
       </Modal>

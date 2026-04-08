@@ -1,5 +1,5 @@
 import { useState, createContext, useContext, type ReactNode } from "react";
-import type { calendarContext, inputContextType, loadingContextType } from "../type";
+import type { calendarContext, inputContextType, loadingContextType } from "../type/type";
 
 const context = createContext<calendarContext | undefined>(undefined);
 

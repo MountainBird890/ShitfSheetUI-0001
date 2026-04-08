@@ -1,7 +1,12 @@
 import React from 'react';
 import type { BadgeProps, CalendarProps } from 'antd';
 import { Badge, Calendar } from 'antd';
+import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
+import 'dayjs/locale/ja';
+import jaJP from 'antd/es/calendar/locale/ja_JP';
+
+dayjs.locale('ja');
 
 const getListData = (value: Dayjs) => {
   let listData: { type: string; content: string }[] = []; // Specify the type of listData
@@ -74,7 +79,7 @@ const UserShift: React.FC = () => {
     return info.originNode;
   };
 
-  return <Calendar cellRender={cellRender} />;
+  return <Calendar cellRender={cellRender} locale={jaJP} />;
 };
 
 export default UserShift;
