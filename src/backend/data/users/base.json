@@ -35,6 +35,12 @@
         "businessTripStay": 0,
         "yearEndAllowance": 0,
         "specialBonus": 0
+      },
+      "2026-04-15": {
+        "user": "田中",
+        "start": "2026-04-15T09:00",
+        "end": "2026-04-15T18:00",
+        "type": "身体"
       }
     },
     {
@@ -69,6 +75,12 @@
         "businessTripStay": 10000,
         "yearEndAllowance": 0,
         "specialBonus": 5000
+      },
+      "2026-04-17": {
+        "user": "鈴木",
+        "start": "2026-04-17T09:00",
+        "end": "2026-04-17T18:00",
+        "type": "身体"
       }
     }
   ]

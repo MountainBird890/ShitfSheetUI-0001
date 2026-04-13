@@ -1,4 +1,4 @@
-import { Button, Modal } from 'antd';
+import { Button, Modal, Flex, Avatar, Space } from 'antd';
 import { handleInput, handleLoading } from '../state/useCalendar';
 
 // useCalendar.tsxの更新関数に、↓の状態更新を置き換える
@@ -42,10 +42,22 @@ console.log("input.tsx4 is correct")
           </Button>
         ]}
       >
-        <div><p>介助者：</p><p>兵庫太郎</p></div>
-        <div><p>開始時間：</p><p>9:00</p></div>
-        <div><p>終了時間：</p><p>18:00</p></div>
-        <div><p>種別：</p><p>身体</p></div>
+        <Space size="large">
+          <Flex gap="small" vertical>
+        <p>介助者</p>
+        <p>開始時間</p>
+        <p>終了時間</p>
+        <p>種別</p>
+        </Flex>
+        <Flex gap="small" vertical>
+          <p>兵庫太郎</p>
+           <p>9:00</p>
+            <p>18:00</p>
+            <p>身体</p>
+        </Flex>
+       
+        </Space>
+        
       </Modal>
     </>
   );
