@@ -1,87 +1,1360 @@
 {
   "basedata": [
-    {
-      "staffId": "1",
-      "name": "兵庫太郎",
-      "schedule": [
-        { "date": "2026-04-08", "type": "warning" },
-        { "date": "2026-04-09", "type": "success" },
-        { "date": "2026-04-11", "type": "success" },
-        { "date": "2026-04-15", "type": "success" },
-        { "date": "2026-04-24", "type": "success" }
-      ],
-      "days": { "workingDays": 20, "paidLeaveDays": 2 },
-      "hours": {
-        "workingHours": 160,
-        "nightHours": 0,
-        "morningEveningHours": 0,
-        "overtimeHours": 0,
-        "emergencyPrevHours": 0,
-        "emergencySameDayHours": 0,
-        "careTrainingHours": 0
+  {
+    "staffId": "1",
+    "name": "兵庫太郎",
+    "schedule": [
+      {
+        "date": "2026-04-15",
+        "type": "warning"
       },
-      "counts": { "travelCount": 3000 },
-      "amounts": {
-        "drivingAllowance": 0,
-        "specialAllowance1": 0,
-        "specialAllowance2": 0,
-        "trainingAllowance": 0,
-        "bathingAllowance": 0,
-        "excretionAllowance": 0,
-        "lodgingAllowance": 0,
-        "longStayAllowance": 10000,
-        "commutingAllowance": 0,
-        "businessTripDay": 0,
-        "businessTripStay": 0,
-        "yearEndAllowance": 0,
-        "specialBonus": 0
+      {
+        "date": "2026-04-20",
+        "type": "success"
       },
-      "2026-04-15": {
-        "user": "田中",
-        "start": "2026-04-15T09:00",
-        "end": "2026-04-15T18:00",
-        "type": "身体"
+      {
+        "date": "2026-04-25",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-28",
+        "type": "warning"
+      },
+      {
+        "date": "2026-04-30",
+        "type": "success"
       }
+    ],
+    "days": {
+      "workingDays": 16,
+      "paidLeaveDays": 3
     },
-    {
-      "staffId": "2",
-      "name": "兵庫次郎",
-      "schedule": [
-        { "date": "2026-04-08", "type": "success" },
-        { "date": "2026-04-10", "type": "warning" }
-      ],
-      "days": { "workingDays": 22, "paidLeaveDays": 2 },
-      "hours": {
-        "workingHours": 160,
-        "nightHours": 2,
-        "morningEveningHours": 6,
-        "overtimeHours": 8,
-        "emergencyPrevHours": 0,
-        "emergencySameDayHours": 0,
-        "careTrainingHours": 0
-      },
-      "counts": { "travelCount": 3000 },
-      "amounts": {
-        "drivingAllowance": 4000,
-        "specialAllowance1": 10000,
-        "specialAllowance2": 0,
-        "trainingAllowance": 0,
-        "bathingAllowance": 15000,
-        "excretionAllowance": 0,
-        "lodgingAllowance": 0,
-        "longStayAllowance": 10000,
-        "commutingAllowance": 0,
-        "businessTripDay": 0,
-        "businessTripStay": 10000,
-        "yearEndAllowance": 0,
-        "specialBonus": 5000
-      },
-      "2026-04-17": {
-        "user": "鈴木",
-        "start": "2026-04-17T09:00",
-        "end": "2026-04-17T18:00",
-        "type": "身体"
-      }
+    "hours": {
+      "workingHours": 128,
+      "nightHours": 12,
+      "morningEveningHours": 6,
+      "overtimeHours": 4,
+      "emergencyPrevHours": 1,
+      "emergencySameDayHours": 1,
+      "careTrainingHours": 4
+    },
+    "counts": {
+      "travelCount": 3916
+    },
+    "amounts": {
+      "drivingAllowance": 0,
+      "specialAllowance1": 0,
+      "specialAllowance2": 0,
+      "trainingAllowance": 0,
+      "bathingAllowance": 0,
+      "excretionAllowance": 1500,
+      "lodgingAllowance": 0,
+      "longStayAllowance": 30000,
+      "commutingAllowance": 3000,
+      "businessTripDay": 6000,
+      "businessTripStay": 10000,
+      "yearEndAllowance": 0,
+      "specialBonus": 0
+    },
+    "2026-04-25": {
+      "user": "加藤",
+      "start": "2026-04-25T10:00",
+      "end": "2026-04-25T14:00",
+      "type": "見守り"
+    },
+    "2026-04-20": {
+      "user": "鈴木",
+      "start": "2026-04-20T08:00",
+      "end": "2026-04-20T11:00",
+      "type": "外出支援"
+    },
+    "2026-04-30": {
+      "user": "山田",
+      "start": "2026-04-30T09:00",
+      "end": "2026-04-30T17:00",
+      "type": "生活"
     }
-  ]
+  },
+  {
+    "staffId": "2",
+    "name": "大阪花子",
+    "schedule": [
+      {
+        "date": "2026-04-14",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-15",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-16",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-22",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-23",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-25",
+        "type": "success"
+      }
+    ],
+    "days": {
+      "workingDays": 21,
+      "paidLeaveDays": 1
+    },
+    "hours": {
+      "workingHours": 168,
+      "nightHours": 19,
+      "morningEveningHours": 9,
+      "overtimeHours": 12,
+      "emergencyPrevHours": 3,
+      "emergencySameDayHours": 3,
+      "careTrainingHours": 1
+    },
+    "counts": {
+      "travelCount": 4365
+    },
+    "amounts": {
+      "drivingAllowance": 5000,
+      "specialAllowance1": 5000,
+      "specialAllowance2": 0,
+      "trainingAllowance": 1000,
+      "bathingAllowance": 0,
+      "excretionAllowance": 500,
+      "lodgingAllowance": 0,
+      "longStayAllowance": 20000,
+      "commutingAllowance": 3000,
+      "businessTripDay": 6000,
+      "businessTripStay": 5000,
+      "yearEndAllowance": 0,
+      "specialBonus": 0
+    },
+    "2026-04-23": {
+      "user": "小林",
+      "start": "2026-04-23T08:00",
+      "end": "2026-04-23T15:00",
+      "type": "医療"
+    },
+    "2026-04-22": {
+      "user": "渡辺",
+      "start": "2026-04-22T10:00",
+      "end": "2026-04-22T13:00",
+      "type": "生活"
+    }
+  },
+  {
+    "staffId": "3",
+    "name": "京都次郎",
+    "schedule": [
+      {
+        "date": "2026-04-13",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-20",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-22",
+        "type": "warning"
+      },
+      {
+        "date": "2026-04-24",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-30",
+        "type": "success"
+      }
+    ],
+    "days": {
+      "workingDays": 23,
+      "paidLeaveDays": 2
+    },
+    "hours": {
+      "workingHours": 184,
+      "nightHours": 13,
+      "morningEveningHours": 0,
+      "overtimeHours": 18,
+      "emergencyPrevHours": 2,
+      "emergencySameDayHours": 0,
+      "careTrainingHours": 4
+    },
+    "counts": {
+      "travelCount": 691
+    },
+    "amounts": {
+      "drivingAllowance": 1000,
+      "specialAllowance1": 0,
+      "specialAllowance2": 10000,
+      "trainingAllowance": 0,
+      "bathingAllowance": 2500,
+      "excretionAllowance": 500,
+      "lodgingAllowance": 10000,
+      "longStayAllowance": 20000,
+      "commutingAllowance": 0,
+      "businessTripDay": 3000,
+      "businessTripStay": 0,
+      "yearEndAllowance": 0,
+      "specialBonus": 10000
+    },
+    "2026-04-30": {
+      "user": "伉岡",
+      "start": "2026-04-30T10:00",
+      "end": "2026-04-30T15:00",
+      "type": "身体"
+    },
+    "2026-04-13": {
+      "user": "山田",
+      "start": "2026-04-13T11:00",
+      "end": "2026-04-13T14:00",
+      "type": "生活"
+    }
+  },
+  {
+    "staffId": "4",
+    "name": "神戸美咲",
+    "schedule": [
+      {
+        "date": "2026-04-16",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-17",
+        "type": "warning"
+      },
+      {
+        "date": "2026-04-21",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-22",
+        "type": "warning"
+      },
+      {
+        "date": "2026-04-23",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-28",
+        "type": "success"
+      }
+    ],
+    "days": {
+      "workingDays": 16,
+      "paidLeaveDays": 2
+    },
+    "hours": {
+      "workingHours": 128,
+      "nightHours": 13,
+      "morningEveningHours": 5,
+      "overtimeHours": 3,
+      "emergencyPrevHours": 5,
+      "emergencySameDayHours": 3,
+      "careTrainingHours": 1
+    },
+    "counts": {
+      "travelCount": 4544
+    },
+    "amounts": {
+      "drivingAllowance": 0,
+      "specialAllowance1": 0,
+      "specialAllowance2": 0,
+      "trainingAllowance": 2000,
+      "bathingAllowance": 2000,
+      "excretionAllowance": 0,
+      "lodgingAllowance": 15000,
+      "longStayAllowance": 10000,
+      "commutingAllowance": 0,
+      "businessTripDay": 6000,
+      "businessTripStay": 0,
+      "yearEndAllowance": 0,
+      "specialBonus": 0
+    },
+    "2026-04-21": {
+      "user": "伉岡",
+      "start": "2026-04-21T09:00",
+      "end": "2026-04-21T15:00",
+      "type": "医療"
+    }
+  },
+  {
+    "staffId": "5",
+    "name": "奈良健一",
+    "schedule": [
+      {
+        "date": "2026-04-13",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-14",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-15",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-20",
+        "type": "warning"
+      },
+      {
+        "date": "2026-04-22",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-23",
+        "type": "warning"
+      },
+      {
+        "date": "2026-04-24",
+        "type": "success"
+      }
+    ],
+    "days": {
+      "workingDays": 21,
+      "paidLeaveDays": 1
+    },
+    "hours": {
+      "workingHours": 168,
+      "nightHours": 9,
+      "morningEveningHours": 5,
+      "overtimeHours": 5,
+      "emergencyPrevHours": 3,
+      "emergencySameDayHours": 2,
+      "careTrainingHours": 0
+    },
+    "counts": {
+      "travelCount": 1471
+    },
+    "amounts": {
+      "drivingAllowance": 3000,
+      "specialAllowance1": 0,
+      "specialAllowance2": 10000,
+      "trainingAllowance": 0,
+      "bathingAllowance": 0,
+      "excretionAllowance": 0,
+      "lodgingAllowance": 5000,
+      "longStayAllowance": 0,
+      "commutingAllowance": 2000,
+      "businessTripDay": 6000,
+      "businessTripStay": 5000,
+      "yearEndAllowance": 0,
+      "specialBonus": 10000
+    },
+    "2026-04-13": {
+      "user": "中村",
+      "start": "2026-04-13T08:00",
+      "end": "2026-04-13T13:00",
+      "type": "見守り"
+    }
+  },
+  {
+    "staffId": "6",
+    "name": "滋賀恵子",
+    "schedule": [
+      {
+        "date": "2026-04-13",
+        "type": "warning"
+      },
+      {
+        "date": "2026-04-14",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-20",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-28",
+        "type": "success"
+      }
+    ],
+    "days": {
+      "workingDays": 22,
+      "paidLeaveDays": 3
+    },
+    "hours": {
+      "workingHours": 176,
+      "nightHours": 5,
+      "morningEveningHours": 6,
+      "overtimeHours": 29,
+      "emergencyPrevHours": 3,
+      "emergencySameDayHours": 0,
+      "careTrainingHours": 2
+    },
+    "counts": {
+      "travelCount": 1722
+    },
+    "amounts": {
+      "drivingAllowance": 0,
+      "specialAllowance1": 0,
+      "specialAllowance2": 0,
+      "trainingAllowance": 0,
+      "bathingAllowance": 2000,
+      "excretionAllowance": 0,
+      "lodgingAllowance": 0,
+      "longStayAllowance": 0,
+      "commutingAllowance": 1000,
+      "businessTripDay": 9000,
+      "businessTripStay": 0,
+      "yearEndAllowance": 0,
+      "specialBonus": 10000
+    },
+    "2026-04-14": {
+      "user": "山田",
+      "start": "2026-04-14T10:00",
+      "end": "2026-04-14T18:00",
+      "type": "見守り"
+    },
+    "2026-04-28": {
+      "user": "渡辺",
+      "start": "2026-04-28T08:00",
+      "end": "2026-04-28T13:00",
+      "type": "見守り"
+    }
+  },
+  {
+    "staffId": "7",
+    "name": "和歌山悠",
+    "schedule": [
+      {
+        "date": "2026-04-13",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-14",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-16",
+        "type": "warning"
+      },
+      {
+        "date": "2026-04-17",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-28",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-30",
+        "type": "success"
+      }
+    ],
+    "days": {
+      "workingDays": 17,
+      "paidLeaveDays": 5
+    },
+    "hours": {
+      "workingHours": 136,
+      "nightHours": 5,
+      "morningEveningHours": 0,
+      "overtimeHours": 2,
+      "emergencyPrevHours": 1,
+      "emergencySameDayHours": 1,
+      "careTrainingHours": 2
+    },
+    "counts": {
+      "travelCount": 1860
+    },
+    "amounts": {
+      "drivingAllowance": 5000,
+      "specialAllowance1": 0,
+      "specialAllowance2": 0,
+      "trainingAllowance": 1000,
+      "bathingAllowance": 1000,
+      "excretionAllowance": 0,
+      "lodgingAllowance": 10000,
+      "longStayAllowance": 10000,
+      "commutingAllowance": 0,
+      "businessTripDay": 9000,
+      "businessTripStay": 0,
+      "yearEndAllowance": 0,
+      "specialBonus": 10000
+    },
+    "2026-04-28": {
+      "user": "佐藤",
+      "start": "2026-04-28T10:00",
+      "end": "2026-04-28T15:00",
+      "type": "入浴"
+    },
+    "2026-04-14": {
+      "user": "加藤",
+      "start": "2026-04-14T09:00",
+      "end": "2026-04-14T17:00",
+      "type": "入浴"
+    }
+  },
+  {
+    "staffId": "8",
+    "name": "三重はるか",
+    "schedule": [
+      {
+        "date": "2026-04-14",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-15",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-16",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-20",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-21",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-22",
+        "type": "warning"
+      },
+      {
+        "date": "2026-04-23",
+        "type": "success"
+      }
+    ],
+    "days": {
+      "workingDays": 22,
+      "paidLeaveDays": 1
+    },
+    "hours": {
+      "workingHours": 176,
+      "nightHours": 13,
+      "morningEveningHours": 5,
+      "overtimeHours": 12,
+      "emergencyPrevHours": 5,
+      "emergencySameDayHours": 3,
+      "careTrainingHours": 5
+    },
+    "counts": {
+      "travelCount": 4726
+    },
+    "amounts": {
+      "drivingAllowance": 4000,
+      "specialAllowance1": 0,
+      "specialAllowance2": 0,
+      "trainingAllowance": 0,
+      "bathingAllowance": 0,
+      "excretionAllowance": 0,
+      "lodgingAllowance": 0,
+      "longStayAllowance": 0,
+      "commutingAllowance": 0,
+      "businessTripDay": 0,
+      "businessTripStay": 0,
+      "yearEndAllowance": 0,
+      "specialBonus": 0
+    },
+    "2026-04-20": {
+      "user": "鈴木",
+      "start": "2026-04-20T09:00",
+      "end": "2026-04-20T15:00",
+      "type": "外出支援"
+    }
+  },
+  {
+    "staffId": "9",
+    "name": "鳥取翔",
+    "schedule": [
+      {
+        "date": "2026-04-13",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-21",
+        "type": "warning"
+      },
+      {
+        "date": "2026-04-22",
+        "type": "warning"
+      },
+      {
+        "date": "2026-04-24",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-25",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-28",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-30",
+        "type": "success"
+      }
+    ],
+    "days": {
+      "workingDays": 15,
+      "paidLeaveDays": 5
+    },
+    "hours": {
+      "workingHours": 120,
+      "nightHours": 18,
+      "morningEveningHours": 10,
+      "overtimeHours": 5,
+      "emergencyPrevHours": 0,
+      "emergencySameDayHours": 1,
+      "careTrainingHours": 2
+    },
+    "counts": {
+      "travelCount": 583
+    },
+    "amounts": {
+      "drivingAllowance": 1000,
+      "specialAllowance1": 0,
+      "specialAllowance2": 5000,
+      "trainingAllowance": 0,
+      "bathingAllowance": 500,
+      "excretionAllowance": 1000,
+      "lodgingAllowance": 0,
+      "longStayAllowance": 0,
+      "commutingAllowance": 4000,
+      "businessTripDay": 3000,
+      "businessTripStay": 0,
+      "yearEndAllowance": 0,
+      "specialBonus": 40000
+    },
+    "2026-04-24": {
+      "user": "鈴木",
+      "start": "2026-04-24T08:00",
+      "end": "2026-04-24T15:00",
+      "type": "入浴"
+    },
+    "2026-04-25": {
+      "user": "田中",
+      "start": "2026-04-25T10:00",
+      "end": "2026-04-25T15:00",
+      "type": "外出支援"
+    }
+  },
+  {
+    "staffId": "10",
+    "name": "島根さくら",
+    "schedule": [
+      {
+        "date": "2026-04-13",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-17",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-23",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-24",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-28",
+        "type": "success"
+      }
+    ],
+    "days": {
+      "workingDays": 16,
+      "paidLeaveDays": 1
+    },
+    "hours": {
+      "workingHours": 128,
+      "nightHours": 4,
+      "morningEveningHours": 7,
+      "overtimeHours": 15,
+      "emergencyPrevHours": 2,
+      "emergencySameDayHours": 3,
+      "careTrainingHours": 1
+    },
+    "counts": {
+      "travelCount": 107
+    },
+    "amounts": {
+      "drivingAllowance": 0,
+      "specialAllowance1": 5000,
+      "specialAllowance2": 0,
+      "trainingAllowance": 0,
+      "bathingAllowance": 0,
+      "excretionAllowance": 2000,
+      "lodgingAllowance": 0,
+      "longStayAllowance": 0,
+      "commutingAllowance": 0,
+      "businessTripDay": 9000,
+      "businessTripStay": 0,
+      "yearEndAllowance": 0,
+      "specialBonus": 0
+    },
+    "2026-04-13": {
+      "user": "伊藤",
+      "start": "2026-04-13T08:00",
+      "end": "2026-04-13T16:00",
+      "type": "入浴"
+    }
+  },
+  {
+    "staffId": "11",
+    "name": "福岡一郎",
+    "schedule": [
+      {
+        "date": "2026-04-17",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-21",
+        "type": "warning"
+      },
+      {
+        "date": "2026-04-22",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-24",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-28",
+        "type": "success"
+      }
+    ],
+    "days": {
+      "workingDays": 21,
+      "paidLeaveDays": 2
+    },
+    "hours": {
+      "workingHours": 168,
+      "nightHours": 18,
+      "morningEveningHours": 3,
+      "overtimeHours": 16,
+      "emergencyPrevHours": 2,
+      "emergencySameDayHours": 1,
+      "careTrainingHours": 0
+    },
+    "counts": {
+      "travelCount": 1260
+    },
+    "amounts": {
+      "drivingAllowance": 3000,
+      "specialAllowance1": 0,
+      "specialAllowance2": 0,
+      "trainingAllowance": 3000,
+      "bathingAllowance": 1000,
+      "excretionAllowance": 0,
+      "lodgingAllowance": 0,
+      "longStayAllowance": 0,
+      "commutingAllowance": 0,
+      "businessTripDay": 3000,
+      "businessTripStay": 0,
+      "yearEndAllowance": 0,
+      "specialBonus": 20000
+    },
+    "2026-04-28": {
+      "user": "佐藤",
+      "start": "2026-04-28T10:00",
+      "end": "2026-04-28T18:00",
+      "type": "生活"
+    },
+    "2026-04-22": {
+      "user": "山田",
+      "start": "2026-04-22T09:00",
+      "end": "2026-04-22T14:00",
+      "type": "入浴"
+    },
+    "2026-04-24": {
+      "user": "伉岡",
+      "start": "2026-04-24T11:00",
+      "end": "2026-04-24T16:00",
+      "type": "生活"
+    }
+  },
+  {
+    "staffId": "12",
+    "name": "長崎二子",
+    "schedule": [
+      {
+        "date": "2026-04-14",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-15",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-16",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-20",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-23",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-28",
+        "type": "success"
+      }
+    ],
+    "days": {
+      "workingDays": 15,
+      "paidLeaveDays": 0
+    },
+    "hours": {
+      "workingHours": 120,
+      "nightHours": 2,
+      "morningEveningHours": 3,
+      "overtimeHours": 23,
+      "emergencyPrevHours": 2,
+      "emergencySameDayHours": 1,
+      "careTrainingHours": 5
+    },
+    "counts": {
+      "travelCount": 2390
+    },
+    "amounts": {
+      "drivingAllowance": 4000,
+      "specialAllowance1": 15000,
+      "specialAllowance2": 5000,
+      "trainingAllowance": 0,
+      "bathingAllowance": 2500,
+      "excretionAllowance": 0,
+      "lodgingAllowance": 0,
+      "longStayAllowance": 0,
+      "commutingAllowance": 3000,
+      "businessTripDay": 0,
+      "businessTripStay": 5000,
+      "yearEndAllowance": 0,
+      "specialBonus": 10000
+    },
+    "2026-04-20": {
+      "user": "加藤",
+      "start": "2026-04-20T08:00",
+      "end": "2026-04-20T12:00",
+      "type": "見守り"
+    }
+  },
+  {
+    "staffId": "13",
+    "name": "熊本三郎",
+    "schedule": [
+      {
+        "date": "2026-04-13",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-15",
+        "type": "warning"
+      },
+      {
+        "date": "2026-04-16",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-23",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-24",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-28",
+        "type": "success"
+      }
+    ],
+    "days": {
+      "workingDays": 18,
+      "paidLeaveDays": 3
+    },
+    "hours": {
+      "workingHours": 144,
+      "nightHours": 17,
+      "morningEveningHours": 5,
+      "overtimeHours": 26,
+      "emergencyPrevHours": 5,
+      "emergencySameDayHours": 0,
+      "careTrainingHours": 5
+    },
+    "counts": {
+      "travelCount": 4437
+    },
+    "amounts": {
+      "drivingAllowance": 1000,
+      "specialAllowance1": 0,
+      "specialAllowance2": 5000,
+      "trainingAllowance": 2000,
+      "bathingAllowance": 0,
+      "excretionAllowance": 2000,
+      "lodgingAllowance": 5000,
+      "longStayAllowance": 30000,
+      "commutingAllowance": 2000,
+      "businessTripDay": 0,
+      "businessTripStay": 10000,
+      "yearEndAllowance": 0,
+      "specialBonus": 0
+    },
+    "2026-04-13": {
+      "user": "伉岡",
+      "start": "2026-04-13T10:00",
+      "end": "2026-04-13T16:00",
+      "type": "見守り"
+    }
+  },
+  {
+    "staffId": "14",
+    "name": "大分四季",
+    "schedule": [
+      {
+        "date": "2026-04-16",
+        "type": "warning"
+      },
+      {
+        "date": "2026-04-21",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-22",
+        "type": "success"
+      }
+    ],
+    "days": {
+      "workingDays": 21,
+      "paidLeaveDays": 2
+    },
+    "hours": {
+      "workingHours": 168,
+      "nightHours": 13,
+      "morningEveningHours": 5,
+      "overtimeHours": 12,
+      "emergencyPrevHours": 5,
+      "emergencySameDayHours": 3,
+      "careTrainingHours": 5
+    },
+    "counts": {
+      "travelCount": 3498
+    },
+    "amounts": {
+      "drivingAllowance": 0,
+      "specialAllowance1": 5000,
+      "specialAllowance2": 5000,
+      "trainingAllowance": 0,
+      "bathingAllowance": 2000,
+      "excretionAllowance": 0,
+      "lodgingAllowance": 15000,
+      "longStayAllowance": 10000,
+      "commutingAllowance": 0,
+      "businessTripDay": 0,
+      "businessTripStay": 5000,
+      "yearEndAllowance": 0,
+      "specialBonus": 40000
+    },
+    "2026-04-21": {
+      "user": "鈴木",
+      "start": "2026-04-21T10:00",
+      "end": "2026-04-21T18:00",
+      "type": "身体"
+    }
+  },
+  {
+    "staffId": "15",
+    "name": "宮崎五月",
+    "schedule": [
+      {
+        "date": "2026-04-15",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-22",
+        "type": "warning"
+      },
+      {
+        "date": "2026-04-28",
+        "type": "success"
+      }
+    ],
+    "days": {
+      "workingDays": 16,
+      "paidLeaveDays": 0
+    },
+    "hours": {
+      "workingHours": 128,
+      "nightHours": 12,
+      "morningEveningHours": 9,
+      "overtimeHours": 14,
+      "emergencyPrevHours": 5,
+      "emergencySameDayHours": 2,
+      "careTrainingHours": 3
+    },
+    "counts": {
+      "travelCount": 488
+    },
+    "amounts": {
+      "drivingAllowance": 0,
+      "specialAllowance1": 5000,
+      "specialAllowance2": 0,
+      "trainingAllowance": 0,
+      "bathingAllowance": 1500,
+      "excretionAllowance": 1500,
+      "lodgingAllowance": 0,
+      "longStayAllowance": 0,
+      "commutingAllowance": 0,
+      "businessTripDay": 0,
+      "businessTripStay": 10000,
+      "yearEndAllowance": 0,
+      "specialBonus": 40000
+    },
+    "2026-04-15": {
+      "user": "鈴木",
+      "start": "2026-04-15T10:00",
+      "end": "2026-04-15T17:00",
+      "type": "医療"
+    },
+    "2026-04-28": {
+      "user": "田中",
+      "start": "2026-04-28T11:00",
+      "end": "2026-04-28T19:00",
+      "type": "医療"
+    }
+  },
+  {
+    "staffId": "16",
+    "name": "鹿児島六花",
+    "schedule": [
+      {
+        "date": "2026-04-14",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-22",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-23",
+        "type": "success"
+      }
+    ],
+    "days": {
+      "workingDays": 21,
+      "paidLeaveDays": 2
+    },
+    "hours": {
+      "workingHours": 168,
+      "nightHours": 9,
+      "morningEveningHours": 4,
+      "overtimeHours": 25,
+      "emergencyPrevHours": 2,
+      "emergencySameDayHours": 2,
+      "careTrainingHours": 1
+    },
+    "counts": {
+      "travelCount": 3430
+    },
+    "amounts": {
+      "drivingAllowance": 4000,
+      "specialAllowance1": 5000,
+      "specialAllowance2": 10000,
+      "trainingAllowance": 3000,
+      "bathingAllowance": 0,
+      "excretionAllowance": 0,
+      "lodgingAllowance": 5000,
+      "longStayAllowance": 0,
+      "commutingAllowance": 1000,
+      "businessTripDay": 3000,
+      "businessTripStay": 10000,
+      "yearEndAllowance": 0,
+      "specialBonus": 0
+    },
+    "2026-04-23": {
+      "user": "伊藤",
+      "start": "2026-04-23T10:00",
+      "end": "2026-04-23T13:00",
+      "type": "外出支援"
+    }
+  },
+  {
+    "staffId": "17",
+    "name": "佐賀七海",
+    "schedule": [
+      {
+        "date": "2026-04-17",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-21",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-22",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-24",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-25",
+        "type": "success"
+      }
+    ],
+    "days": {
+      "workingDays": 18,
+      "paidLeaveDays": 4
+    },
+    "hours": {
+      "workingHours": 144,
+      "nightHours": 9,
+      "morningEveningHours": 9,
+      "overtimeHours": 24,
+      "emergencyPrevHours": 2,
+      "emergencySameDayHours": 3,
+      "careTrainingHours": 5
+    },
+    "counts": {
+      "travelCount": 3928
+    },
+    "amounts": {
+      "drivingAllowance": 4000,
+      "specialAllowance1": 5000,
+      "specialAllowance2": 0,
+      "trainingAllowance": 2000,
+      "bathingAllowance": 0,
+      "excretionAllowance": 0,
+      "lodgingAllowance": 10000,
+      "longStayAllowance": 0,
+      "commutingAllowance": 2000,
+      "businessTripDay": 6000,
+      "businessTripStay": 0,
+      "yearEndAllowance": 0,
+      "specialBonus": 30000
+    },
+    "2026-04-22": {
+      "user": "佐藤",
+      "start": "2026-04-22T10:00",
+      "end": "2026-04-22T14:00",
+      "type": "外出支援"
+    },
+    "2026-04-17": {
+      "user": "鈴木",
+      "start": "2026-04-17T09:00",
+      "end": "2026-04-17T16:00",
+      "type": "見守り"
+    }
+  },
+  {
+    "staffId": "18",
+    "name": "沖縄八重",
+    "schedule": [
+      {
+        "date": "2026-04-13",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-14",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-30",
+        "type": "success"
+      }
+    ],
+    "days": {
+      "workingDays": 16,
+      "paidLeaveDays": 5
+    },
+    "hours": {
+      "workingHours": 128,
+      "nightHours": 13,
+      "morningEveningHours": 4,
+      "overtimeHours": 29,
+      "emergencyPrevHours": 4,
+      "emergencySameDayHours": 2,
+      "careTrainingHours": 1
+    },
+    "counts": {
+      "travelCount": 832
+    },
+    "amounts": {
+      "drivingAllowance": 1000,
+      "specialAllowance1": 10000,
+      "specialAllowance2": 0,
+      "trainingAllowance": 0,
+      "bathingAllowance": 2500,
+      "excretionAllowance": 0,
+      "lodgingAllowance": 0,
+      "longStayAllowance": 10000,
+      "commutingAllowance": 3000,
+      "businessTripDay": 0,
+      "businessTripStay": 0,
+      "yearEndAllowance": 0,
+      "specialBonus": 40000
+    },
+    "2026-04-30": {
+      "user": "中村",
+      "start": "2026-04-30T09:00",
+      "end": "2026-04-30T13:00",
+      "type": "身体"
+    }
+  },
+  {
+    "staffId": "19",
+    "name": "山口九重",
+    "schedule": [
+      {
+        "date": "2026-04-13",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-14",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-15",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-22",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-24",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-25",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-30",
+        "type": "warning"
+      }
+    ],
+    "days": {
+      "workingDays": 15,
+      "paidLeaveDays": 3
+    },
+    "hours": {
+      "workingHours": 120,
+      "nightHours": 13,
+      "morningEveningHours": 1,
+      "overtimeHours": 3,
+      "emergencyPrevHours": 2,
+      "emergencySameDayHours": 3,
+      "careTrainingHours": 2
+    },
+    "counts": {
+      "travelCount": 917
+    },
+    "amounts": {
+      "drivingAllowance": 4000,
+      "specialAllowance1": 10000,
+      "specialAllowance2": 0,
+      "trainingAllowance": 3000,
+      "bathingAllowance": 1500,
+      "excretionAllowance": 0,
+      "lodgingAllowance": 15000,
+      "longStayAllowance": 10000,
+      "commutingAllowance": 0,
+      "businessTripDay": 9000,
+      "businessTripStay": 5000,
+      "yearEndAllowance": 0,
+      "specialBonus": 0
+    },
+    "2026-04-15": {
+      "user": "加藤",
+      "start": "2026-04-15T09:00",
+      "end": "2026-04-15T14:00",
+      "type": "外出支援"
+    },
+    "2026-04-14": {
+      "user": "佐藤",
+      "start": "2026-04-14T11:00",
+      "end": "2026-04-14T17:00",
+      "type": "身体"
+    }
+  },
+  {
+    "staffId": "20",
+    "name": "広島十郎",
+    "schedule": [
+      {
+        "date": "2026-04-15",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-16",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-21",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-22",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-24",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-28",
+        "type": "success"
+      },
+      {
+        "date": "2026-04-30",
+        "type": "success"
+      }
+    ],
+    "days": {
+      "workingDays": 22,
+      "paidLeaveDays": 0
+    },
+    "hours": {
+      "workingHours": 176,
+      "nightHours": 1,
+      "morningEveningHours": 10,
+      "overtimeHours": 19,
+      "emergencyPrevHours": 3,
+      "emergencySameDayHours": 3,
+      "careTrainingHours": 5
+    },
+    "counts": {
+      "travelCount": 3821
+    },
+    "amounts": {
+      "drivingAllowance": 0,
+      "specialAllowance1": 0,
+      "specialAllowance2": 10000,
+      "trainingAllowance": 3000,
+      "bathingAllowance": 2000,
+      "excretionAllowance": 0,
+      "lodgingAllowance": 0,
+      "longStayAllowance": 20000,
+      "commutingAllowance": 4000,
+      "businessTripDay": 0,
+      "businessTripStay": 0,
+      "yearEndAllowance": 0,
+      "specialBonus": 0
+    },
+    "2026-04-30": {
+      "user": "加藤",
+      "start": "2026-04-30T10:00",
+      "end": "2026-04-30T17:00",
+      "type": "生活"
+    }
+  }
+]
 }

@@ -64,7 +64,7 @@ export default function UserColumn(value: Dayjs) {
       dataSource={data.basedata}
       bordered
       size="middle"
-      scroll={{ x: 'max-content', y: 47 * 5 }}
+      scroll={{ x: 'max-content', y: 'max-content'}}
     />
   );
 }
