@@ -1,3 +1,4 @@
+import type { Dispatch } from "react";
 import type React from "react"
 
 type calendarContext = {
@@ -22,3 +23,11 @@ type loadingContextType ={
 }
 
 export type {loadingContextType}
+
+
+type searchContextType = {
+    search: string | undefined,
+    setSearch: React.Dispatch<React.SetStateAction<string | undefined>>
+}
+
+export type {searchContextType}

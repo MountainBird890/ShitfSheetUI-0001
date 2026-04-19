@@ -8,6 +8,8 @@ import jaJP from 'antd/es/calendar/locale/ja_JP';
 
 dayjs.locale('ja');
 
+// ここにcalendarと同じロジックを実装する
+
 const getListData = (value: Dayjs) => {
   let listData: { type: string; content: string }[] = []; // Specify the type of listData
   switch (value.date()) {

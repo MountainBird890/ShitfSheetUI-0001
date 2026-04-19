@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
 import type { BadgeProps, CalendarProps } from 'antd';
-import { Badge, Calendar, Modal } from 'antd';
+import { Badge, Calendar, Modal, Input } from 'antd';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import 'dayjs/locale/ja';
@@ -8,8 +7,7 @@ import jaJP from 'antd/es/calendar/locale/ja_JP';
 import baseData from '../../../../backend/data/users/base.json';
 import type { StaffWork } from '../../../../backend/data/basetype';
 import InputUI from './input';
-import { handleInput } from '../state/useCalendar';
-
+import { handleInput, handleSearch } from '../state/useCalendar';
 
 
 
@@ -17,7 +15,10 @@ import { handleInput } from '../state/useCalendar';
 // dayjsのデフォルトロケールを日本語に設定
 dayjs.locale('ja');
 
-const data = baseData.basedata as StaffWork[];
+
+
+const CalendarUI: React.FC = () => {
+  const data = baseData.basedata as StaffWork[];
 
 const getListData = (value: Dayjs) => {
   const targetDate = value.format('YYYY-MM-DD');
@@ -30,12 +31,14 @@ const getListData = (value: Dayjs) => {
         content: staff.name,
         staffId: staff.staffId,
       }))
-  );
+  ).filter((item) => 
+    !search || item.content.includes(search)
+  )
 };
 
-const CalendarUI: React.FC = () => {
+
   console.log("CalendarUI(calendar.tsx) is correct")
-  
+  const { search, setSearch } = handleSearch(); // 型をつくるsearchContextTypeで
   const { open , setOpen } = handleInput();
   
   const dateCellRender = (value: Dayjs) => {
@@ -65,11 +68,23 @@ const CalendarUI: React.FC = () => {
   };
 
   return (
-    <>
+    <> // 検索欄入力中にカレンダーが白紙になるバグあり
+      <Input.Search
+      placeholder='ここで検索'
+      variant='filled'
+      value={search}
+      onChange={
+        (e) => setSearch(e.target.value)
+      }
+      onSearch={
+        (q) => setSearch(q)
+      }
+      />
       <Calendar cellRender={cellRender} locale={jaJP} />
       <Modal open={open} onCancel={() => setOpen(false)} footer={null}>
         <InputUI />
       </Modal>
+      
     </>
 
   )

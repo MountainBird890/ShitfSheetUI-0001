@@ -1,5 +1,5 @@
 import { useState, createContext, useContext, type ReactNode } from "react";
-import type { calendarContext, inputContextType, loadingContextType } from "../type/type";
+import type { calendarContext, inputContextType, loadingContextType, searchContextType } from "../type/type";
 
 const context = createContext<calendarContext | undefined>(undefined);
 
@@ -74,3 +74,26 @@ export const handleLoading = () => {
     )
 }
 
+
+// <Input.Search placeholder='ここで検索' variant='filled' onSearch={(q)=> fetchUserName(q, (data) => setOpen(data))}/>で使用
+
+const contextSearch = createContext<searchContextType | undefined>(undefined);
+
+export const handleSearch = () => {
+    const searchContext = useContext(contextSearch);
+
+    if(searchContext === undefined){
+        throw new Error("childをcontextSearch.Providorで囲んでください");
+    }
+    return(searchContext)
+};
+
+export function SearchState({children} : {children: ReactNode}){
+    const [ search, setSearch ] = useState<string | undefined>(undefined);
+
+    return(
+        <contextSearch.Provider value={{search, setSearch}}>
+            {children}
+        </contextSearch.Provider>
+    )
+}
