@@ -6,20 +6,48 @@ import type { Dayjs } from "dayjs";
 
 export default function UserColumn(value: Dayjs) {
   const startDate = dayjs().startOf('week');
-
+  
+  const concurrented = data.basedata.filter(type => type["employment-type"] === "B" || type["employment-type"] === "D");
+  
   const weekColumns: ColumnsType<any> = [
     // 職員列（固定）
     {
       title: '職種',
+      dataIndex: 'position',
+      key: 'position',
       width: 100,
       fixed: 'left',
       align: 'center'
     },
     {
       title: '勤務形態',
+      dataIndex: 'employment-type',
+      key: 'employment-type',
       width: 100,
       fixed: 'left',
       align: 'center'
+    },
+    {
+      title: '資格',
+      dataIndex: 'qualifications',
+      key: 'qualifications',
+      width: 100,
+      fixed: 'left',
+      align: 'center'
+    },
+    {
+      title: '兼務先',
+      key: 'qualifications',
+      width: 100,
+      fixed: 'left',
+      align: 'center',
+        render: (_: any, record: any) => {
+    // そのスタッフ自身が "B" タイプなら work-place を表示、そうでなければ空
+    if ((record["employment-type"] === "B") || (record["employment-type"] === "D")) {
+      return record["work-place"];
+    }
+    return "-";
+  }
     },
     {
       title: '職員名',
