@@ -3,6 +3,10 @@
   {
     "staffId": "1",
     "name": "兵庫太郎",
+    "position": "管理者",
+    "employment-type": "B",
+    "qualifications": "介護福祉士",
+    "work-place": "特別養護老人ホーム兵庫",
     "schedule": [
       {
         "date": "2026-04-15",
@@ -78,6 +82,10 @@
   {
     "staffId": "2",
     "name": "大阪花子",
+    "position": "サービス提供責任者",
+    "employment-type": "A",
+    "qualifications": "介護福祉士",
+    "work-place": "特別養護老人ホーム大阪",
     "schedule": [
       {
         "date": "2026-04-14",
@@ -151,6 +159,10 @@
   {
     "staffId": "3",
     "name": "京都次郎",
+    "position": "訪問介護員",
+    "employment-type": "A",
+    "qualifications": "介護福祉士",
+    "work-place": "特別養護老人ホーム京都",
     "schedule": [
       {
         "date": "2026-04-13",
@@ -220,6 +232,10 @@
   {
     "staffId": "4",
     "name": "神戸美咲",
+    "position": "訪問介護員",
+    "employment-type": "A",
+    "qualifications": "訪問介護員1級",
+    "work-place": "特別養護老人ホーム神戸",
     "schedule": [
       {
         "date": "2026-04-16",
@@ -287,6 +303,10 @@
   {
     "staffId": "5",
     "name": "奈良健一",
+    "position": "管理者",
+    "employment-type": "A",
+    "qualifications": "訪問介護員1級",
+    "work-place": "特別養護老人ホーム奈良",
     "schedule": [
       {
         "date": "2026-04-13",
@@ -358,6 +378,10 @@
   {
     "staffId": "6",
     "name": "滋賀恵子",
+    "position": "訪問介護員",
+    "employment-type": "A",
+    "qualifications": "居宅介護従業者養成研修2級",
+    "work-place": "特別養護老人ホーム滋賀",
     "schedule": [
       {
         "date": "2026-04-13",
@@ -423,6 +447,10 @@
   {
     "staffId": "7",
     "name": "和歌山悠",
+    "position": "訪問介護員",
+    "employment-type": "A",
+    "qualifications": "訪問介護員2級",
+    "work-place": "特別養護老人ホーム和歌山",
     "schedule": [
       {
         "date": "2026-04-13",
@@ -496,6 +524,10 @@
   {
     "staffId": "8",
     "name": "三重はるか",
+    "position": "訪問介護員",
+    "employment-type": "C",
+    "qualifications": "介護福祉士",
+    "work-place": "特別養護老人ホーム三重",
     "schedule": [
       {
         "date": "2026-04-14",
@@ -567,6 +599,10 @@
   {
     "staffId": "9",
     "name": "鳥取翔",
+    "position": "訪問介護員",
+    "employment-type": "D",
+    "qualifications": "実務研修修了者",
+    "work-place": "特別養護老人ホーム鳥取",
     "schedule": [
       {
         "date": "2026-04-13",
@@ -644,6 +680,10 @@
   {
     "staffId": "10",
     "name": "島根さくら",
+    "position": "訪問介護員",
+    "employment-type": "A",
+    "qualifications": "実務者研修修了者",
+    "work-place": "特別養護老人ホーム島根",
     "schedule": [
       {
         "date": "2026-04-13",
@@ -707,6 +747,10 @@
   {
     "staffId": "11",
     "name": "福岡一郎",
+    "position": "訪問介護員",
+    "employment-type": "A",
+    "qualifications": "介護職員基礎研修終了者",
+    "work-place": "特別養護老人ホーム福岡",
     "schedule": [
       {
         "date": "2026-04-17",
@@ -782,6 +826,10 @@
   {
     "staffId": "12",
     "name": "長崎二子",
+    "position": "訪問介護員",
+    "employment-type": "B",
+    "qualifications": "居宅介護従業者養成研修1級",
+    "work-place": "特別養護老人ホーム長崎",
     "schedule": [
       {
         "date": "2026-04-14",
@@ -849,6 +897,10 @@
   {
     "staffId": "13",
     "name": "熊本三郎",
+    "position": "訪問介護員",
+    "employment-type": "D",
+    "qualifications": "介護職員初任者研修修了者・居宅介護職員初任者研修修了者",
+    "work-place": "特別養護老人ホーム熊本",
     "schedule": [
       {
         "date": "2026-04-13",
@@ -916,6 +968,10 @@
   {
     "staffId": "14",
     "name": "大分四季",
+    "position": "訪問介護員",
+    "employment-type": "A",
+    "qualifications": "介護職員初任者研修修了者・居宅介護職員初任者研修修了者",
+    "work-place": "特別養護老人ホーム大分",
     "schedule": [
       {
         "date": "2026-04-16",
@@ -971,6 +1027,10 @@
   {
     "staffId": "15",
     "name": "宮崎五月",
+    "position": "訪問介護員",
+    "employment-type": "A",
+    "qualifications": "介護職員初任者研修修了者・居宅介護職員初任者研修修了者",
+    "work-place": "特別養護老人ホーム宮崎",
     "schedule": [
       {
         "date": "2026-04-15",
@@ -1032,6 +1092,10 @@
   {
     "staffId": "16",
     "name": "鹿児島六花",
+    "position": "訪問介護員",
+    "employment-type": "A",
+    "qualifications": "介護職員初任者研修修了者・居宅介護職員初任者研修修了者",
+    "work-place": "特別養護老人ホーム鹿児島",
     "schedule": [
       {
         "date": "2026-04-14",
@@ -1087,6 +1151,10 @@
   {
     "staffId": "17",
     "name": "佐賀七海",
+    "position": "訪問介護員",
+    "employment-type": "A",
+    "qualifications": "訪問介護員3級",
+    "work-place": "特別養護老人ホーム佐賀",
     "schedule": [
       {
         "date": "2026-04-17",
@@ -1156,6 +1224,10 @@
   {
     "staffId": "18",
     "name": "沖縄八重",
+    "position": "訪問介護員",
+    "employment-type": "A",
+    "qualifications": "居宅介護従業者養成研修3級",
+    "work-place": "特別養護老人ホーム沖縄",
     "schedule": [
       {
         "date": "2026-04-13",
@@ -1211,6 +1283,10 @@
   {
     "staffId": "19",
     "name": "山口九重",
+    "position": "訪問介護員",
+    "employment-type": "A",
+    "qualifications": "無資格",
+    "work-place": "特別養護老人ホーム山口",
     "schedule": [
       {
         "date": "2026-04-13",
@@ -1288,6 +1364,10 @@
   {
     "staffId": "20",
     "name": "広島十郎",
+    "position": "訪問介護員",
+    "employment-type": "A",
+    "qualifications": "重度訪問介護従業者養成研修",
+    "work-place": "特別養護老人ホーム沖縄",
     "schedule": [
       {
         "date": "2026-04-15",
