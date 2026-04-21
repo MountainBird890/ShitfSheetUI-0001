@@ -1,5 +1,5 @@
 import { Table } from "antd";
-import kinmukeitai from "../../../backend/data/users/kinmukeitai.json"
+import kinmukeitai from "../../../../backend/data/users/kinmukeitai.json"
 import type { ColumnsType } from "antd/es/table";
 
 

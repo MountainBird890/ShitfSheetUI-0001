@@ -5,11 +5,20 @@ import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import 'dayjs/locale/ja';
 import jaJP from 'antd/es/calendar/locale/ja_JP';
+import baseData from '../../../../backend/data/users/base.json'
+import type { StaffWork } from '../../../../backend/data/basetype';
 
 dayjs.locale('ja');
 
 // ここにcalendarと同じロジックを実装する
 
+const ShiftUI: React.FC = () => {
+  const data = baseData.basedata as StaffWork[];
+
+  const getListData = (value: Dayjs) => {
+    // ココの写経から続きを始める
+  }
+} 
 const getListData = (value: Dayjs) => {
   let listData: { type: string; content: string }[] = []; // Specify the type of listData
   switch (value.date()) {
