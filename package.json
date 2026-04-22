@@ -12,6 +12,7 @@
   "dependencies": {
     "@ant-design/icons": "~6.1.1",
     "@fastify/cors": "^11.2.0",
+    "@fastify/type-provider-typebox": "^6.1.0",
     "@sinclair/typebox": "^0.34.49",
     "antd": "^6.3.5",
     "dayjs": "^1.11.20",

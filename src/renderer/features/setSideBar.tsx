@@ -28,7 +28,7 @@ export default function SideBar(){
     },
     {
         key: 'main5',
-        label: <Link to="/usershift">シフト表</Link>,
+        label: <Link to="/usershift">職員</Link>,
         icon: <UserDeleteOutlined />
     },
     {

@@ -4,7 +4,7 @@ import { handleInput, handleLoading } from '../state/useCalendar';
 // useCalendar.tsxの更新関数に、↓の状態更新を置き換える
 // calendar.tsxに職員名を押せるonClickロジックを実装して、ここのreturnが返されてポップアップが表示されるロジックを書く
 // 実際に編集できるUIはまだ作ってない。編集UIコンポーネントとこのクリックポップアップコンポーネントの更新は分離させる。別アプリとして扱う。
-
+// 編集UIをつくる
 
 
 const InputUI: React.FC = () => {

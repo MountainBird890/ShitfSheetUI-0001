@@ -1,5 +1,6 @@
 import { useState, createContext, useContext, type ReactNode } from "react";
 import type { calendarContext, inputContextType, loadingContextType, searchContextType } from "../type/type";
+import type{ StaffRecord, ScheduleEntry } from "../ui/editer";
 
 const context = createContext<calendarContext | undefined>(undefined);
 
@@ -96,4 +97,58 @@ export function SearchState({children} : {children: ReactNode}){
             {children}
         </contextSearch.Provider>
     )
+}
+
+
+// editer.tsxで使用。
+
+
+// Contextの型定義
+interface EditorContextValue {
+  open: boolean;
+  staff: StaffRecord | null;
+  dateKey: string | null;
+  openEditor: (staff: StaffRecord, dateKey: string) => void;
+  closeEditor: () => void;
+  handleSave: (staffId: string, dateKey: string, updated: ScheduleEntry, updatedName: string) => void;
+}
+
+const EditorContext = createContext<EditorContextValue | null>(null);
+
+// カスタムフック
+export function useEditor() {
+  const ctx = useContext(EditorContext);
+  if (!ctx) throw new Error("useEditor must be used within HandleScheduleEditor");
+  return ctx;
+}
+
+// HandleEditor を Context Provider に変更
+export function HandleScheduleEditor({ children }: { children: React.ReactNode }) {
+  const [open, setOpen] = useState(false);
+  const [staff, setStaff] = useState<StaffRecord | null>(null);
+  const [dateKey, setDateKey] = useState<string | null>(null);
+
+  const openEditor = (staff: StaffRecord, dateKey: string) => {
+    setStaff(staff);
+    setDateKey(dateKey);
+    setOpen(true);
+  };
+
+  const closeEditor = () => setOpen(false);
+
+  const handleSave = (
+    staffId: string,
+    dateKey: string,
+    updated: ScheduleEntry,
+    updatedName: string
+  ) => {
+    // ここに保存ロジック（API呼び出しなど）を書く
+    closeEditor();
+  };
+
+  return (
+    <EditorContext.Provider value={{ open, staff, dateKey, openEditor, closeEditor, handleSave }}>
+      {children}
+    </EditorContext.Provider>
+  );
 }
