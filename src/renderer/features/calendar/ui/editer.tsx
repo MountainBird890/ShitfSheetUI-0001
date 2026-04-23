@@ -120,13 +120,14 @@ const ScheduleEditModal: React.FC = () => {
 
   const currentEntry = staff && dateKey ? (staff[dateKey] as ScheduleEntry | undefined) : undefined;
 
+  console.log("editer.tsx is correct")
   return (
     <Modal
       open={open}
       onCancel={closeEditor}
       footer={null}
       width={560}
-      destroyOnClose
+      destroyOnHidden
       title={null}
       styles={{
         container: {

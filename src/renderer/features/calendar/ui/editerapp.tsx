@@ -126,17 +126,16 @@ function flatten(data: StaffRecord[]): FlatRow[] {
 }
 
 // ---- Main App ---------------------------------------------------
-
+// ここをContextAPIに対応するように作り変える
 const App: React.FC = () => {
   const [data, setData] = useState<StaffRecord[]>(initialData);
-  const { openEditor } = useEditor();  
+  const { openEditor, closeEditor } = useEditor();
   const [messageApi, contextHolder] = message.useMessage();
 
   const openEdit = (staffId: string, dateKey: string) => {
     const staff = data.find((s) => s.staffId === staffId) ?? null;
-    setSelectedStaff(staff);
-    setSelectedDate(dateKey);
-    setModalOpen(true);
+    if (!staff) return;
+    openEditor(staff, dateKey); 
   };
 
   const handleSave = (
@@ -151,7 +150,7 @@ const App: React.FC = () => {
         return { ...s, name: updatedName, [dateKey]: updated };
       })
     );
-    setModalOpen(false);
+    closeEditor();
     messageApi.success("保存しました");
   };
 
@@ -303,13 +302,7 @@ const App: React.FC = () => {
         </Content>
       </Layout>
 
-      <ScheduleEditModal
-        open={modalOpen}
-        staff={selectedStaff}
-        dateKey={selectedDate}
-        onSave={handleSave}
-        onCancel={() => setModalOpen(false)}
-      />
+      <ScheduleEditModal/>
     </ConfigProvider>
   );
 };

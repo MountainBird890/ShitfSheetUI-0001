@@ -1,56 +1,63 @@
 import React from 'react';
 import type { BadgeProps, CalendarProps } from 'antd';
 import { Badge, Calendar } from 'antd';
-import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
-import 'dayjs/locale/ja';
-import jaJP from 'antd/es/calendar/locale/ja_JP';
-import baseData from '../../../../backend/data/users/base.json'
-import type { StaffWork } from '../../../../backend/data/basetype';
-
-dayjs.locale('ja');
-
-// ここにcalendarと同じロジックを実装する。午後からはココをやる
-
-const ShiftUI: React.FC = () => {
-  const data = baseData.basedata as StaffWork[];
 
 const getListData = (value: Dayjs) => {
-  const targetDate = value.format('YYYY-MM-DD');
-
-  return data.flatMap((staff) =>
-    staff.schedule
-      .filter((s) => s.date === targetDate)
-      .map((s) => ({
-        type: s.type,
-        content: staff.name,
-        staffId: staff.staffId,
-      }))
-  ).filter((item) => 
-    !search || item.content.includes(search)
-  )
+  let listData: { type: string; content: string }[] = []; // Specify the type of listData
+  switch (value.date()) {
+    case 8:
+      listData = [
+        { type: 'warning', content: 'これは田中さんの予定表です。' },
+        { type: 'success', content: 'これは田中さんの予定表です。' },
+      ];
+      break;
+    case 10:
+      listData = [
+        { type: 'warning', content: 'これは田中さんの予定表です。' },
+        { type: 'success', content: 'これは田中さんの予定表です。' },
+        { type: 'error', content: 'これは田中さんの予定表です。' },
+      ];
+      break;
+    case 15:
+      listData = [
+        { type: 'warning', content: 'これは田中さんの予定表です。' },
+        { type: 'success', content: 'これは田中さんの予定表です。' },
+        { type: 'error', content: 'これは田中さんの予定表です。' },
+        { type: 'error', content: 'これは田中さんの予定表です。' },
+        { type: 'error', content: 'これは田中さんの予定表です。' },
+        { type: 'error', content: 'これは田中さんの予定表です。' },
+      ];
+      break;
+    default:
+  }
+  return listData || [];
 };
 
+const getMonthData = (value: Dayjs) => {
+  if (value.month() === 8) {
+    return 1394;
+  }
+};
 
-  console.log("CalendarUI(calendar.tsx) is correct")
-  const { search, setSearch } = handleSearch(); // 型をつくるsearchContextTypeで
-  const { open , setOpen } = handleInput();
-  
+const UserShift: React.FC = () => {
+  const monthCellRender = (value: Dayjs) => {
+    const num = getMonthData(value);
+    return num ? (
+      <div className="notes-month">
+        <section>{num}</section>
+        <span>Backlog number</span>
+      </div>
+    ) : null;
+  };
+
   const dateCellRender = (value: Dayjs) => {
     const listData = getListData(value);
     return (
       <ul className="events">
         {listData.map((item) => (
-          <li key={`${item.staffId}-${item.content}`} onClick={() => setOpen(true)}>
-            <Badge
-              status={item.type as BadgeProps['status']}
-              text={
-                <span onClick={() => setOpen(true)} style={{ cursor: 'pointer' }}>
-                  {item.content}
-                </span>
-              }
-            />
-            <Modal />
+          <li key={item.content}>
+            <Badge status={item.type as BadgeProps['status']} text={item.content} />
           </li>
         ))}
       </ul>
@@ -58,33 +65,16 @@ const getListData = (value: Dayjs) => {
   };
 
   const cellRender: CalendarProps<Dayjs>['cellRender'] = (current, info) => {
-    if (info.type === 'date') return dateCellRender(current);
+    if (info.type === 'date') {
+      return dateCellRender(current);
+    }
+    if (info.type === 'month') {
+      return monthCellRender(current);
+    }
     return info.originNode;
   };
 
-  return (
-    <> // 検索欄入力中にカレンダーが白紙になるバグあり
-      <Input.Search
-      placeholder='ここで検索'
-      variant='filled'
-      value={search}
-      onChange={
-        (e) => setSearch(e.target.value)
-      }
-      onSearch={
-        (q) => setSearch(q)
-      }
-      />
-      <Calendar cellRender={cellRender} locale={jaJP} />
-      <Modal open={open} onCancel={() => setOpen(false)} footer={null}>
-        <InputUI />
-      </Modal>
-      
-    </>
-
-  )
-
-  return <Calendar cellRender={cellRender} locale={jaJP} />;
+  return <Calendar cellRender={cellRender} />;
 };
 
 export default UserShift;

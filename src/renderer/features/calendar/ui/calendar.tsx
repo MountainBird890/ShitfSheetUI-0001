@@ -66,9 +66,9 @@ const getListData = (value: Dayjs) => {
     if (info.type === 'date') return dateCellRender(current);
     return info.originNode;
   };
-
+// 検索欄入力中にカレンダーが白紙になるバグあり
   return (
-    <> // 検索欄入力中にカレンダーが白紙になるバグあり
+    <> 
       <Input.Search
       placeholder='ここで検索'
       variant='filled'
