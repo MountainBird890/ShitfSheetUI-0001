@@ -1,61 +1,56 @@
+// 今日は編集した内容がJsonファイルのデータを書き換えるロジックを作る
+
+
 import type { BadgeProps, CalendarProps } from 'antd';
-import { Badge, Calendar, Modal, Input } from 'antd';
+import { Badge, Calendar, Input } from 'antd';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import 'dayjs/locale/ja';
 import jaJP from 'antd/es/calendar/locale/ja_JP';
 import baseData from '../../../../backend/data/users/base.json';
 import type { StaffWork } from '../../../../backend/data/basetype';
-import InputUI from './input';
-import { handleInput, handleSearch } from '../state/useCalendar';
+import { handleSearch, HandleScheduleEditor, useEditor } from '../state/useCalendar';
+import ScheduleEditModal from './editer';
 
-
-
-
-// dayjsのデフォルトロケールを日本語に設定
 dayjs.locale('ja');
 
-
-
-const CalendarUI: React.FC = () => {
+// カレンダー本体（Context内で使う）
+const CalendarInner: React.FC = () => {
   const data = baseData.basedata as StaffWork[];
+  const { search, setSearch } = handleSearch();
+  const { openEditor } = useEditor(); // ← ContextからopenEditorを取得
 
-const getListData = (value: Dayjs) => {
-  const targetDate = value.format('YYYY-MM-DD');
+  const getListData = (value: Dayjs) => {
+    const targetDate = value.format('YYYY-MM-DD');
+    return data.flatMap((staff) =>
+      staff.schedule
+        .filter((s) => s.date === targetDate)
+        .map((s) => ({
+          type: s.type,
+          content: staff.name,
+          staffId: staff.staffId,
+          dateKey: targetDate,
+          staffRecord: staff, // StaffRecordをそのまま渡す
+        }))
+    ).filter((item) =>
+      !search || item.content.includes(search)
+    );
+  };
 
-  return data.flatMap((staff) =>
-    staff.schedule
-      .filter((s) => s.date === targetDate)
-      .map((s) => ({
-        type: s.type,
-        content: staff.name,
-        staffId: staff.staffId,
-      }))
-  ).filter((item) => 
-    !search || item.content.includes(search)
-  )
-};
-
-
-  console.log("CalendarUI(calendar.tsx) is correct")
-  const { search, setSearch } = handleSearch(); // 型をつくるsearchContextTypeで
-  const { open , setOpen } = handleInput();
-  
   const dateCellRender = (value: Dayjs) => {
     const listData = getListData(value);
     return (
       <ul className="events">
         {listData.map((item) => (
-          <li key={`${item.staffId}-${item.content}`} onClick={() => setOpen(true)}>
+          <li
+            key={`${item.staffId}-${item.dateKey}`}
+            onClick={() => openEditor(item.staffRecord, item.dateKey)} // ← staffとdateKeyを渡す
+            style={{ cursor: 'pointer' }}
+          >
             <Badge
               status={item.type as BadgeProps['status']}
-              text={
-                <span onClick={() => setOpen(true)} style={{ cursor: 'pointer' }}>
-                  {item.content}
-                </span>
-              }
+              text={item.content}
             />
-            <Modal />
           </li>
         ))}
       </ul>
@@ -66,28 +61,27 @@ const getListData = (value: Dayjs) => {
     if (info.type === 'date') return dateCellRender(current);
     return info.originNode;
   };
-// 検索欄入力中にカレンダーが白紙になるバグあり
+
   return (
-    <> 
+    <>
       <Input.Search
-      placeholder='ここで検索'
-      variant='filled'
-      value={search}
-      onChange={
-        (e) => setSearch(e.target.value)
-      }
-      onSearch={
-        (q) => setSearch(q)
-      }
+        placeholder="ここで検索"
+        variant="filled"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        onSearch={(q) => setSearch(q)}
       />
       <Calendar cellRender={cellRender} locale={jaJP} />
-      <Modal open={open} onCancel={() => setOpen(false)} footer={null}>
-        <InputUI />
-      </Modal>
-      
+      {/* Modalはここに置かない。ScheduleEditModal自身がModalを持つ */}
+      <ScheduleEditModal />
     </>
-
-  )
+  );
 };
+
+const CalendarUI: React.FC = () => (
+  <HandleScheduleEditor>
+    <CalendarInner />
+  </HandleScheduleEditor>
+);
 
 export default CalendarUI;

@@ -136,13 +136,23 @@ export function HandleScheduleEditor({ children }: { children: React.ReactNode }
 
   const closeEditor = () => setOpen(false);
 
-  const handleSave = (
+  const handleSave = async(
     staffId: string,
     dateKey: string,
     updated: ScheduleEntry,
     updatedName: string
   ) => {
-    // ここに保存ロジック（API呼び出しなど）を書く
+    // ここに保存ロジック（API呼び出しなど）を書く。形式はconst res = await fetch()
+    // 午後はココの修正とJSON書き換えロジック（backend）の作成から
+const res = await fetch(`/api/staff/${staffId}/schedule/${dateKey}`, {
+  method: 'PUT',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ name: updatedName, entry: updated }),
+});
+    if(!res.ok){
+        throw new Error('保存に失敗しました');
+    };
+    console.log('保存完了');
     closeEditor();
   };
 

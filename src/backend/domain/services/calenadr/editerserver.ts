@@ -22,7 +22,7 @@ type UpdateScheduleBody = Static<typeof UpdateScheduleBodySchema>;
 
 // ---- Data file path ---------------------------------------------
 
-const DATA_PATH = path.resolve(process.cwd(), "data", "basedata.json");
+const DATA_PATH = path.resolve(process.cwd(), "src/backend/data/users/base.json");
 
 async function readData(): Promise<{ basedata: Record<string, unknown>[] }> {
   const raw = await fs.readFile(DATA_PATH, "utf-8");
