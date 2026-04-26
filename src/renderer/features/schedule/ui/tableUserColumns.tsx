@@ -27,28 +27,28 @@ export default function UserColumn(value: Dayjs) {
         children: [
           {
             title: '利用者',
-            dataIndex: [dateStr, 'user'],
+            dataIndex: ['details',dateStr, 'user'],
             key: `${dateStr}_user`,
             width: 100,
             render: (text: string) => text || '-',
           },
           {
             title: '開始',
-            dataIndex: [dateStr, 'start'],
+            dataIndex: ['details',dateStr, 'start'],
             key: `${dateStr}_start`,
             width: 80,
             render: (text: string) => text ? dayjs(text).format('HH:mm') : '-',
           },
           {
             title: '終了',
-            dataIndex: [dateStr, 'end'],
+            dataIndex: ['details',dateStr, 'end'],
             key: `${dateStr}_end`,
             width: 80,
             render: (text: string) => text ? dayjs(text).format('HH:mm') : '-',
           },
           {
             title: '種別',
-            dataIndex: [dateStr, 'type'],
+            dataIndex: ['details',dateStr, 'type'],
             key: `${dateStr}_type`,
             width: 100,
             render: (text: string) => text || '-',
