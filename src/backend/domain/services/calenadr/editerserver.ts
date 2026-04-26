@@ -132,7 +132,7 @@ server.post('/api/download/csv', {
 
   reply
     .header('Content-Type', 'text/csv; charset=utf-8')
-    .header('Content-Disposition', `attachment; filename*=UTF-8''勤務表.csv`)
+    .header('Content-Disposition', `attachment; filename="schedule.csv"`)
     .send('\uFEFF' + csv)
 })
 
