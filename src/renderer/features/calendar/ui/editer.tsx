@@ -46,7 +46,7 @@ export interface StaffRecord {
   staffId: string;
   name: string;
   position?: string;
-  [dateKey: string]: ScheduleEntry | string | unknown;
+  details?: Record<string, ScheduleEntry>;  // ← detailsにまとめる
 }
 
 export interface EditFormValues {
@@ -80,7 +80,7 @@ const ScheduleEditModal: React.FC = () => {
   useEffect(() => {
     if (!open || !staff || !dateKey) return;
 
-    const entry = staff[dateKey] as ScheduleEntry | undefined;
+    const entry = staff.details?.[dateKey] as ScheduleEntry | undefined;
 
     form.setFieldsValue({
       name: staff.name as string,
@@ -118,7 +118,7 @@ const ScheduleEditModal: React.FC = () => {
   const typeColor = (t?: string) =>
     SERVICE_TYPES.find((s) => s.value === t)?.color ?? "default";
 
-  const currentEntry = staff && dateKey ? (staff[dateKey] as ScheduleEntry | undefined) : undefined;
+  const currentEntry = staff && dateKey ? (staff.details?.[dateKey] as ScheduleEntry | undefined) : undefined;
 
   console.log("editer.tsx is correct")
   return (
