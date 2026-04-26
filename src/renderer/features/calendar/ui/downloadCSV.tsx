@@ -1,9 +1,15 @@
-import type { StaffWork } from "../../../../backend/data/basetype";
 import { Button } from "antd"
 import { DownloadOutlined } from '@ant-design/icons';
 import { handleDownloadCSV } from "../state/useCalendar";
 // DownloadButton.tsx
-type Props = { data: StaffWork[] }
+type VisibleData = {
+  staffId: string
+  name: string
+  date: string
+  type: string
+}
+
+type Props = { data: VisibleData[] }
 
 export const DownloadButton = ({ data }: Props) => {
   const {dl, setDl} = handleDownloadCSV()

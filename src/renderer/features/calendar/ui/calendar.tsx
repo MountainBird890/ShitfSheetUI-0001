@@ -8,12 +8,14 @@ import baseData from '../../../../backend/data/users/base.json';
 import type { StaffWork } from '../../../../backend/data/basetype';
 import { handleSearch, HandleScheduleEditor, useEditor } from '../state/useCalendar';
 import ScheduleEditModal from './editer';
+import { DownloadButton } from './downloadCSV';
+import { DlState } from '../state/useCalendar';
 
 dayjs.locale('ja');
 
 // カレンダー本体（Context内で使う）
 const CalendarInner: React.FC = () => {
-  const data = baseData.basedata as StaffWork[];
+  const data = baseData.basedata as unknown as StaffWork[];
   const { search, setSearch } = handleSearch();
   const { openEditor } = useEditor(); // ← ContextからopenEditorを取得
 
@@ -33,6 +35,19 @@ const CalendarInner: React.FC = () => {
       !search || item.content.includes(search)
     );
   };
+
+  const visibleData = data.flatMap((staff) =>
+  Object.entries(staff.details ?? {}).map(([date, detail]) => ({
+    staffId: staff.staffId,
+    name: staff.name,
+    date,
+    type: detail.type,
+  }))
+).filter((item) =>
+  !search || item.name.includes(search)
+)
+
+console.log('visibleData:', visibleData)
 
   const dateCellRender = (value: Dayjs) => {
     const listData = getListData(value);
@@ -68,6 +83,9 @@ const CalendarInner: React.FC = () => {
         onChange={(e) => setSearch(e.target.value)}
         onSearch={(q) => setSearch(q)}
       />
+      <DlState>
+        <DownloadButton data={visibleData} />
+      </DlState>
       <Calendar cellRender={cellRender} locale={jaJP} />
       {/* Modalはここに置かない。ScheduleEditModal自身がModalを持つ */}
       <ScheduleEditModal />

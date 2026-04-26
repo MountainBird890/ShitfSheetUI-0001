@@ -14,6 +14,13 @@ export const ScheduleItemSchema = Type.Object({
   ]),
 });
 
+export const ScheduleDetailSchema = Type.Object({
+  user:  Type.String(),
+  start: Type.String(),
+  end:   Type.String(),
+  type:  Type.String(),
+})
+
 export const StaffWorkSchema = Type.Object({
   staffId: Type.String(),
   name: Type.String(),
@@ -55,7 +62,11 @@ export const StaffWorkSchema = Type.Object({
     yearEndAllowance: Type.Number(),
     specialBonus: Type.Number(),
   }),
+  details: Type.Optional(           // ← これを追加
+    Type.Record(Type.String(), ScheduleDetailSchema)
+  ),
 });
 
 export type ScheduleItem = Static<typeof ScheduleItemSchema>;
 export type StaffWork = Static<typeof StaffWorkSchema>;
+export type ScheduleDetail = Static<typeof ScheduleDetailSchema> 

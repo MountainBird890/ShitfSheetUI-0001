@@ -144,7 +144,7 @@ export function HandleScheduleEditor({ children }: { children: React.ReactNode }
     updatedName: string
   ) => {
     // ここに保存ロジック（API呼び出しなど）を書く。形式はconst res = await fetch()
-    // 午後はココの修正とJSON書き換えロジック（backend）の作成から
+
 const res = await fetch(`/api/staff/${staffId}/schedule/${dateKey}`, {
   method: 'PUT',
   headers: { 'Content-Type': 'application/json' },

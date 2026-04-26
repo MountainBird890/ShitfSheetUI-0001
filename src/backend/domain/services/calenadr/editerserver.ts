@@ -109,6 +109,33 @@ server.put<{
   }
 );
 
+
+// ---- CSV ダウンロード ------------------------------------------
+const CsvBodySchema = Type.Array(Type.Object({
+  staffId: Type.String(),
+  name:    Type.String(),
+  date:    Type.String(),
+  type:    Type.String(),
+}))
+
+server.post('/api/download/csv', {
+  schema: { body: CsvBodySchema }
+}, async (request, reply) => {
+  const data = request.body as Static<typeof CsvBodySchema>
+  
+  const csv = [
+    'staffId,name,date,type',
+    ...data.map(row =>
+      `"${row.staffId}","${row.name}","${row.date}","${row.type}"`
+    )
+  ].join('\n')
+
+  reply
+    .header('Content-Type', 'text/csv; charset=utf-8')
+    .header('Content-Disposition', `attachment; filename*=UTF-8''勤務表.csv`)
+    .send('\uFEFF' + csv)
+})
+
 // ---- Start ------------------------------------------------------
 
 server.listen({ port: 3000, host: "0.0.0.0" }, (err) => {
