@@ -1,80 +1,57 @@
 import React from 'react';
 import type { BadgeProps, CalendarProps } from 'antd';
-import { Badge, Calendar } from 'antd';
+import { Badge, Calendar, Table } from 'antd';
 import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
+import type { ColumnsType } from 'antd/es/table';
+import { title } from 'process';
+import data from '../../../../backend/data/users/base.json';
 
-const getListData = (value: Dayjs) => {
-  let listData: { type: string; content: string }[] = []; // Specify the type of listData
-  switch (value.date()) {
-    case 8:
-      listData = [
-        { type: 'warning', content: 'これは田中さんの予定表です。' },
-        { type: 'success', content: 'これは田中さんの予定表です。' },
-      ];
-      break;
-    case 10:
-      listData = [
-        { type: 'warning', content: 'これは田中さんの予定表です。' },
-        { type: 'success', content: 'これは田中さんの予定表です。' },
-        { type: 'error', content: 'これは田中さんの予定表です。' },
-      ];
-      break;
-    case 15:
-      listData = [
-        { type: 'warning', content: 'これは田中さんの予定表です。' },
-        { type: 'success', content: 'これは田中さんの予定表です。' },
-        { type: 'error', content: 'これは田中さんの予定表です。' },
-        { type: 'error', content: 'これは田中さんの予定表です。' },
-        { type: 'error', content: 'これは田中さんの予定表です。' },
-        { type: 'error', content: 'これは田中さんの予定表です。' },
-      ];
-      break;
-    default:
-  }
-  return listData || [];
-};
+// ここをExcelの勤怠表に合わせて修正
+export default function DaysColumns(value: Dayjs){
+  const startDate = dayjs().startOf('week');
 
-const getMonthData = (value: Dayjs) => {
-  if (value.month() === 8) {
-    return 1394;
-  }
-};
+  const weekColumns: ColumnsType<any> = 
+    [...Array(31)].flatMap((_, index) => {
+      const day = startDate.add(index, 'day');
+      const dateString = day.format('YYYY-MM-DD');
 
-const UserShift: React.FC = () => {
-  const monthCellRender = (value: Dayjs) => {
-    const num = getMonthData(value);
-    return num ? (
-      <div className="notes-month">
-        <section>{num}</section>
-        <span>Backlog number</span>
-      </div>
-    ) : null;
-  };
+      return[
+        {
+        title: '介助者',
+        dataIndex: ['details', dateString, 'user'],
+        key: `${dateString}_name`,
+        width: 100,
+        render: (text:string) => text || '-',
+      },{
+        title: '開始',
+        dataIndex: ['details', dateString, 'start'],
+        key: `${dateString}_start`,
+        width: 80,
+        render: (text:string) => text ? dayjs(text).format('HH:mm') : '-',
+      },{
+        title: '終了',
+        dataIndex: ['details', dateString, 'end'],
+        key: `${dateString}_end`,
+        width: 80,
+        render: (text:string) => text ? dayjs(text).format('HH:mm') : '-',
+      },{
+        title: '種別',
+        dataIndex: ['details', dateString, 'type'],
+        key: `${dateString}_type`,
+        width: 100,
+        render: (text:string) => text || '-',
+      }
+    ]
+    })
 
-  const dateCellRender = (value: Dayjs) => {
-    const listData = getListData(value);
-    return (
-      <ul className="events">
-        {listData.map((item) => (
-          <li key={item.content}>
-            <Badge status={item.type as BadgeProps['status']} text={item.content} />
-          </li>
-        ))}
-      </ul>
-    );
-  };
-
-  const cellRender: CalendarProps<Dayjs>['cellRender'] = (current, info) => {
-    if (info.type === 'date') {
-      return dateCellRender(current);
-    }
-    if (info.type === 'month') {
-      return monthCellRender(current);
-    }
-    return info.originNode;
-  };
-
-  return <Calendar cellRender={cellRender} />;
-};
-
-export default UserShift;
+  return(
+    <Table
+    columns={weekColumns}
+    dataSource={data.basedata}
+    bordered
+    size='middle'
+    scroll={{x: 'max-content', y:'min-content'}}
+    />
+  )
+}
