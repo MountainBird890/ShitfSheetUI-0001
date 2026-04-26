@@ -1,6 +1,7 @@
 import { useState, createContext, useContext, type ReactNode } from "react";
 import type { calendarContext, inputContextType, loadingContextType, searchContextType } from "../type/type";
 import type{ StaffRecord, ScheduleEntry } from "../ui/editer";
+import type { downloadCSVContextType } from "../type/type";
 
 const context = createContext<calendarContext | undefined>(undefined);
 
@@ -161,4 +162,29 @@ const res = await fetch(`/api/staff/${staffId}/schedule/${dateKey}`, {
       {children}
     </EditorContext.Provider>
   );
+}
+
+
+// downloadCSV.tsxで使用
+const contextDl = createContext<downloadCSVContextType | false>(false);
+
+// 続きにexport const handleSearch = () => {...の処理を書く（他のContextを参考にする）
+export const handleDownloadCSV = () => {
+    const dlContext = useContext(contextDl);
+
+        if(dlContext === false){
+        throw new Error("childをcontextSearch.Providorで囲んでください");
+    }
+    return(dlContext)
+};
+
+export function DlState({children} : {children: ReactNode}){
+    const [ dl, setDl ] = useState<boolean>(false);
+
+    return(
+        <contextDl.Provider value={{dl, setDl}}>
+            {children}
+        </contextDl.Provider>
+    )
+
 }

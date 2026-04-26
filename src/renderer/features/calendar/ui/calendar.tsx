@@ -1,6 +1,3 @@
-// 今日は編集した内容がJsonファイルのデータを書き換えるロジックを作る
-
-
 import type { BadgeProps, CalendarProps } from 'antd';
 import { Badge, Calendar, Input } from 'antd';
 import dayjs from 'dayjs';

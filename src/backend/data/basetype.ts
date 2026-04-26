@@ -1,6 +1,9 @@
 import { Type } from "@sinclair/typebox";
 import type { Static } from "@sinclair/typebox";
 
+// 型を変えた後、データ構造の日付キーをdetails項目にまとめる。その後、現状のカレンダーの情報を吸い上げるフロントエンドロジックをcalendar.tsxに追加する
+
+
 // カレンダー用スケジュール型
 export const ScheduleItemSchema = Type.Object({
   date: Type.String(), // "2026-04-08"

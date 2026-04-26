@@ -31,3 +31,10 @@ type searchContextType = {
 }
 
 export type {searchContextType}
+
+type downloadCSVContextType =  {
+    dl: boolean,
+    setDl: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export type {downloadCSVContextType}
