@@ -4,7 +4,7 @@ import type { ColumnsType } from "antd/es/table";
 import dayjs from "dayjs";
 import type { Dayjs } from "dayjs";
 
-export default function UserColumn(value: Dayjs) {
+export default function UserColumn({value}:{value: Dayjs}) {
   const startDate = dayjs().startOf('week');
 
   const weekColumns: ColumnsType<any> = [

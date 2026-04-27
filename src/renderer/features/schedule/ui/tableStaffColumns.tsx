@@ -14,5 +14,5 @@ export default function StaffColumn(){
 
 return <Table<StaffDataType>
  columns = {staffColumn}
- dataSource={data.shiftdata}/>
+ dataSource={data.shiftdata as any}/>
 };
