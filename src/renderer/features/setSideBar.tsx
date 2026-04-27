@@ -1,4 +1,4 @@
-import { HomeOutlined, CheckOutlined, CheckSquareOutlined, UserAddOutlined, UserDeleteOutlined, UserOutlined   } from '@ant-design/icons';
+import { HomeOutlined, CheckOutlined, CheckSquareOutlined, UserAddOutlined, UserDeleteOutlined } from '@ant-design/icons';
 import { Layout, Menu, type MenuProps} from 'antd';
 import { Link, Outlet } from 'react-router-dom';
 
@@ -28,13 +28,8 @@ export default function SideBar(){
     },
     {
         key: 'main5',
-        label: <Link to="/sheet">職員</Link>,
+        label: <Link to="/sheet">シフト一覧</Link>,
         icon: <UserDeleteOutlined />
-    },
-    {
-        key: 'main6',
-        label: 'ご利用者様',
-        icon: <UserOutlined />
     },
 ];
 

@@ -4,6 +4,8 @@ import type { ColumnsType } from "antd/es/table";
 import dayjs from "dayjs";
 import type { Dayjs } from "dayjs";
 
+// ・労働日数,労働時間,深夜時間,早朝夜間時間,研修手当,移動手当,労働時間における介護時間の計算ロジック及びUIを作る
+
 export default function UserColumn(value: Dayjs) {
   const startDate = dayjs().startOf('week');
   
