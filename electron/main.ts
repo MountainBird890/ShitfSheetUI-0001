@@ -29,7 +29,7 @@ function createWindow() {
   const isDev = process.argv.includes("--dev") || !app.isPackaged;
 
   if (isDev) {
-    win.loadURL("http://localhost:5174");
+    win.loadURL("http://localhost:5173");
     win.webContents.openDevTools();
   } else {
     win.loadFile(path.join(__dirname, "../dist/index.html"));
