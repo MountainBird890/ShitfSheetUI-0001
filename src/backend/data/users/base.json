@@ -7,28 +7,6 @@
       "employment-type": "B",
       "qualifications": "介護福祉士",
       "work-place": "特別養護老人ホーム兵庫",
-      "schedule": [
-        {
-          "date": "2026-04-15",
-          "type": "warning"
-        },
-        {
-          "date": "2026-04-20",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-25",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-28",
-          "type": "warning"
-        },
-        {
-          "date": "2026-04-30",
-          "type": "success"
-        }
-      ],
       "days": {
         "workingDays": 16,
         "paidLeaveDays": 3
@@ -100,32 +78,6 @@
       "employment-type": "A",
       "qualifications": "介護福祉士",
       "work-place": "特別養護老人ホーム大阪",
-      "schedule": [
-        {
-          "date": "2026-04-14",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-15",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-16",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-22",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-23",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-25",
-          "type": "success"
-        }
-      ],
       "days": {
         "workingDays": 21,
         "paidLeaveDays": 1
@@ -179,28 +131,6 @@
       "employment-type": "A",
       "qualifications": "介護福祉士",
       "work-place": "特別養護老人ホーム京都",
-      "schedule": [
-        {
-          "date": "2026-04-13",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-20",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-22",
-          "type": "warning"
-        },
-        {
-          "date": "2026-04-24",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-30",
-          "type": "success"
-        }
-      ],
       "days": {
         "workingDays": 23,
         "paidLeaveDays": 2
@@ -254,32 +184,6 @@
       "employment-type": "A",
       "qualifications": "訪問介護員1級",
       "work-place": "特別養護老人ホーム神戸",
-      "schedule": [
-        {
-          "date": "2026-04-16",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-17",
-          "type": "warning"
-        },
-        {
-          "date": "2026-04-21",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-22",
-          "type": "warning"
-        },
-        {
-          "date": "2026-04-23",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-28",
-          "type": "success"
-        }
-      ],
       "days": {
         "workingDays": 16,
         "paidLeaveDays": 2
@@ -327,36 +231,6 @@
       "employment-type": "A",
       "qualifications": "訪問介護員1級",
       "work-place": "特別養護老人ホーム奈良",
-      "schedule": [
-        {
-          "date": "2026-04-13",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-14",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-15",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-20",
-          "type": "warning"
-        },
-        {
-          "date": "2026-04-22",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-23",
-          "type": "warning"
-        },
-        {
-          "date": "2026-04-24",
-          "type": "success"
-        }
-      ],
       "days": {
         "workingDays": 21,
         "paidLeaveDays": 1
@@ -404,24 +278,6 @@
       "employment-type": "A",
       "qualifications": "居宅介護従業者養成研修2級",
       "work-place": "特別養護老人ホーム滋賀",
-      "schedule": [
-        {
-          "date": "2026-04-13",
-          "type": "warning"
-        },
-        {
-          "date": "2026-04-14",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-20",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-28",
-          "type": "success"
-        }
-      ],
       "days": {
         "workingDays": 22,
         "paidLeaveDays": 3
@@ -475,32 +331,6 @@
       "employment-type": "A",
       "qualifications": "訪問介護員2級",
       "work-place": "特別養護老人ホーム和歌山",
-      "schedule": [
-        {
-          "date": "2026-04-13",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-14",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-16",
-          "type": "warning"
-        },
-        {
-          "date": "2026-04-17",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-28",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-30",
-          "type": "success"
-        }
-      ],
       "days": {
         "workingDays": 17,
         "paidLeaveDays": 5
@@ -554,36 +384,6 @@
       "employment-type": "C",
       "qualifications": "介護福祉士",
       "work-place": "特別養護老人ホーム三重",
-      "schedule": [
-        {
-          "date": "2026-04-14",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-15",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-16",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-20",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-21",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-22",
-          "type": "warning"
-        },
-        {
-          "date": "2026-04-23",
-          "type": "success"
-        }
-      ],
       "days": {
         "workingDays": 22,
         "paidLeaveDays": 1
@@ -631,36 +431,6 @@
       "employment-type": "D",
       "qualifications": "実務研修修了者",
       "work-place": "特別養護老人ホーム鳥取",
-      "schedule": [
-        {
-          "date": "2026-04-13",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-21",
-          "type": "warning"
-        },
-        {
-          "date": "2026-04-22",
-          "type": "warning"
-        },
-        {
-          "date": "2026-04-24",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-25",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-28",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-30",
-          "type": "success"
-        }
-      ],
       "days": {
         "workingDays": 15,
         "paidLeaveDays": 5
@@ -714,28 +484,6 @@
       "employment-type": "A",
       "qualifications": "実務者研修修了者",
       "work-place": "特別養護老人ホーム島根",
-      "schedule": [
-        {
-          "date": "2026-04-13",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-17",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-23",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-24",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-28",
-          "type": "success"
-        }
-      ],
       "days": {
         "workingDays": 16,
         "paidLeaveDays": 1
@@ -783,28 +531,6 @@
       "employment-type": "A",
       "qualifications": "介護職員基礎研修終了者",
       "work-place": "特別養護老人ホーム福岡",
-      "schedule": [
-        {
-          "date": "2026-04-17",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-21",
-          "type": "warning"
-        },
-        {
-          "date": "2026-04-22",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-24",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-28",
-          "type": "success"
-        }
-      ],
       "days": {
         "workingDays": 21,
         "paidLeaveDays": 2
@@ -864,32 +590,6 @@
       "employment-type": "B",
       "qualifications": "居宅介護従業者養成研修1級",
       "work-place": "特別養護老人ホーム長崎",
-      "schedule": [
-        {
-          "date": "2026-04-14",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-15",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-16",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-20",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-23",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-28",
-          "type": "success"
-        }
-      ],
       "days": {
         "workingDays": 15,
         "paidLeaveDays": 0
@@ -937,32 +637,6 @@
       "employment-type": "D",
       "qualifications": "介護職員初任者研修修了者・居宅介護職員初任者研修修了者",
       "work-place": "特別養護老人ホーム熊本",
-      "schedule": [
-        {
-          "date": "2026-04-13",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-15",
-          "type": "warning"
-        },
-        {
-          "date": "2026-04-16",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-23",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-24",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-28",
-          "type": "success"
-        }
-      ],
       "days": {
         "workingDays": 18,
         "paidLeaveDays": 3
@@ -1010,20 +684,6 @@
       "employment-type": "A",
       "qualifications": "介護職員初任者研修修了者・居宅介護職員初任者研修修了者",
       "work-place": "特別養護老人ホーム大分",
-      "schedule": [
-        {
-          "date": "2026-04-16",
-          "type": "warning"
-        },
-        {
-          "date": "2026-04-21",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-22",
-          "type": "success"
-        }
-      ],
       "days": {
         "workingDays": 21,
         "paidLeaveDays": 2
@@ -1071,20 +731,6 @@
       "employment-type": "A",
       "qualifications": "介護職員初任者研修修了者・居宅介護職員初任者研修修了者",
       "work-place": "特別養護老人ホーム宮崎",
-      "schedule": [
-        {
-          "date": "2026-04-15",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-22",
-          "type": "warning"
-        },
-        {
-          "date": "2026-04-28",
-          "type": "success"
-        }
-      ],
       "days": {
         "workingDays": 16,
         "paidLeaveDays": 0
@@ -1138,20 +784,6 @@
       "employment-type": "A",
       "qualifications": "介護職員初任者研修修了者・居宅介護職員初任者研修修了者",
       "work-place": "特別養護老人ホーム鹿児島",
-      "schedule": [
-        {
-          "date": "2026-04-14",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-22",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-23",
-          "type": "success"
-        }
-      ],
       "days": {
         "workingDays": 21,
         "paidLeaveDays": 2
@@ -1199,28 +831,6 @@
       "employment-type": "A",
       "qualifications": "訪問介護員3級",
       "work-place": "特別養護老人ホーム佐賀",
-      "schedule": [
-        {
-          "date": "2026-04-17",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-21",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-22",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-24",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-25",
-          "type": "success"
-        }
-      ],
       "days": {
         "workingDays": 18,
         "paidLeaveDays": 4
@@ -1274,20 +884,6 @@
       "employment-type": "A",
       "qualifications": "居宅介護従業者養成研修3級",
       "work-place": "特別養護老人ホーム沖縄",
-      "schedule": [
-        {
-          "date": "2026-04-13",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-14",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-30",
-          "type": "success"
-        }
-      ],
       "days": {
         "workingDays": 16,
         "paidLeaveDays": 5
@@ -1335,36 +931,6 @@
       "employment-type": "A",
       "qualifications": "無資格",
       "work-place": "特別養護老人ホーム山口",
-      "schedule": [
-        {
-          "date": "2026-04-13",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-14",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-15",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-22",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-24",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-25",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-30",
-          "type": "warning"
-        }
-      ],
       "days": {
         "workingDays": 15,
         "paidLeaveDays": 3
@@ -1418,36 +984,6 @@
       "employment-type": "A",
       "qualifications": "重度訪問介護従業者養成研修",
       "work-place": "特別養護老人ホーム沖縄",
-      "schedule": [
-        {
-          "date": "2026-04-15",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-16",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-21",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-22",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-24",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-28",
-          "type": "success"
-        },
-        {
-          "date": "2026-04-30",
-          "type": "success"
-        }
-      ],
       "days": {
         "workingDays": 22,
         "paidLeaveDays": 0

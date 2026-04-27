@@ -1,5 +1,3 @@
-// staffSheet.tsx
-// トイレ後、このページをcsvでダウンロードできるボタンを作る
 import dayjs from "dayjs"
 import data from '../../../../backend/data/users/base.json'
 import { useState } from "react";

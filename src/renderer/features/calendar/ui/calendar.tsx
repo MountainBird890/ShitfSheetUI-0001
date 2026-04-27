@@ -19,22 +19,25 @@ const CalendarInner: React.FC = () => {
   const { search, setSearch } = handleSearch();
   const { openEditor } = useEditor(); // ← ContextからopenEditorを取得
 
-  const getListData = (value: Dayjs) => {
-    const targetDate = value.format('YYYY-MM-DD');
-    return data.flatMap((staff) =>
-      staff.schedule
-        .filter((s) => s.date === targetDate)
-        .map((s) => ({
-          type: s.type,
-          content: staff.name,
-          staffId: staff.staffId,
-          dateKey: targetDate,
-          staffRecord: staff, // StaffRecordをそのまま渡す
-        }))
-    ).filter((item) =>
-      !search || item.content.includes(search)
-    );
-  };
+const getListData = (value: Dayjs) => {
+  const targetDate = value.format('YYYY-MM-DD');
+
+  return data.flatMap((staff) => {
+    const detail = staff.details?.[targetDate];
+    if (!detail) return [];
+
+    // details には type がないので、表示上の badge タイプを決める
+    // ここでは固定で "success" にするか、必要なら別ロジックで判定
+    return [{
+      content: staff.name,
+      staffId: staff.staffId,
+      dateKey: targetDate,
+      staffRecord: staff,
+    }];
+  }).filter((item) =>
+    !search || item.content.includes(search)
+  );
+};
 
   const visibleData = data.flatMap((staff) =>
   Object.entries(staff.details ?? {}).map(([date, detail]) => ({
@@ -59,10 +62,7 @@ console.log('visibleData:', visibleData)
             onClick={() => openEditor(item.staffRecord, item.dateKey)} // ← staffとdateKeyを渡す
             style={{ cursor: 'pointer' }}
           >
-            <Badge
-              status={item.type as BadgeProps['status']}
-              text={item.content}
-            />
+            <Badge status='processing' text={`${item.content}`} />
           </li>
         ))}
       </ul>

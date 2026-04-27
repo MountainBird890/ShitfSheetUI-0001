@@ -1,16 +1,6 @@
 import { Type } from "@sinclair/typebox";
 import type { Static } from "@sinclair/typebox";
 
-// カレンダー用スケジュール型
-export const ScheduleItemSchema = Type.Object({
-  date: Type.String(), // "2026-04-08"
-  type: Type.Union([
-    Type.Literal("warning"),
-    Type.Literal("success"),
-    Type.Literal("error"),
-  ]), // 現在の勤務状態
-});
-
 export const ScheduleDetailSchema = Type.Object({
   user:  Type.String(), // 利用者名
   start: Type.String(), // サービス開始時間
@@ -21,9 +11,6 @@ export const ScheduleDetailSchema = Type.Object({
 export const StaffWorkSchema = Type.Object({
   staffId: Type.String(),// 職員ID
   name: Type.String(),// 職員名
-
-  // ↓ 追加
-  schedule: Type.Array(ScheduleItemSchema),
 
   days: Type.Object({
     workingDays: Type.Number(),// 労働日数
@@ -64,6 +51,5 @@ export const StaffWorkSchema = Type.Object({
   ),
 });
 
-export type ScheduleItem = Static<typeof ScheduleItemSchema>;
 export type StaffWork = Static<typeof StaffWorkSchema>;
 export type ScheduleDetail = Static<typeof ScheduleDetailSchema> 
