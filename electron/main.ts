@@ -1,17 +1,19 @@
-import { app, BrowserWindow } from "electron";
+import electron from "electron";
 import { spawn } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+
+const { app, BrowserWindow } = electron;
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 let serverProcess: ReturnType<typeof spawn> | null = null;
 
 function startServer() {
-  // Fastifyサーバーを子プロセスとして起動
-  serverProcess = spawn("node", [
-    path.join(__dirname, "../src/backend/domain/services/calenadr/server.ts")
-  ], { stdio: "inherit" });
+  serverProcess = spawn("npx", [
+    "tsx",
+    path.join(__dirname, "../src/backend/domain/utils/server.ts")
+  ], { stdio: "inherit", shell: true });
 }
 
 function createWindow() {
@@ -24,9 +26,10 @@ function createWindow() {
     },
   });
 
-  // 開発時はViteのdev server、本番はビルド済みHTMLを開く
-  if (process.env.NODE_ENV === "development") {
-    win.loadURL("http://localhost:5173");
+  const isDev = process.argv.includes("--dev") || !app.isPackaged;
+
+  if (isDev) {
+    win.loadURL("http://localhost:5174");
     win.webContents.openDevTools();
   } else {
     win.loadFile(path.join(__dirname, "../dist/index.html"));

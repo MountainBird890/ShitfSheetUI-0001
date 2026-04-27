@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "server": "npx tsx src/backend/domain/utils/server.ts",
     "server:watch": "npx tsx watch src/backend/domain/utils/server.ts",
-    "electron:dev": "concurrently \"npm run dev\" \"npm run server:watch\" \"wait-on http://localhost:5173 && npx tsx electron/main.ts\"",
+    "electron:dev": "concurrently \"npm run dev\" \"npm run server:watch\" \"wait-on http://localhost:5174 && electron electron/main.ts\"",
     "electron:build": "npm run build && electron-builder"
   },
     "build": {
