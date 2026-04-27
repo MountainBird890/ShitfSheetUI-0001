@@ -7,12 +7,13 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:server": "tsc -p tsconfig.server.json",
     "lint": "eslint .",
     "preview": "vite preview",
     "server": "npx tsx src/backend/domain/utils/server.ts",
     "server:watch": "npx tsx watch src/backend/domain/utils/server.ts",
     "electron:dev": "concurrently \"npm run dev\" \"npm run server:watch\" \"wait-on http://localhost:5173 && electron electron/main.ts\"",
-    "electron:build": "npm run build && electron-builder"
+    "electron:build": "npm run build && npm run build:server && electron-builder"
   },
   "build": {
     "appId": "com.myapp.care",
@@ -21,9 +22,10 @@
       "output": "release"
     },
     "files": [
-      "dist/**/*",
-      "electron/**/*",
-      "src/backend/**/*"
+  "dist/**/*",
+  "electron/**/*",
+  "src/backend/**/*",
+  "dist-server/**/*"
     ],
     "linux": {
       "target": "AppImage"

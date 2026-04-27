@@ -10,10 +10,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 let serverProcess: ReturnType<typeof spawn> | null = null;
 
 function startServer() {
-  serverProcess = spawn("npx", [
-    "tsx",
-    path.join(__dirname, "../src/backend/domain/utils/server.ts")
-  ], { stdio: "inherit", shell: true });
+  const serverPath = app.isPackaged
+    ? path.join(process.resourcesPath, "dist-server/src/backend/domain/utils/server.js")
+    : path.join(__dirname, "../src/backend/domain/utils/server.ts");
+
+  const command = app.isPackaged ? "node" : "npx";
+  const args = app.isPackaged ? [serverPath] : ["tsx", serverPath];
+
+  serverProcess = spawn(command, args, { stdio: "inherit", shell: true });
 }
 
 function createWindow() {
