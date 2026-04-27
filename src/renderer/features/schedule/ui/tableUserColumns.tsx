@@ -62,6 +62,7 @@ export default function UserColumn(value: Dayjs) {
     <Table<any>
       columns={weekColumns}
       dataSource={data.basedata}
+      rowKey="staffId"
       bordered
       size="middle"
       scroll={{ x: 'max-content', y: 'max-content'}}
