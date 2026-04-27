@@ -1,8 +1,9 @@
 import sharp from "sharp";
 
-sharp("public/icon.svg")
+// まずSVG→PNGに変換
+await sharp("public/icon.svg")
   .resize(256, 256)
-  .toFile("public/icon.ico", (err, info) => {
-    if (err) console.error(err);
-    else console.log("変換成功!", info);
-  });
+  .png()
+  .toFile("public/icon.png");
+
+console.log("PNG変換完了！次にicoに変換します");
