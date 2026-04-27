@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "npx tsx src/backend/domain/utils/server.ts",
+    "server:watch": "npx tsx watch src/backend/domain/utils/server.ts"
   },
   "dependencies": {
     "@ant-design/icons": "~6.1.1",
