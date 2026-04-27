@@ -14,7 +14,7 @@
     "electron:dev": "concurrently \"npm run dev\" \"npm run server:watch\" \"wait-on http://localhost:5173 && electron electron/main.ts\"",
     "electron:build": "npm run build && electron-builder"
   },
-    "build": {
+  "build": {
     "appId": "com.myapp.care",
     "productName": "介護勤務管理",
     "directories": {
@@ -34,15 +34,17 @@
     "win": {
       "target": {
         "target": "nsis",
-        "arch": ["x64"]
+        "arch": [
+          "x64"
+        ]
       },
       "icon": "public/icon.ico"
     },
-      "nsis": {
-    "oneClick": false,
-    "allowToChangeInstallationDirectory": true,
-    "language": "1041"
-  }
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "language": "1041"
+    }
   },
   "dependencies": {
     "@ant-design/icons": "~6.1.1",
@@ -71,6 +73,7 @@
     "globals": "^16.5.0",
     "nodemon": "^3.1.14",
     "rollup": "^4.60.1",
+    "sharp": "^0.34.5",
     "ts-node": "^10.9.2",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.58.2",
