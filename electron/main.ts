@@ -41,13 +41,13 @@ function createWindow() {
     },
   });
 
-  const isDev = process.argv.includes("--dev") || !app.isPackaged;
+  const isDev = !app.isPackaged;
 
   if (isDev) {
     win.loadURL("http://localhost:5173");
     win.webContents.openDevTools();
   } else {
-    win.loadFile(path.join(process.resourcesPath, "app.asar/dist/index.html"));
+    win.loadFile(path.join(__dirname, "../../dist/index.html"));
   }
 }
 
