@@ -5,7 +5,9 @@
     "moduleResolution": "bundler",
     "outDir": "dist-server",
     "skipLibCheck": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "noImplicitAny": false,
+    "strict": false
   },
   "include": [
     "src/backend/domain/utils/server.ts",
