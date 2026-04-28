@@ -1,4 +1,4 @@
-import { HomeOutlined, CheckOutlined, CheckSquareOutlined, UserAddOutlined, UserDeleteOutlined } from '@ant-design/icons';
+import { HomeOutlined, CheckOutlined, CheckSquareOutlined, UserAddOutlined, UserDeleteOutlined, CarryOutOutlined, CalendarOutlined, DatabaseOutlined , InfoCircleOutlined } from '@ant-design/icons';
 import { Layout, Menu, type MenuProps} from 'antd';
 import { Link, Outlet } from 'react-router-dom';
 
@@ -8,29 +8,31 @@ export default function SideBar(){
     const categories:MenuProps['items'] = [
     {
         key: 'main1',
-        label: <Link to="/shift">リスト</Link>,
-        icon: <HomeOutlined />
+        label: <Link to="/shift">基本情報</Link>,
+        icon: <InfoCircleOutlined />
+    },
+        {
+        key: 'main3',
+        label: <Link to="/calendar">予約スケジュール</Link>,
+        icon: <CarryOutOutlined />
+    },
+        {
+        key: 'main5',
+        label: <Link to="/sheet">個別スケジュール</Link>,
+        icon: <CalendarOutlined />
     },
     {
         key: 'main2',
-        label:  <Link to="/schedule">スケジュール表</Link>,
-        icon: <CheckOutlined />
+        label:  <Link to="/schedule">スケジュール一覧</Link>,
+        icon: <DatabaseOutlined />
     },
-    {
-        key: 'main3',
-        label: <Link to="/calendar">カレンダー</Link>,
-        icon: <CheckSquareOutlined />
-    },
+
         {
         key: 'main4',
         label: <Link to="/kinmu">勤務形態</Link>,
         icon: <UserAddOutlined />
     },
-    {
-        key: 'main5',
-        label: <Link to="/sheet">シフト一覧</Link>,
-        icon: <UserDeleteOutlined />
-    },
+
 ];
 
 const { Sider, Content } = Layout;
