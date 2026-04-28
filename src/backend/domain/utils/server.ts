@@ -244,7 +244,8 @@ const CsvBodySchema = Type.Array(Type.Object({
 server.post("/api/download/csv", {
   schema: { body: CsvBodySchema },
 }, async (request, reply) => {
-  const rows = request.body as any;
+  const body: unknown = request.body;
+  const rows = body as any;
   const csv  = [
     "staffId,name,date,type",
     ...rows.map((r: any) => `"${r.staffId}","${r.name}","${r.date}","${r.type}"`),
