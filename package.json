@@ -28,6 +28,7 @@
     "node_modules/tsx/**/*",
     "node_modules/@esbuild/**/*"
   ],
+  "asar": false,
   "win": {
     "target": {
       "target": "portable",
