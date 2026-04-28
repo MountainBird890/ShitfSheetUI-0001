@@ -13,7 +13,7 @@
     "server": "npx tsx src/backend/domain/utils/server.ts",
     "server:watch": "npx tsx watch src/backend/domain/utils/server.ts",
     "electron:dev": "concurrently \"npm run dev\" \"npm run server:watch\" \"wait-on http://localhost:5173 && electron electron/main.ts\"",
-    "electron:build": "npm run build && npm run build:server && electron-builder"
+    "electron:build": "npm run build && electron-builder"
   },
   "build": {
     "appId": "com.myapp.care",
@@ -25,7 +25,9 @@
   "dist/**/*",
   "electron/**/*",
   "src/backend/**/*",
-  "dist-server/**/*"
+  "node_modules/.bin/tsx",
+  "node_modules/tsx/**/*",
+  "node_modules/@esbuild/**/*"
     ],
     "linux": {
       "target": "AppImage"
