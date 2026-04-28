@@ -7,7 +7,8 @@ let serverProcess = null;
 
 function startServer() {
   const base = app.isPackaged ? process.resourcesPath : path.join(__dirname, "..");
-  const tsxPath = path.join(base, "node_modules/.bin/tsx");
+  const tsxBin = process.platform === "win32" ? "tsx.cmd" : "tsx";
+  const tsxPath = path.join(base, "node_modules/.bin", tsxBin);
   const serverPath = path.join(base, "src/backend/domain/utils/server.ts");
 
   const logPath = path.join(app.getPath("userData"), "debug.log");
