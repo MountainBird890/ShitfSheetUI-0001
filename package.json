@@ -4,46 +4,39 @@
   "version": "0.0.0",
   "type": "module",
   "main": "electron/main.ts",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "build:server": "tsc -p tsconfig.server.json",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "server": "npx tsx src/backend/domain/utils/server.ts",
-    "server:watch": "npx tsx watch src/backend/domain/utils/server.ts",
-    "electron:dev": "concurrently \"npm run dev\" \"npm run server:watch\" \"wait-on http://localhost:5173 && electron electron/main.ts\"",
-    "electron:build": "npm run build && electron-builder"
+"scripts": {
+  "dev": "vite",
+  "build": "tsc -b && vite build",
+  "lint": "eslint .",
+  "preview": "vite preview",
+  "server": "npx tsx src/backend/domain/utils/server.ts",
+  "server:watch": "npx tsx watch src/backend/domain/utils/server.ts",
+  "electron:dev": "concurrently \"npm run dev\" \"npm run server:watch\" \"wait-on http://localhost:5173 && electron electron/main.ts\"",
+  "electron:build": "npm run build && electron-builder"
+},
+"build": {
+  "appId": "com.myapp.care",
+  "productName": "介護勤務管理",
+  "directories": {
+    "output": "release"
   },
-  "build": {
-    "appId": "com.myapp.care",
-    "productName": "介護勤務管理",
-    "directories": {
-      "output": "release"
+  "files": [
+    "dist/**/*",
+    "electron/**/*",
+    "src/backend/**/*",
+    "node_modules/.bin/tsx",
+    "node_modules/tsx/**/*",
+    "node_modules/@esbuild/**/*"
+  ],
+  "win": {
+    "target": {
+      "target": "portable",
+      "arch": ["x64"]
     },
-    "files": [
-  "dist/**/*",
-  "electron/**/*",
-  "src/backend/**/*",
-  "node_modules/.bin/tsx",
-  "node_modules/tsx/**/*",
-  "node_modules/@esbuild/**/*"
-    ],
-    "linux": {
-      "target": "AppImage"
-    },
-    "mac": {
-      "target": "dmg"
-    },
-    "win": {
-      "target": {
-        "target": "portable",
-        "arch": ["x64"]
-      },
-      "icon": "public/icon.ico",
-      "signAndEditExecutable": false
-    }
-  },
+    "icon": "public/icon.ico",
+    "signAndEditExecutable": false
+  }
+},
   "dependencies": {
     "@ant-design/icons": "~6.1.1",
     "@fastify/cors": "^11.2.0",
@@ -74,6 +67,7 @@
     "rollup": "^4.60.1",
     "sharp": "^0.34.5",
     "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.58.2",
     "vite": "^8.0.8",
