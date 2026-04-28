@@ -2,6 +2,7 @@ import electron from "electron";
 import { spawn } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import fs from "node:fs";
 
 const { app, BrowserWindow } = electron;
 
@@ -10,14 +11,24 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 let serverProcess: ReturnType<typeof spawn> | null = null;
 
 function startServer() {
-  const serverPath = app.isPackaged
-    ? path.join(process.resourcesPath, "dist-server/src/backend/domain/utils/server.js")
-    : path.join(__dirname, "../src/backend/domain/utils/server.ts");
+  const serverPath = path.join(
+    app.isPackaged ? process.resourcesPath : path.join(__dirname, ".."),
+    "src/backend/domain/utils/server.ts"
+  );
 
-  const command = app.isPackaged ? "node" : "npx";
-  const args = app.isPackaged ? [serverPath] : ["tsx", serverPath];
+  const tsxPath = path.join(
+    app.isPackaged ? process.resourcesPath : path.join(__dirname, ".."),
+    "node_modules/.bin/tsx"
+  );
 
-  serverProcess = spawn(command, args, { stdio: "inherit", shell: true });
+  // ログファイルに書き出す
+  const logPath = path.join(app.getPath("userData"), "debug.log");
+  fs.writeFileSync(logPath, `serverPath: ${serverPath}\ntsxPath: ${tsxPath}\n`);
+
+  serverProcess = spawn(tsxPath, [serverPath], {
+    stdio: "inherit",
+    shell: true,
+  });
 }
 
 function createWindow() {
