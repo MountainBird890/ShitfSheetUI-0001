@@ -32,7 +32,7 @@ function createWindow() {
   if (app.isPackaged) {
     win.loadFile(path.join(__dirname, "../dist/index.html"));
   } else {
-    win.loadFile("dist/index.html")
+    loadURL("http://localhost:5173")
   }
 }
 
