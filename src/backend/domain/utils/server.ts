@@ -3,7 +3,6 @@ import { Type, type Static } from "@sinclair/typebox";
 import type { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 
 // ---- Schemas (TypeBox) ------------------------------------------
 
@@ -298,6 +297,55 @@ server.get<{ Params: Static<typeof CalcParamsSchema> & { staffId: string } }>(
     if (!staff) return reply.status(404).send({ message: "Staff not found" });
 
     return reply.send(calcMonthlySummary(staff, year, month));
+  }
+);
+
+// ---- POST /api/staff  — 職員新規追加（staffRoutes から統合） ------------------------------------------------------
+const StaffBodySchema = Type.Object({
+  name:              Type.String({ minLength: 1 }),
+  position:          Type.String({ minLength: 1 }),
+  "employment-type": Type.String({ minLength: 1 }),
+  qualifications:    Type.String(),
+  "work-place":      Type.String({ minLength: 1 }),
+});
+
+server.post<{ Body: Static<typeof StaffBodySchema> }>(
+  "/api/staff",
+  { schema: { body: StaffBodySchema } },
+  async (request, reply) => {
+    const data = await readData();
+
+        // staffId末番+1
+    const maxId = (data.basedata as any[]).reduce(
+      (acc: number, s) => Math.max(acc, Number(s.staffId)),
+      0
+    );
+    const newStaffId = String(maxId + 1);
+
+    const newStaff = {
+      staffId:           newStaffId,
+      name:              request.body.name,
+      position:          request.body.position,
+      "employment-type": request.body["employment-type"],
+      qualifications:    request.body.qualifications,
+      "work-place":      request.body["work-place"],
+      days:    { workingDays: 0, paidLeaveDays: 0 },
+      hours:   { workingHours: 0, nightHours: 0, morningEveningHours: 0,
+                 overtimeHours: 0, emergencyPrevHours: 0,
+                 emergencySameDayHours: 0, careTrainingHours: 0 },
+      counts:  { travelCount: 0 },
+      amounts: { drivingAllowance: 0, specialAllowance1: 0, specialAllowance2: 0,
+                 trainingAllowance: 0, bathingAllowance: 0, excretionAllowance: 0,
+                 lodgingAllowance: 0, longStayAllowance: 0, commutingAllowance: 0,
+                 businessTripDay: 0, businessTripStay: 0, yearEndAllowance: 0,
+                 specialBonus: 0 },
+      details: {},
+    };
+
+        data.basedata.push(newStaff as any);
+    await writeData(data);
+
+    return reply.status(201).send({ ok: true, staffId: newStaffId });
   }
 );
 
