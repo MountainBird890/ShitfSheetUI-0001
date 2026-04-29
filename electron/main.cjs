@@ -40,7 +40,7 @@ function createWindow() {
   win.webContents.openDevTools();
 
   if (app.isPackaged) {
-     win.loadFile(path.join(__dirname, "dist/index.html"));
+     win.loadURL(`file://${path.join(__dirname, "../dist/index.html").replace(/\\/g, "/")}`);
   } else {
     win.loadURL("http://localhost:5173")
   }
