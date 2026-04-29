@@ -1,6 +1,7 @@
 import { Button } from "antd";
 import { setAdd } from "../ui/addRow";
-import SetTable from "./setTable";
+import UserColumn from "../ui/setTable";
+import dayjs from "dayjs";
 
 export default function Shift(){
 
@@ -8,7 +9,7 @@ export default function Shift(){
      <div className="layout">
     <div className="list">
         <Button onClick={setAdd}>行を追加</Button>
-        <SetTable />
+        <UserColumn value={dayjs()} />
     </div>
     </div>
   )
