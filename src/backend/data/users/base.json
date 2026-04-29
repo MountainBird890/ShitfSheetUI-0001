@@ -1029,6 +1029,46 @@
           "type": "生活"
         }
       }
+    },
+    {
+      "staffId": "21",
+      "name": "北海道太郎",
+      "position": "管理者",
+      "employment-type": "A",
+      "qualifications": "介護福祉士",
+      "work-place": "特別養護老人ホームほっかいどう",
+      "days": {
+        "workingDays": 0,
+        "paidLeaveDays": 0
+      },
+      "hours": {
+        "workingHours": 0,
+        "nightHours": 0,
+        "morningEveningHours": 0,
+        "overtimeHours": 0,
+        "emergencyPrevHours": 0,
+        "emergencySameDayHours": 0,
+        "careTrainingHours": 0
+      },
+      "counts": {
+        "travelCount": 0
+      },
+      "amounts": {
+        "drivingAllowance": 0,
+        "specialAllowance1": 0,
+        "specialAllowance2": 0,
+        "trainingAllowance": 0,
+        "bathingAllowance": 0,
+        "excretionAllowance": 0,
+        "lodgingAllowance": 0,
+        "longStayAllowance": 0,
+        "commutingAllowance": 0,
+        "businessTripDay": 0,
+        "businessTripStay": 0,
+        "yearEndAllowance": 0,
+        "specialBonus": 0
+      },
+      "details": {}
     }
   ]
 }

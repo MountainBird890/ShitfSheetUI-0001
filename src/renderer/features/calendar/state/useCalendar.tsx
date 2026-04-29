@@ -143,7 +143,6 @@ export function HandleScheduleEditor({ children }: { children: React.ReactNode }
     updated: ScheduleEntry,
     updatedName: string
   ) => {
-    // ここに保存ロジック（API呼び出しなど）を書く。形式はconst res = await fetch()
 
 const res = await fetch(`/api/staff/${staffId}/schedule/${dateKey}`, {
   method: 'PUT',
@@ -187,4 +186,67 @@ export function DlState({children} : {children: ReactNode}){
         </contextDl.Provider>
     )
 
+}
+
+
+
+
+
+// addNewPlan.tsxで使用。
+interface AddContextValue {
+  open: boolean;
+  staff: StaffRecord | null;
+  dateKey: string | null;
+  openEditor: (staff: StaffRecord, dateKey: string) => void;
+  closeEditor: () => void;
+  handleSave: (staffId: string, dateKey: string, updated: ScheduleEntry, updatedName: string) => void;
+}
+
+const AddPlanContext = createContext<AddContextValue | null>(null);
+
+// カスタムフック
+export function useAdd() {
+  const ctx = useContext(AddPlanContext);
+  if (!ctx) throw new Error("useAdd must be used within HandleAddNewPlan");
+  return ctx;
+}
+
+// HandleEditor を Context Provider に変更
+export function HandleAddNewPlan({ children }: { children: React.ReactNode }) {
+  const [open, setOpen] = useState(false);
+  const [staff, setStaff] = useState<StaffRecord | null>(null);
+  const [dateKey, setDateKey] = useState<string | null>(null);
+
+  const openEditor = (staff: StaffRecord, dateKey: string) => {
+    setStaff(staff);
+    setDateKey(dateKey);
+    setOpen(true);
+  };
+
+  const closeEditor = () => setOpen(false);
+
+  const handleSave = async(
+    staffId: string,
+    dateKey: string,
+    updated: ScheduleEntry,
+    updatedName: string
+  ) => {
+
+const res = await fetch(`/api/staff/${staffId}/schedule/${dateKey}`, {
+  method: 'PUT',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ name: updatedName, entry: updated }),
+});
+    if(!res.ok){
+        throw new Error('保存に失敗しました');
+    };
+    console.log('保存完了');
+    closeEditor();
+  };
+
+  return (
+    <AddPlanContext.Provider value={{ open, staff, dateKey, openEditor, closeEditor, handleSave }}>
+      {children}
+    </AddPlanContext.Provider>
+  );
 }

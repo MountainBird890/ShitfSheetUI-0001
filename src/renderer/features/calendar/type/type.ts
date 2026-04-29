@@ -1,5 +1,5 @@
-import type { Dispatch } from "react";
 import type React from "react"
+import { Dayjs } from "dayjs";
 
 type calendarContext = {
     calendar: string | undefined,
@@ -38,3 +38,27 @@ type downloadCSVContextType =  {
 }
 
 export type {downloadCSVContextType}
+
+
+// ---- addNewPlanで使う -------------------------------------------------------
+
+export interface ScheduleEntry {
+  user: string;
+  start: string; // ISO datetime string e.g. "2026-04-25T10:00"
+  end: string;
+  type: string;
+}
+
+export interface StaffRecord {
+  staffId: string;
+  name: string;
+  position?: string;
+  details?: Record<string, ScheduleEntry>;  // ← detailsにまとめる
+}
+
+export interface EditFormValues {
+  name: string;
+  user: string;
+  dateRange: [Dayjs, Dayjs];
+  type: string;
+}
