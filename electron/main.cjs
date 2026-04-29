@@ -5,8 +5,6 @@ const fs = require("node:fs");
 
 let serverProcess = null;
 
-// 今日はserver.tsを本番環境用に書き換えて、serverProcessをserver.tsと適合させる。また、startServerのパスなどが怪しいからここを確認する。
-
 function startServer() {
   const base = app.isPackaged ? process.resourcesPath : path.join(__dirname, "..");
   const tsxBin = process.platform === "win32" ? "tsx.cmd" : "tsx";
