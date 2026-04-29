@@ -16,7 +16,15 @@ function startServer() {
   const logPath = path.join(app.getPath("userData"), "debug.log");
   fs.writeFileSync(logPath, `base: ${base}\ntsxPath: ${tsxPath}\nserverPath: ${serverPath}\n`);
 
-  serverProcess = spawn(tsxPath, [serverPath], { stdio: "inherit", shell: true });
+  serverProcess = spawn(tsxPath, [serverPath], {
+  stdio: "inherit",
+  shell: true,
+  env: {
+    ...process.env,
+    NODE_ENV: "production",
+    RESOURCES_PATH: process.resourcesPath,
+  }
+});
 }
 
 function createWindow() {
