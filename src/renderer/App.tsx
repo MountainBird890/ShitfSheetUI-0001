@@ -4,11 +4,10 @@ import Schedule from "./features/schedule/pages/SchedulePage";
 import KimuKeitai from "./features/Kinmu/pages/kinmupage";
 import Calendar from "./features/calendar/pages/calendarpage";
 import { Sheet } from "./features/shift/pages/shiftpage";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter as Routes, Route } from 'react-router-dom';
 
 export default function App(){
     return(
-        <BrowserRouter>
         <Routes>
             <Route path="/" element={<SideBar />}>
             <Route path="/shift" element={<Shift />}/>
@@ -18,6 +17,5 @@ export default function App(){
             <Route path="/sheet" element={<Sheet />}/>
             </Route>
         </Routes>
-        </BrowserRouter>
     );
 };
