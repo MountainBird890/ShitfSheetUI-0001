@@ -1,5 +1,5 @@
 import type { BadgeProps, CalendarProps } from 'antd';
-import { Badge, Calendar, Input } from 'antd';
+import { Badge, Calendar, Select } from 'antd';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import 'dayjs/locale/ja';
@@ -13,44 +13,47 @@ import { DlState } from '../state/useCalendar';
 
 dayjs.locale('ja');
 
-// カレンダー本体（Context内で使う）
 const CalendarInner: React.FC = () => {
   const data = baseData.basedata as unknown as StaffWork[];
   const { search, setSearch } = handleSearch();
-  const { openEditor } = useEditor(); // ← ContextからopenEditorを取得
+  const { openEditor } = useEditor();
 
-const getListData = (value: Dayjs) => {
-  const targetDate = value.format('YYYY-MM-DD');
+  // スタッフ名の選択肢を生成
+  const staffOptions = data.map((staff) => ({
+    value: staff.name,
+    label: staff.name,
+  }));
 
-  return data.flatMap((staff) => {
-    const detail = staff.details?.[targetDate];
-    if (!detail) return [];
+  const getListData = (value: Dayjs) => {
+    const targetDate = value.format('YYYY-MM-DD');
 
-    // details には type がないので、表示上の badge タイプを決める
-    // ここでは固定で "success" にするか、必要なら別ロジックで判定
-    return [{
-      content: staff.name,
-      staffId: staff.staffId,
-      dateKey: targetDate,
-      staffRecord: staff,
-    }];
-  }).filter((item) =>
-    !search || item.content.includes(search)
-  );
-};
+    return data.flatMap((staff) => {
+      const detail = staff.details?.[targetDate];
+      if (!detail) return [];
+
+      return [{
+        content: staff.name,
+        staffId: staff.staffId,
+        dateKey: targetDate,
+        staffRecord: staff,
+      }];
+    }).filter((item) =>
+      !search || item.content.includes(search)
+    );
+  };
 
   const visibleData = data.flatMap((staff) =>
-  Object.entries(staff.details ?? {}).map(([date, detail]) => ({
-    staffId: staff.staffId,
-    name: staff.name,
-    date,
-    type: detail.type,
-  }))
-).filter((item) =>
-  !search || item.name.includes(search)
-)
+    Object.entries(staff.details ?? {}).map(([date, detail]) => ({
+      staffId: staff.staffId,
+      name: staff.name,
+      date,
+      type: detail.type,
+    }))
+  ).filter((item) =>
+    !search || item.name.includes(search)
+  );
 
-console.log('visibleData:', visibleData)
+  console.log('visibleData:', visibleData);
 
   const dateCellRender = (value: Dayjs) => {
     const listData = getListData(value);
@@ -59,7 +62,7 @@ console.log('visibleData:', visibleData)
         {listData.map((item) => (
           <li
             key={`${item.staffId}-${item.dateKey}`}
-            onClick={() => openEditor(item.staffRecord, item.dateKey)} // ← staffとdateKeyを渡す
+            onClick={() => openEditor(item.staffRecord, item.dateKey)}
             style={{ cursor: 'pointer' }}
           >
             <Badge status='processing' text={`${item.content}`} />
@@ -76,18 +79,23 @@ console.log('visibleData:', visibleData)
 
   return (
     <>
-      <Input.Search
-        placeholder="ここで検索"
+      <Select
+        showSearch
+        allowClear
+        placeholder="職員を選択"
         variant="filled"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        onSearch={(q) => setSearch(q)}
+        value={search || undefined}
+        options={staffOptions}
+        onChange={(value) => setSearch(value ?? '')}
+        filterOption={(input, option) =>
+          (option?.label ?? '').includes(input)
+        }
+        style={{ width: 200 }}
       />
       <DlState>
         <DownloadButton data={visibleData} />
       </DlState>
       <Calendar cellRender={cellRender} locale={jaJP} />
-      {/* Modalはここに置かない。ScheduleEditModal自身がModalを持つ */}
       <ScheduleEditModal />
     </>
   );
