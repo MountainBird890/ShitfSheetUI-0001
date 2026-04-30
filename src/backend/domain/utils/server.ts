@@ -349,6 +349,62 @@ server.post<{ Body: Static<typeof StaffBodySchema> }>(
   }
 );
 
+// ---- POST /api/schedule/add  — 予定新規追加 -------------------------
+
+const AddScheduleBodySchema = Type.Object({
+  staffId: Type.String({ minLength: 1 }),
+  dateKey: Type.String({ pattern: "^\\d{4}-\\d{2}-\\d{2}$" }),
+  user:    Type.String({ minLength: 1 }),
+  start:   Type.String({ pattern: "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}$" }),
+  end:     Type.String({ pattern: "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}$" }),
+  type:    Type.String({ minLength: 1 }),
+});
+
+server.post<{ Body: Static<typeof AddScheduleBodySchema> }>(
+  "/api/schedule/add",
+  { schema: { body: AddScheduleBodySchema } },
+  async (request, reply) => {
+    const { staffId, dateKey, user, start, end, type } = request.body;
+
+    const data = await readData();
+    const idx  = data.basedata.findIndex(
+      (s) => (s as Record<string, unknown>).staffId === staffId
+    );
+    if (idx === -1) return reply.status(404).send({ message: "Staff not found" });
+
+    const staff   = data.basedata[idx] as Record<string, unknown>;
+    const details = (staff.details ?? {}) as Record<string, Record<string, string>>;
+    const existing = details[dateKey];
+
+    if (!existing) {
+      // 同日データなし → 通常保存
+      details[dateKey] = { user, start, end, type };
+    } else {
+      // 同日データあり → 既存キーから最大番号を取得して連番追加
+      // user, user-2, user-3... の番号を収集
+      const nums = Object.keys(existing)
+        .map((k) => {
+          const m = k.match(/^user(?:-(\d+))?$/);
+          return m ? (m[1] ? parseInt(m[1]) : 1) : null;
+        })
+        .filter((n): n is number => n !== null);
+
+      const nextNum = Math.max(...nums) + 1;
+      const suffix  = `-${nextNum}`;
+
+      existing[`user${suffix}`]  = user;
+      existing[`start${suffix}`] = start;
+      existing[`end${suffix}`]   = end;
+      existing[`type${suffix}`]  = type;
+    }
+
+    staff.details = details;
+    await writeData(data);
+
+    return reply.status(201).send({ ok: true, staffId, dateKey });
+  }
+);
+
 // ---- Start ------------------------------------------------------
 
 server.listen({ port: 3000, host: "0.0.0.0" }, (err) => {

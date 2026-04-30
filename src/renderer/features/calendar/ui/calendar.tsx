@@ -1,5 +1,5 @@
 import type { BadgeProps, CalendarProps } from 'antd';
-import { Badge, Calendar, Select } from 'antd';
+import { Badge, Calendar, Select, Space } from 'antd';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import 'dayjs/locale/ja';
@@ -10,6 +10,7 @@ import { handleSearch, HandleScheduleEditor, useEditor } from '../state/useCalen
 import ScheduleEditModal from './editer';
 import { DownloadButton } from './downloadCSV';
 import { DlState } from '../state/useCalendar';
+import AddNewPlanModal from './addNewPlan';
 
 dayjs.locale('ja');
 
@@ -79,6 +80,7 @@ const CalendarInner: React.FC = () => {
 
   return (
     <>
+    <Space>
       <Select
         showSearch
         allowClear
@@ -92,6 +94,9 @@ const CalendarInner: React.FC = () => {
         }
         style={{ width: 200 }}
       />
+  <AddNewPlanModal onSuccess={() => window.location.reload()} />
+</Space>
+
       <DlState>
         <DownloadButton data={visibleData} />
       </DlState>
