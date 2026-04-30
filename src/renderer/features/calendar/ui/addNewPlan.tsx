@@ -233,7 +233,7 @@ const AddNewPlanModal: React.FC<Props> = ({ onSuccess }) => {
               rules={[{ required: true, message: "日時を選択してください" }]}
             >
               <RangePicker
-                showTime={{ format: "HH:mm", minuteStep: 15 }}
+                showTime={{ format: "HH:mm", minuteStep: 1 }}
                 format="YYYY/MM/DD HH:mm"
                 locale={locale}
                 size="large"

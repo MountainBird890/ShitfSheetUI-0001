@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { BadgeProps, CalendarProps } from 'antd';
 import { Badge, Calendar, Select, Space } from 'antd';
 import dayjs from 'dayjs';
@@ -11,6 +12,7 @@ import ScheduleEditModal from './editer';
 import { DownloadButton } from './downloadCSV';
 import { DlState } from '../state/useCalendar';
 import AddNewPlanModal from './addNewPlan';
+import CopyScheduleModal from './copySchedule';
 
 dayjs.locale('ja');
 
@@ -18,6 +20,7 @@ const CalendarInner: React.FC = () => {
   const data = baseData.basedata as unknown as StaffWork[];
   const { search, setSearch } = handleSearch();
   const { openEditor } = useEditor();
+  const [currentMonth, setCurrentMonth] = useState(dayjs());
 
   // スタッフ名の選択肢を生成
   const staffOptions = data.map((staff) => ({
@@ -95,12 +98,17 @@ const CalendarInner: React.FC = () => {
         style={{ width: 200 }}
       />
   <AddNewPlanModal onSuccess={() => window.location.reload()} />
+    <CopyScheduleModal
+    currentYear={currentMonth.year()}
+    currentMonth={currentMonth.month() + 1}
+    onSuccess={() => window.location.reload()}
+  />
 </Space>
 
       <DlState>
         <DownloadButton data={visibleData} />
       </DlState>
-      <Calendar cellRender={cellRender} locale={jaJP} />
+      <Calendar cellRender={cellRender} locale={jaJP} onPanelChange={(val) => setCurrentMonth(val)}/>
       <ScheduleEditModal />
     </>
   );

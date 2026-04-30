@@ -405,6 +405,64 @@ server.post<{ Body: Static<typeof AddScheduleBodySchema> }>(
   }
 );
 
+// ---- POST /api/schedule/copy  — 月コピー -------------------------
+
+const CopyScheduleBodySchema = Type.Object({
+  fromYear:  Type.Integer({ minimum: 2000, maximum: 2100 }),
+  fromMonth: Type.Integer({ minimum: 1,    maximum: 12   }),
+  toYear:    Type.Integer({ minimum: 2000, maximum: 2100 }),
+  toMonth:   Type.Integer({ minimum: 1,    maximum: 12   }),
+});
+
+server.post<{ Body: Static<typeof CopyScheduleBodySchema> }>(
+  "/api/schedule/copy",
+  { schema: { body: CopyScheduleBodySchema } },
+  async (request, reply) => {
+    const { fromYear, fromMonth, toYear, toMonth } = request.body;
+
+    if (fromYear === toYear && fromMonth === toMonth) {
+      return reply.status(400).send({ message: "コピー元とコピー先が同じ月です" });
+    }
+
+    const fromPrefix = `${fromYear}-${String(fromMonth).padStart(2, "0")}`;
+    const toPrefix   = `${toYear}-${String(toMonth).padStart(2, "0")}`;
+
+    const data = await readData();
+    let copiedDays = 0;
+
+    for (const staffRaw of data.basedata) {
+      const staff   = staffRaw as Record<string, unknown>;
+      const details = (staff.details ?? {}) as Record<string, Record<string, string>>;
+
+      // コピー元の月のエントリを抽出
+      const fromEntries = Object.entries(details).filter(([dateKey]) =>
+        dateKey.startsWith(fromPrefix)
+      );
+
+      for (const [fromDateKey, entry] of fromEntries) {
+        // "YYYY-MM-DD" の日部分だけ取り出してコピー先月に付け替え
+        const day       = fromDateKey.slice(8, 10); // "19" など
+        const toDateKey = `${toPrefix}-${day}`;
+
+        // start/end の日付部分も付け替え（時刻はそのまま）
+        const newEntry: Record<string, string> = {};
+        for (const [k, v] of Object.entries(entry)) {
+          // "2026-04-19T10:00" → "2026-05-19T10:00" に置換
+          newEntry[k] = v.replace(fromPrefix, toPrefix);
+        }
+
+        details[toDateKey] = newEntry;
+        copiedDays++;
+      }
+
+      staff.details = details;
+    }
+
+    await writeData(data);
+    return reply.status(200).send({ ok: true, copiedDays });
+  }
+);
+
 // ---- Start ------------------------------------------------------
 
 server.listen({ port: 3000, host: "0.0.0.0" }, (err) => {
