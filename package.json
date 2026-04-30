@@ -4,40 +4,42 @@
   "version": "0.0.0",
   "type": "module",
   "main": "electron/main.cjs",
-"scripts": {
-  "dev": "vite",
-  "build": "tsc -b && vite build",
-  "lint": "eslint .",
-  "preview": "vite preview",
-  "server": "npx tsx src/backend/domain/utils/server.ts",
-  "server:watch": "npx tsx watch src/backend/domain/utils/server.ts",
-  "electron:dev": "concurrently \"npm run dev\" \"npm run server:watch\" \"wait-on http://localhost:5173 && electron electron/main.cjs\"",
-  "electron:build": "npm run build && electron-builder"
-},
-"build": {
-  "appId": "com.myapp.care",
-  "productName": "介護勤務管理",
-  "directories": {
-    "output": "release"
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "server": "npx tsx src/backend/domain/utils/server.ts",
+    "server:watch": "npx tsx watch src/backend/domain/utils/server.ts",
+    "electron:dev": "concurrently \"npm run dev\" \"npm run server:watch\" \"wait-on http://localhost:5173 && electron electron/main.cjs\"",
+    "electron:build": "npm run build && electron-builder"
   },
-  "files": [
-    "dist/**/*",
-    "electron/**/*",
-    "src/backend/**/*",
-    "node_modules/.bin/tsx",
-    "node_modules/tsx/**/*",
-    "node_modules/@esbuild/**/*"
-  ],
-  "asar": false,
-  "win": {
-    "target": {
-      "target": "portable",
-      "arch": ["x64"]
+  "build": {
+    "appId": "com.myapp.care",
+    "productName": "介護勤務管理",
+    "directories": {
+      "output": "release"
     },
-    "icon": "public/icon.ico",
-    "signAndEditExecutable": false
-  }
-},
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "src/backend/**/*",
+      "node_modules/.bin/tsx",
+      "node_modules/tsx/**/*",
+      "node_modules/@esbuild/**/*"
+    ],
+    "asar": false,
+    "win": {
+      "target": {
+        "target": "portable",
+        "arch": [
+          "x64"
+        ]
+      },
+      "icon": "public/icon.ico",
+      "signAndEditExecutable": false
+    }
+  },
   "dependencies": {
     "@ant-design/icons": "~6.1.1",
     "@fastify/cors": "^11.2.0",
@@ -46,6 +48,7 @@
     "antd": "^6.3.5",
     "dayjs": "^1.11.20",
     "fastify": "^5.8.5",
+    "pdf-lib": "^1.17.1",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-router-dom": "^7.14.1"
