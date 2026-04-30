@@ -190,16 +190,16 @@ const ScheduleEditModal: React.FC = () => {
 
           <Divider style={{ margin: "8px 0 16px" }} />
 
-          {/* 被介護者 */}
+          {/* ご利用者 */}
           <Form.Item
             label={
               <Space size={6}>
                 <UserOutlined style={{ color: "#52c41a" }} />
-                <span style={{ fontWeight: 600 }}>被介護者</span>
+                <span style={{ fontWeight: 600 }}>ご利用者</span>
               </Space>
             }
             name="user"
-            rules={[{ required: true, message: "被介護者を入力してください" }]}
+            rules={[{ required: true, message: "ご利用者を入力してください" }]}
           >
             <Input placeholder="例：加藤" size="large" />
           </Form.Item>
@@ -216,7 +216,7 @@ const ScheduleEditModal: React.FC = () => {
             rules={[{ required: true, message: "日時を選択してください" }]}
           >
             <RangePicker
-              showTime={{ format: "HH:mm", minuteStep: 15 }}
+              showTime={{ format: "HH:mm", minuteStep: 1 }}
               format="YYYY/MM/DD HH:mm"
               locale={locale}
               size="large"
@@ -268,7 +268,7 @@ const ScheduleEditModal: React.FC = () => {
                 return v ? (
                   <Col key={f} span={8}>
                     <Text type="secondary" style={{ fontSize: 11 }}>
-                      {f === "name" ? "職員" : f === "user" ? "被介護者" : "種別"}
+                      {f === "name" ? "職員" : f === "user" ? "ご利用者" : "種別"}
                     </Text>
                     <br />
                     <Text strong style={{ fontSize: 13 }}>
