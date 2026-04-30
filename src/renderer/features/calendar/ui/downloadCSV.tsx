@@ -3,6 +3,7 @@ import { DownloadOutlined } from '@ant-design/icons';
 import { handleDownloadCSV } from "../state/useCalendar";
 import { useState } from "react";
 import { PDFDocument, rgb, StandardFonts, PDFPage } from "pdf-lib";
+import fontkit from "@pdf-lib/fontkit" 
 
 // DownloadButton.tsx
 type VisibleData = {
@@ -43,7 +44,8 @@ export const DownloadButton = ({ data }: Props) => {
     setDlPdf(true)
     try {
       const pdfDoc = await PDFDocument.create()
-      const fontBytes = await fetch('../../../../../public/fonts/NotoSansJP-Regular.ttf').then(r => r.arrayBuffer())
+      pdfDoc.registerFontkit(fontkit) 
+      const fontBytes = await fetch('../../../../../public/fonts/NotoSansJP-VariableFont_wght.ttf').then(r => r.arrayBuffer())
       const font = await pdfDoc.embedFont(fontBytes)
 
       const ROW_HEIGHT = 20
@@ -86,9 +88,7 @@ export const DownloadButton = ({ data }: Props) => {
             height: ROW_HEIGHT,
             color: rgb(0.2, 0.4, 0.8),
           })
-          // pdf-libの標準フォントは日本語非対応のため英語ラベルで代替
-          const headerEn = ['Staff ID', 'Name', 'Date', 'Type']
-          page.drawText(headerEn[i], {
+          page.drawText(header, {
             x: x + 4,
             y: startY + 5,
             size: 10,
@@ -116,9 +116,7 @@ export const DownloadButton = ({ data }: Props) => {
           }
 
           cells.forEach((cell, i) => {
-            // 日本語はASCII範囲外のため英数字のみ描画、日本語はそのまま渡す（文字化けするが構造は保持）
-            const safeText = cell.replace(/[^\x00-\x7F]/g, '?')
-            page.drawText(safeText, {
+            page.drawText(cell, {
               x: cx + 4,
               y: y + 5,
               size: 9,
