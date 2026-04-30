@@ -5,8 +5,9 @@ import { OpenCard, HandleCard } from "../state/useShift";
 import { Dayjs } from "dayjs";
 import { Badge, Calendar, Drawer, Select, Button, type BadgeProps, type CalendarProps } from "antd";
 import jaJP from 'antd/es/calendar/locale/ja_JP';
-import DaysColumns from "./userShift";
+import DaysColumns from "./StaffShift";
 import { downloadCsv } from "../utils/downloadCsv";
+import { DownloadButton } from "./download";
 
 dayjs.locale('ja');
 
@@ -123,6 +124,15 @@ const StaffSheetCalendar: React.FC = () => {
         label: s.name,
     }));
 
+      const visibleData = useData.flatMap((staff) =>
+    Object.entries(staff.details ?? {}).map(([date, detail]) => ({
+      staffId: staff.staffId,
+      name: staff.name,
+      date,
+      type: detail.type,
+    }))
+  )
+
     return (
         <HandleCard>
             <Select
@@ -132,6 +142,7 @@ const StaffSheetCalendar: React.FC = () => {
                 style={{textAlign:"center", width: 200, marginBottom: 16 }}
                 placeholder="職員を選択"
             />
+            <DownloadButton data={visibleData} /> 
             <StaffCalendar staffId={selectedStaffId} />
             <ShiftCard />
         </HandleCard>
