@@ -16,7 +16,7 @@ type Props = { data: VisibleData[] }
 export const DownloadButton = ({ data }: Props) => {
   const [dlCsv, setDlCsv] = useState(false)
   const [dlPdf, setDlPdf] = useState(false)
-
+// staffSheet.tsxのhandleDownload.tsxで取得できるデータをこっちでもCSVとPDFにできるようにする。
   // --- CSV ---
   const handleDownloadCsv = async () => {
     setDlCsv(true)

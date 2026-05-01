@@ -1,8 +1,7 @@
-import dayjs from "dayjs"
+import dayjs, { Dayjs } from "dayjs"
 import data from '../../../../backend/data/users/base.json'
 import { useState } from "react";
 import { OpenCard, HandleCard } from "../state/useShift";
-import { Dayjs } from "dayjs";
 import { Badge, Calendar, Drawer, Select, Button, type BadgeProps, type CalendarProps } from "antd";
 import jaJP from 'antd/es/calendar/locale/ja_JP';
 import DaysColumns from "./StaffShift";
@@ -25,25 +24,12 @@ type StaffWork = {
   details: Record<string, DetailEntry>;
 }
 
-const StaffCalendar: React.FC<{ staffId: string }> = ({ staffId }) => {
+const StaffCalendar: React.FC<{ staffId: string, onMonthChange: (month: Dayjs) => void  }> = ({ staffId, onMonthChange }) => {
     const useData = data.basedata as unknown as StaffWork[];
     const { openCard } = OpenCard();
     const staff = useData.find((s) => s.staffId === staffId);
 
-    const handleDownload = () => {
-        if (!staff) return;
-        const rows = [
-            ['日付', '利用者', '開始', '終了', '種別'],
-            ...Object.entries(staff.details).map(([date, d]) => [
-                date,
-                d.user,
-                dayjs(d.start).format('HH:mm'),
-                dayjs(d.end).format('HH:mm'),
-                d.type,
-            ])
-        ];
-        downloadCsv(`${staff.name}_シフト.csv`, rows);
-    };
+
 
     const getListData = (value: Dayjs) => {
         const targetDate = value.format('YYYY-MM-DD');
@@ -87,14 +73,10 @@ const StaffCalendar: React.FC<{ staffId: string }> = ({ staffId }) => {
     };
 
     return(
-      <>
-      <Button onClick={handleDownload}>CSVダウンロード</Button>
-      <Calendar cellRender={cellRender} locale={jaJP} />
-      </>
+      <Calendar cellRender={cellRender} locale={jaJP} onPanelChange={(val) => onMonthChange(val)} />
     );
 };
 
-// ↓ これを追加
 const ShiftCard: React.FC = () => {
     const { open, staff, dateKey, closeCard } = OpenCard();
 
@@ -118,20 +100,24 @@ const ShiftCard: React.FC = () => {
 const StaffSheetCalendar: React.FC = () => {
     const useData = data.basedata as unknown as StaffWork[];
     const [selectedStaffId, setSelectedStaffId] = useState<string>("1");
+    const [currentMonth, setCurrentMonth] = useState<Dayjs>(dayjs())
 
     const selectOptions = useData.map((s) => ({
         value: s.staffId,
         label: s.name,
     }));
 
-      const visibleData = useData.flatMap((staff) =>
-    Object.entries(staff.details ?? {}).map(([date, detail]) => ({
-      staffId: staff.staffId,
-      name: staff.name,
+ const selectedStaff = useData.find((s) => s.staffId === selectedStaffId)
+
+  const monthPrefix = currentMonth.format("YYYY-MM")
+  const visibleData = Object.entries(selectedStaff?.details ?? {})
+    .filter(([date]) => date.startsWith(monthPrefix))
+    .map(([date, detail]) => ({
+      staffId: selectedStaff?.staffId ?? "",
+      name: detail.user,
       date,
       type: detail.type,
     }))
-  )
 
     return (
         <HandleCard>
@@ -143,7 +129,7 @@ const StaffSheetCalendar: React.FC = () => {
                 placeholder="職員を選択"
             />
             <DownloadButton data={visibleData} /> 
-            <StaffCalendar staffId={selectedStaffId} />
+            <StaffCalendar staffId={selectedStaffId} onMonthChange={(month) => setCurrentMonth(month)} />
             <ShiftCard />
         </HandleCard>
     );
