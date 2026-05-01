@@ -239,18 +239,22 @@ server.put<{
 const CsvBodySchema = Type.Array(Type.Object({
   staffId: Type.String(),
   name:    Type.String(),
+  user:    Type.Optional(Type.String()),  // 既存ボタンにない場合も受け付ける
   date:    Type.String(),
+  start:   Type.Optional(Type.String()),
+  end:     Type.Optional(Type.String()),
   type:    Type.String(),
 }));
 
 server.post("/api/download/csv", {
   schema: { body: CsvBodySchema },
 }, async (request, reply) => {
-  const body: unknown = request.body;
-  const rows = body as any;
-  const csv  = [
-    "staffId,name,date,type",
-    ...rows.map((r: any) => `"${r.staffId}","${r.name}","${r.date}","${r.type}"`),
+  const rows = request.body as any[];
+  const csv = [
+    "staffId,name,user,date,start,end,type",
+    ...rows.map((r: any) =>
+      `"${r.staffId}","${r.name}","${r.user ?? ''}","${r.date}","${r.start ?? ''}","${r.end ?? ''}","${r.type}"`
+    ),
   ].join("\n");
 
   reply
