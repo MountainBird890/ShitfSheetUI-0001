@@ -5,7 +5,6 @@ import { OpenCard, HandleCard } from "../state/useShift";
 import { Badge, Calendar, Drawer, Select, Button, type BadgeProps, type CalendarProps } from "antd";
 import jaJP from 'antd/es/calendar/locale/ja_JP';
 import DaysColumns from "./StaffShift";
-import { downloadCsv } from "../utils/downloadCsv";
 import { DownloadButton } from "./download";
 
 dayjs.locale('ja');
@@ -82,7 +81,7 @@ const ShiftCard: React.FC = () => {
 
     return (
         <Drawer
-            title={staff ? `${staff.name} のシフト詳細` : ''}
+            title={staff ? `${staff.name} さんのシフト詳細` : ''}
             open={open}
             onClose={closeCard}
             size={800}
