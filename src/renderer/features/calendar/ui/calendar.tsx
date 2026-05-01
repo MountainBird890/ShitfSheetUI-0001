@@ -46,16 +46,19 @@ const CalendarInner: React.FC = () => {
     );
   };
 
-  const visibleData = data.flatMap((staff) =>
-    Object.entries(staff.details ?? {}).map(([date, detail]) => ({
-      staffId: staff.staffId,
-      name: staff.name,
-      date,
-      type: detail.type,
-    }))
-  ).filter((item) =>
-    !search || item.name.includes(search)
-  );
+const visibleData = data.flatMap((staff) =>
+  Object.entries(staff.details ?? {}).map(([date, detail]) => ({
+    staffId: staff.staffId,
+    name: staff.name,
+    user: detail.user,
+    date,
+    start: dayjs(detail.start).format("HH:mm"),
+    end: dayjs(detail.end).format("HH:mm"),
+    type: detail.type,
+  }))
+).filter((item) =>
+  !search || item.name.includes(search)
+)
 
   console.log('visibleData:', visibleData);
 
