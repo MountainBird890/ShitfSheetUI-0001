@@ -114,7 +114,7 @@ const visibleData = Object.entries(selectedStaff?.details ?? {})
   .map(([date, detail]) => ({
     staffId: selectedStaff?.staffId ?? "",
     name: selectedStaff?.name ?? "",
-    user: detail.user,       // ← 追加
+    user: detail.user,
     date,
     start: dayjs(detail.start).format("HH:mm"),
     end: dayjs(detail.end).format("HH:mm"),

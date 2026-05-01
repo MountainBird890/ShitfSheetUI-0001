@@ -73,7 +73,10 @@ const UserSheetCalendarInner: React.FC = () => {
       .map(([date, detail]) => ({
         staffId: staff.staffId,
         name: staff.name,
+        user: detail.user,
         date,
+        start: dayjs(detail.start).format("HH:mm"),
+        end: dayjs(detail.end).format("HH:mm"),
         type: detail.type,
       }))
   );
