@@ -7,7 +7,10 @@ import fontkit from "@pdf-lib/fontkit"
 type VisibleData = {
   staffId: string
   name: string
+  user: string
   date: string
+  start: string
+  end: string
   type: string
 }
 

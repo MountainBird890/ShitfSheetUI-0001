@@ -109,14 +109,17 @@ const StaffSheetCalendar: React.FC = () => {
  const selectedStaff = useData.find((s) => s.staffId === selectedStaffId)
 
   const monthPrefix = currentMonth.format("YYYY-MM")
-  const visibleData = Object.entries(selectedStaff?.details ?? {})
-    .filter(([date]) => date.startsWith(monthPrefix))
-    .map(([date, detail]) => ({
-      staffId: selectedStaff?.staffId ?? "",
-      name: detail.user,
-      date,
-      type: detail.type,
-    }))
+const visibleData = Object.entries(selectedStaff?.details ?? {})
+  .filter(([date]) => date.startsWith(monthPrefix))
+  .map(([date, detail]) => ({
+    staffId: selectedStaff?.staffId ?? "",
+    name: selectedStaff?.name ?? "",
+    user: detail.user,       // ← 追加
+    date,
+    start: dayjs(detail.start).format("HH:mm"),
+    end: dayjs(detail.end).format("HH:mm"),
+    type: detail.type,
+  }))
 
     return (
         <HandleCard>
