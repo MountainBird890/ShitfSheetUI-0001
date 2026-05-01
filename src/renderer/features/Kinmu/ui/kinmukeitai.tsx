@@ -53,8 +53,8 @@ interface ApiMonthlySummary {
   morningEveningHours: number;
   careHours:           number;
   careRatio:           number;
-  trainingAllowance:   number;
-  travelAllowance:     number;
+  trainingHours:       number;
+  travelHours:         number;
 }
 
 // ─── 種別カラー（日付セル表示用） ───────────────────────────
@@ -101,16 +101,16 @@ interface SummaryCardsProps { summary: ApiMonthlySummary | undefined }
 
 function SummaryCards({ summary: s }: SummaryCardsProps) {
   if (!s) return <Spin />;
-  const items = [
-    { title: "労働日数",       value: s.workingDays,         suffix: "日" },
-    { title: "労働時間",       value: s.workingHours,         suffix: "h"  },
-    { title: "深夜時間",       value: s.nightHours,           suffix: "h"  },
-    { title: "早朝・夜間時間", value: s.morningEveningHours,  suffix: "h"  },
-    { title: "介護時間",       value: s.careHours,            suffix: "h"  },
-    { title: "介護率",         value: s.careRatio,            suffix: "%"  },
-    { title: "研修手当",       value: s.trainingAllowance,    suffix: "円" },
-    { title: "移動手当",       value: s.travelAllowance,      suffix: "円" },
-  ];
+const items = [
+  { title: "労働日数",       value: s.workingDays,         suffix: "日" },
+  { title: "労働時間",       value: s.workingHours,         suffix: "h"  },
+  { title: "深夜時間",       value: s.nightHours,           suffix: "h"  },
+  { title: "早朝・夜間時間", value: s.morningEveningHours,  suffix: "h"  },
+  { title: "介護時間",       value: s.careHours,            suffix: "h"  },
+  { title: "介護率",         value: s.careRatio,            suffix: "%"  },
+  { title: "研修時間",       value: s.trainingHours,        suffix: "h"  }, // ← 変更
+  { title: "移動時間", value: s.travelHours, suffix: "h" },
+];
   return (
     <Row gutter={[8, 8]} style={{ marginBottom: 8 }}>
       {items.map(it => (
@@ -150,16 +150,14 @@ export default function Kimukeitai({ value }: KimukeitaiProps) {
   const days  = month.daysInMonth();
 
   // 初回のみ：職員一覧を取得
-  useEffect(() => {
-    fetch("http://localhost:3000/api/staff")
-      .then(res => res.json())
-      .then((list: StaffWork[]) =>
-        setStaffList(
-          list.filter(s => s["employment-type"] === "B" || s["employment-type"] === "D")
-        )
-      )
-      .catch(err => console.error("職員一覧fetch失敗:", err));
-  }, []);
+useEffect(() => {
+  fetch("http://localhost:3000/api/staff")
+    .then(res => res.json())
+    .then((list: StaffWork[]) =>
+      setStaffList(list) // ← filterを削除
+    )
+    .catch(err => console.error("職員一覧fetch失敗:", err));
+}, []);
 
   // 月が変わるたびに：月次サマリーを取得
   useEffect(() => {
@@ -178,29 +176,6 @@ export default function Kimukeitai({ value }: KimukeitaiProps) {
   // ─── 固定列 ───────────────────────────────────────────────
 
   const fixedCols: ColumnsType<StaffWork> = [
-    {
-      title: "職種", dataIndex: "position", key: "position",
-      width: 90, fixed: "left", align: "center",
-      render: v => <span style={{ fontSize: 12 }}>{v ?? "-"}</span>,
-    },
-    {
-      title: "勤務形態", dataIndex: "employment-type", key: "emp",
-      width: 80, fixed: "left", align: "center",
-      render: v => <Tag color="blue" style={{ fontSize: 11 }}>{v ?? "-"}</Tag>,
-    },
-    {
-      title: "資格", dataIndex: "qualifications", key: "qual",
-      width: 100, fixed: "left", align: "center",
-      render: v => <span style={{ fontSize: 12 }}>{v ?? "-"}</span>,
-    },
-    {
-      title: "兼務先", key: "workplace",
-      width: 130, fixed: "left", align: "center",
-      render: (_, r) =>
-        r["employment-type"] === "B" || r["employment-type"] === "D"
-          ? <span style={{ fontSize: 11 }}>{r["work-place"] ?? "-"}</span>
-          : "-",
-    },
     {
       title: "職員名", dataIndex: "name", key: "name",
       width: 100, fixed: "left", align: "center",
@@ -248,26 +223,24 @@ export default function Kimukeitai({ value }: KimukeitaiProps) {
         );
       },
     },
-    {
-      title: "研修手当", key: "trainingAllowance",
-      width: 80, fixed: "left", align: "center",
-      render: (_, r) => {
-        const v = summaryMap[r.staffId]?.trainingAllowance ?? 0;
-        return v > 0
-          ? <span style={{ color: "#1677ff", fontWeight: 600 }}>¥{v.toLocaleString()}</span>
-          : "-";
-      },
-    },
-    {
-      title: "移動手当", key: "travelAllowance",
-      width: 80, fixed: "left", align: "center",
-      render: (_, r) => {
-        const v = summaryMap[r.staffId]?.travelAllowance ?? 0;
-        return v > 0
-          ? <span style={{ color: "#52c41a", fontWeight: 600 }}>¥{v.toLocaleString()}</span>
-          : "-";
-      },
-    },
+{
+  title: "研修時間(h)", key: "trainingHours",
+  width: 80, fixed: "left", align: "center",
+  render: (_, r) => {
+    const v = summaryMap[r.staffId]?.trainingHours ?? 0;
+    return v > 0
+      ? <Tag color="blue">{v}h</Tag>
+      : <span style={{ color: "#ccc" }}>0h</span>;
+  },
+},
+{
+  title: "移動時間(h)", key: "travelHours",
+  width: 80, fixed: "left", align: "center",
+  render: (_, r) => {
+      const v = summaryMap[r.staffId]?.travelHours ?? 0;
+  return v > 0 ? <Tag color="green">{v}h</Tag> : <span style={{ color: "#ccc" }}>0h</span>;
+  },
+},
   ];
 
   // ─── 日付列（月初〜月末） ──────────────────────────────────
@@ -333,16 +306,16 @@ export default function Kimukeitai({ value }: KimukeitaiProps) {
   const columns: ColumnsType<StaffWork> = [...fixedCols, ...dateCols];
 
   // 全スタッフ合計（summaryMapから集計）
-  const totals = useMemo(() => {
-    const list = Object.values(summaryMap);
-    return {
-      workingDays:       list.reduce((s, r) => s + r.workingDays,       0),
-      workingHours:      list.reduce((s, r) => s + r.workingHours,      0),
-      careHours:         list.reduce((s, r) => s + r.careHours,         0),
-      trainingAllowance: list.reduce((s, r) => s + r.trainingAllowance, 0),
-      travelAllowance:   list.reduce((s, r) => s + r.travelAllowance,   0),
-    };
-  }, [summaryMap]);
+const totals = useMemo(() => {
+  const list = Object.values(summaryMap);
+  return {
+    workingDays:   list.reduce((s, r) => s + r.workingDays,   0),
+    workingHours:  list.reduce((s, r) => s + r.workingHours,  0),
+    careHours:     list.reduce((s, r) => s + r.careHours,     0),
+    trainingHours: list.reduce((s, r) => s + r.trainingHours, 0),
+    travelHours: list.reduce((s, r) => s + r.travelHours, 0),
+  };
+}, [summaryMap]);
 
   // ─── レンダリング ────────────────────────────────────────
 
@@ -373,8 +346,8 @@ export default function Kimukeitai({ value }: KimukeitaiProps) {
             { label: "総労働日数",  value: totals.workingDays,       suffix: "日" },
             { label: "総労働時間",  value: totals.workingHours,      suffix: "h"  },
             { label: "総介護時間",  value: totals.careHours,         suffix: "h"  },
-            { label: "総研修手当",  value: totals.trainingAllowance, suffix: "円" },
-            { label: "総移動手当",  value: totals.travelAllowance,   suffix: "円" },
+            { label: "総研修時間", value: totals.trainingHours, suffix: "h"  },
+            { label: "総移動時間", value: totals.travelHours, suffix: "h" },
           ].map(it => (
             <Col key={it.label} xs={12} sm={8} md={4}>
               <Statistic title={it.label} value={it.value} suffix={it.suffix} precision={1} />
