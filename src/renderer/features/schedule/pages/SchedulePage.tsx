@@ -1,16 +1,17 @@
-import Date from "../ui/dateSchedule";
-import ToggleSchedule from "../ui/switchSchedules";
-import App from "../ui/downloadButton";
-import UserColumn from "../ui/tableUserColumns";
-import dayjs from "dayjs";
+import { HandleSchedule } from '../state/useSchedule';
+import DateSchedule from '../ui/dateSchedule';
+import ToggleSchedule from '../ui/switchSchedules';
+import DownloadButton from '../ui/downloadButton';
+import UserColumn from '../ui/tableUserColumns';
 
-export default function Schedule(){
-  return(
-    <>
-      <Date />
+export default function Schedule() {
+
+  return (
+    <HandleSchedule>
+      <DateSchedule />
       <ToggleSchedule />
-      <App />
-      <UserColumn value={dayjs()} />
-    </>
-  )
+      <DownloadButton />
+      <UserColumn />
+    </HandleSchedule>
+  );
 }

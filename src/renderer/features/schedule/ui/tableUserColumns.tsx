@@ -2,10 +2,12 @@ import { Table } from "antd";
 import data from "../../../../backend/data/users/base.json";
 import type { ColumnsType } from "antd/es/table";
 import dayjs from "dayjs";
-import type { Dayjs } from "dayjs";
+import { useSchedule } from "../state/useSchedule";
 
-export default function UserColumn({value}:{value: Dayjs}) {
-  const startDate = dayjs().startOf('week');
+export default function UserColumn() {
+  const { currentMonth } = useSchedule(); 
+  const startDate = currentMonth.startOf('month')
+  const daysInMonth = currentMonth.daysInMonth()
 
   const weekColumns: ColumnsType<any> = [
     // 職員列（固定）
@@ -17,7 +19,7 @@ export default function UserColumn({value}:{value: Dayjs}) {
       fixed: 'left',
     },
     // 日付列 × 7（children付き）
-    ...[...Array(31)].map((_, index) => {
+    ...[...Array(daysInMonth)].map((_, index) => {
       const day = startDate.add(index, 'day');
       const dateStr = day.format('YYYY-MM-DD');
 
