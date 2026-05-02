@@ -12,7 +12,8 @@
     "server": "npx tsx src/backend/domain/utils/server.ts",
     "server:watch": "npx tsx watch src/backend/domain/utils/server.ts",
     "electron:dev": "concurrently \"npm run dev\" \"npm run server:watch\" \"wait-on http://localhost:5173 && electron electron/main.cjs\"",
-    "electron:build": "npm run build && electron-builder"
+    "build:server": "esbuild src/backend/domain/utils/server.ts --bundle --platform=node --target=node18 --outfile=resources/server.cjs --external:fsevents",
+    "electron:build": "npm run build && npm run build:server && electron-builder"
   },
   "build": {
     "appId": "com.myapp.care",
@@ -23,10 +24,7 @@
     "files": [
       "dist/**/*",
       "electron/**/*",
-      "src/backend/**/*",
-      "node_modules/.bin/tsx",
-      "node_modules/tsx/**/*",
-      "node_modules/@esbuild/**/*"
+      "resources/server.cjs"
     ],
     "asar": false,
     "win": {
@@ -63,6 +61,7 @@
     "concurrently": "^9.2.1",
     "electron": "^41.3.0",
     "electron-builder": "^26.8.1",
+    "esbuild": "^0.28.0",
     "eslint": "^9.39.4",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.26",
