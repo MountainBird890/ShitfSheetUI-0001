@@ -27,7 +27,7 @@ type UpdateScheduleBody = Static<typeof UpdateScheduleBodySchema>;
 // ---- Data file path ---------------------------------------------
 
 const DATA_PATH = process.env.NODE_ENV === "production"
-  ? path.join(process.env.RESOURCES_PATH ?? "", "src/backend/data/users/base.json")
+  ? path.join(process.env.RESOURCES_PATH ?? "", "data", "users", "base.json")
   : path.resolve(process.cwd(), "src/backend/data/users/base.json");
 
 async function readData(): Promise<{ basedata: Record<string, unknown>[] }> {
