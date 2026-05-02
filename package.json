@@ -39,7 +39,7 @@
   "asar": false,
   "win": {
     "target": {
-      "target": "portable",
+      "target": "dir",
       "arch": ["x64"]
     },
     "icon": "public/icon.ico",
