@@ -152,7 +152,7 @@ export default function Kimukeitai({ value }: KimukeitaiProps) {
 
   // 初回のみ：職員一覧を取得
 useEffect(() => {
-  fetch(apiUrl("http://localhost:3000/api/staff"))
+  fetch(apiUrl("/api/staff"))
     .then(res => res.json())
     .then((list: StaffWork[]) =>
       setStaffList(list) // ← filterを削除
@@ -163,7 +163,7 @@ useEffect(() => {
   // 月が変わるたびに：月次サマリーを取得
   useEffect(() => {
     setLoading(true);
-    fetch(apiUrl(`http://localhost:3000/api/calc/${year}/${mon}`))
+    fetch(apiUrl(`/api/calc/${year}/${mon}`))
       .then(res => res.json())
       .then((data: { summaries: ApiMonthlySummary[] }) => {
         const map: Record<string, ApiMonthlySummary> = {};
