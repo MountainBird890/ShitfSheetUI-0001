@@ -26,7 +26,6 @@ import {
 import dayjs from "dayjs";
 import "dayjs/locale/ja";
 import locale from "antd/es/date-picker/locale/ja_JP";
-import baseData from "../../../../backend/data/users/base.json";
 import type { StaffWork } from "../../../../backend/data/basetype";
 import { apiUrl } from "../../../../lib/api";
 
@@ -55,20 +54,15 @@ type AddFormValues = {
 };
 
 type Props = {
-  onSuccess?: () => void; // 保存後にカレンダーを再描画したい場合に使う
+  staffOptions: { value: string; label: string }[];
+  onSuccess?: () => void;
 };
 
-const AddNewPlanModal: React.FC<Props> = ({ onSuccess }) => {
+const AddNewPlanModal: React.FC<Props> = ({ staffOptions, onSuccess }) => {
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm<AddFormValues>();
   const [loading, setLoading] = useState(false);
   const [dirty, setDirty] = useState(false);
-
-  const data = baseData.basedata as unknown as StaffWork[];
-  const staffOptions = data.map((s) => ({
-    value: s.staffId,
-    label: s.name,
-  }));
 
   const handleOpen = () => {
     setOpen(true);

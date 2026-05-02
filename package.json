@@ -26,16 +26,11 @@
     "electron/**/*",
     "package.json"
   ],
-  "extraResources": [
-    {
-      "from": "resources/server.cjs",
-      "to": "server.cjs"
-    },
-    {
-      "from": "src/backend/data",
-      "to": "data"
-    }
-  ],
+"extraResources": [
+  { "from": "resources/server.cjs", "to": "server.cjs" },
+  { "from": "src/backend/data", "to": "data" },
+  { "from": "public/fonts", "to": "fonts" }
+],
   "asar": false,
   "win": {
     "target": {

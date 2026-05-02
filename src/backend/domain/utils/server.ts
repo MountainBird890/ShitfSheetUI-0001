@@ -6,7 +6,8 @@ import path from "node:path";
 import {
   calcMonthlySummary,
   type StaffWork,
-} from "../services/kinmukeitai/calc/calcSummary"; // ← 追加
+} from "../services/kinmukeitai/calc/calcSummary";
+import { createReadStream } from "node:fs";
 
 // ---- Schemas (TypeBox) ------------------------------------------
 
@@ -335,6 +336,16 @@ server.post<{ Body: Static<typeof CopyScheduleBodySchema> }>(
     return reply.status(200).send({ ok: true, copiedDays });
   }
 );
+
+// ---- 日本語フォント ------------------------------------------------------
+
+server.get("/api/fonts/:name", async (request, reply) => {
+  const { name } = request.params as { name: string };
+  const fontPath = path.join(process.env.RESOURCES_PATH ?? "", "fonts", name);
+  const stream = createReadStream(fontPath);
+  reply.header("Content-Type", "font/ttf");
+  return reply.send(stream);
+});
 
 // ---- Start ------------------------------------------------------
 
