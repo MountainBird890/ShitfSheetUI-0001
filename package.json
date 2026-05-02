@@ -15,29 +15,35 @@
     "build:server": "esbuild src/backend/domain/utils/server.ts --bundle --platform=node --target=node18 --outfile=resources/server.cjs --external:fsevents",
     "electron:build": "npm run build && npm run build:server && electron-builder"
   },
-  "build": {
-    "appId": "com.myapp.care",
-    "productName": "介護勤務管理",
-    "directories": {
-      "output": "release"
-    },
-    "files": [
-      "dist/**/*",
-      "electron/**/*",
-      "resources/server.cjs"
-    ],
-    "asar": false,
-    "win": {
-      "target": {
-        "target": "portable",
-        "arch": [
-          "x64"
-        ]
-      },
-      "icon": "public/icon.ico",
-      "signAndEditExecutable": false
-    }
+"build": {
+  "appId": "com.myapp.care",
+  "productName": "介護勤務管理",
+  "directories": {
+    "output": "release"
   },
+  "files": [
+    "dist/**/*",
+    "electron/**/*",
+    "resources/server.cjs",
+    "package.json"
+  ],
+  "extraResources": [
+    {
+      "from": "src/backend/data",
+      "to": "data",
+      "filter": ["**/*"]
+    }
+  ],
+  "asar": false,
+  "win": {
+    "target": {
+      "target": "portable",
+      "arch": ["x64"]
+    },
+    "icon": "public/icon.ico",
+    "signAndEditExecutable": false
+  }
+},
   "dependencies": {
     "@ant-design/icons": "~6.1.1",
     "@fastify/cors": "^11.2.0",
