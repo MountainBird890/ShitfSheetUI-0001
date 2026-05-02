@@ -4,48 +4,53 @@ const path = require("node:path");
 const fs = require("node:fs");
 const http = require("node:http");
 
+let LOG_PATH;  // ★ 宣言だけ先にする
+
+function log(msg) {
+  if (!LOG_PATH) return;
+  const line = `[${new Date().toISOString()}] ${msg}\n`;
+  fs.appendFileSync(LOG_PATH, line);
+}
+
 let serverProcess = null;
 
-// ★ logPathをグローバルで定義（起動直後から使えるように）
-let logPath;
-
 function startServer() {
-  logPath = path.join(app.getPath("userData"), "debug.log");
+  // ★ app.whenReady()後なのでここで初期化
+  LOG_PATH = path.join(
+    process.env.PORTABLE_EXECUTABLE_DIR ?? app.getPath("userData"),
+    "debug.log"
+  );
 
-  // ★ まず現在の全パス情報を書き出す
-  fs.writeFileSync(logPath, [
-    `isPackaged: ${app.isPackaged}`,
-    `__dirname: ${__dirname}`,
-    `resourcesPath: ${process.resourcesPath}`,
-    `execPath: ${process.execPath}`,
-    `cwd: ${process.cwd()}`,
-  ].join("\n") + "\n");
+  fs.writeFileSync(LOG_PATH, `=== START ===\n`);
+  log(`isPackaged: ${app.isPackaged}`);
+  log(`__dirname: ${__dirname}`);
+  log(`resourcesPath: ${process.resourcesPath}`);
+  log(`PORTABLE_EXECUTABLE_DIR: ${process.env.PORTABLE_EXECUTABLE_DIR}`);
+  log(`execPath: ${process.execPath}`);
 
   const serverPath = app.isPackaged
     ? path.join(process.resourcesPath, "server.cjs")
     : path.join(__dirname, "../src/backend/domain/utils/server.ts");
 
+  log(`serverPath: ${serverPath}`);
+  log(`serverPath exists: ${fs.existsSync(serverPath)}`);
+
   const [cmd, args] = app.isPackaged
     ? ["node", [serverPath]]
     : [(process.platform === "win32" ? "tsx.cmd" : "tsx"), [serverPath]];
 
-  fs.appendFileSync(logPath, `cmd: ${cmd}\nargs: ${JSON.stringify(args)}\nserverPath exists: ${fs.existsSync(serverPath)}\n`);
+  log(`cmd: ${cmd}`);
 
   serverProcess = spawn(cmd, args, {
-    stdio: ["ignore", "pipe", "pipe"],  // ★ pipeに変更してstdout/stderrをキャプチャ
+    stdio: ["ignore", "pipe", "pipe"],
     shell: true,
-    env: {
-      ...process.env,
-      NODE_ENV: "production",
-      RESOURCES_PATH: process.resourcesPath,
-    }
+    env: { ...process.env, NODE_ENV: "production", RESOURCES_PATH: process.resourcesPath },
   });
 
-  // ★ サーバーの出力をログに記録
-  serverProcess.stdout?.on("data", (d) => fs.appendFileSync(logPath, `[stdout] ${d}`));
-  serverProcess.stderr?.on("data", (d) => fs.appendFileSync(logPath, `[stderr] ${d}`));
-  serverProcess.on("error", (err) => fs.appendFileSync(logPath, `[spawn error] ${err.message}\n`));
-  serverProcess.on("exit", (code) => fs.appendFileSync(logPath, `[exit] code: ${code}\n`));
+  serverProcess.stdout?.on("data", (d) => log(`[stdout] ${d.toString().trim()}`));
+  serverProcess.stderr?.on("data", (d) => log(`[stderr] ${d.toString().trim()}`));
+  serverProcess.on("error", (err) => log(`[spawn error] ${err.message}`));
+  serverProcess.on("exit", (code, signal) => log(`[exit] code=${code} signal=${signal}`));
 }
 
 function waitForServer(url, retries = 20, interval = 500) {
@@ -75,12 +80,11 @@ function createWindow() {
 }
 
 app.whenReady().then(async () => {
-  startServer();
+  startServer();  // ★ LOG_PATH初期化はここで行われる
+  log("startServer called, waiting for port 3000...");
   await waitForServer("http://localhost:3000/api/staff")
-    .catch((err) => {
-      if (logPath) fs.appendFileSync(logPath, `[waitForServer failed] ${err.message}\n`);
-      console.error("Fastify起動タイムアウト");
-    });
+    .catch((err) => log(`[waitForServer failed] ${err.message}`));
+  log("createWindow");
   createWindow();
 });
 
