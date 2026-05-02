@@ -16,6 +16,7 @@ import {
 import dayjs, { Dayjs } from "dayjs";
 import "dayjs/locale/ja";
 import locale from "antd/es/date-picker/locale/ja_JP";
+import { apiUrl } from "../../../../lib/api";
 
 dayjs.locale("ja");
 
@@ -51,7 +52,7 @@ const CopyScheduleModal: React.FC<Props> = ({
 
     setLoading(true);
     try {
-      const res = await fetch("/api/schedule/copy", {
+      const res = await fetch(apiUrl("/api/schedule/copy"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

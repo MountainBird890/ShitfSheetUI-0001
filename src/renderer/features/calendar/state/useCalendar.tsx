@@ -2,6 +2,7 @@ import { useState, createContext, useContext, type ReactNode } from "react";
 import type { calendarContext, inputContextType, loadingContextType, searchContextType } from "../type/type";
 import type{ StaffRecord, ScheduleEntry } from "../ui/editer";
 import type { downloadCSVContextType } from "../type/type";
+import { apiUrl } from "../../../../lib/api";
 
 const context = createContext<calendarContext | undefined>(undefined);
 
@@ -144,11 +145,11 @@ export function HandleScheduleEditor({ children }: { children: React.ReactNode }
     updatedName: string
   ) => {
 
-const res = await fetch(`/api/staff/${staffId}/schedule/${dateKey}`, {
+const res = await fetch(apiUrl(`/api/staff/${staffId}/schedule/${dateKey}`), {
   method: 'PUT',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ name: updatedName, entry: updated }),
-});
+})
     if(!res.ok){
         throw new Error('保存に失敗しました');
     };
@@ -232,7 +233,7 @@ export function HandleAddNewPlan({ children }: { children: React.ReactNode }) {
     updatedName: string
   ) => {
 
-const res = await fetch(`/api/staff/${staffId}/schedule/${dateKey}`, {
+const res = await fetch(apiUrl(`/api/staff/${staffId}/schedule/${dateKey}`), {
   method: 'PUT',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ name: updatedName, entry: updated }),

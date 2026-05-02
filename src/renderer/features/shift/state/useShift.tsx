@@ -1,7 +1,6 @@
-// staffSheet.tsxで使用
-
 import React, { createContext, useContext, useState } from "react";
 import type { CardContextValue, StaffRecord, ScheduleEntry } from "../type/openCardType";
+import { apiUrl } from "../../../../lib/api";
 
 const CardContext = createContext<CardContextValue | null>(null);
 
@@ -30,7 +29,7 @@ export function HandleCard({ children } : { children : React.ReactNode }){
         updated: ScheduleEntry,
         updatedName: string
       ) => { 
-        const res = await fetch(`/api/staff/${staffId}/schedule/${dateKey}`, {
+        const res = await fetch(apiUrl(`/api/staff/${staffId}/schedule/${dateKey}`), {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name: updatedName, entry: updated }),

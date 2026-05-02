@@ -28,6 +28,7 @@ import "dayjs/locale/ja";
 import locale from "antd/es/date-picker/locale/ja_JP";
 import baseData from "../../../../backend/data/users/base.json";
 import type { StaffWork } from "../../../../backend/data/basetype";
+import { apiUrl } from "../../../../lib/api";
 
 dayjs.locale("ja");
 
@@ -86,7 +87,7 @@ const AddNewPlanModal: React.FC<Props> = ({ onSuccess }) => {
       const start = values.dateRange[0].format("YYYY-MM-DDTHH:mm");
       const end = values.dateRange[1].format("YYYY-MM-DDTHH:mm");
 
-      const res = await fetch("/api/schedule/add", {
+      const res = await fetch(apiUrl("/api/schedule/add"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

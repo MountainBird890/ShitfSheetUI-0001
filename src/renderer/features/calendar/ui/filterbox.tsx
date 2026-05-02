@@ -1,5 +1,4 @@
-// filterbox.tsx
-import { useState, useCallback } from 'react';
+import { apiUrl } from '../../../../lib/api';
 import type { StaffWork } from '../../../../backend/data/basetype';
 
 // デバウンス付きフェッチ
@@ -15,7 +14,7 @@ export const fetchUserName = (
   timer = setTimeout(async () => {
     console.log("search is correct");
     try {
-      const res = await fetch(`http://localhost:3000/search?q=${q}`);
+      const res = await fetch(apiUrl(`http://localhost:3000/search?q=${q}`));
       const userdata: StaffWork[] = await res.json();
       onResult(userdata); // 結果をコールバックで返す
     } catch (e) {

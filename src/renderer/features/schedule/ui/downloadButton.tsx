@@ -6,6 +6,7 @@ import fontkit from "@pdf-lib/fontkit";
 import dayjs from "dayjs";
 import data from "../../../../backend/data/users/base.json";
 import { useSchedule } from "../state/useSchedule";
+import { apiUrl } from "../../../../lib/api";
 
 type DetailEntry = {
   user: string;
@@ -57,7 +58,7 @@ export default function DownloadButton() {
   const handleDownloadCsv = async () => {
     setDlCsv(true);
     try {
-      const res = await fetch("/api/download/csv", {
+      const res = await fetch(apiUrl("/api/download/csv"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(visibleData),
@@ -80,7 +81,7 @@ export default function DownloadButton() {
     try {
       const pdfDoc = await PDFDocument.create();
       pdfDoc.registerFontkit(fontkit);
-      const fontBytes = await fetch("../../../../../public/fonts/NotoSansJP-VariableFont_wght.ttf").then((r) =>
+      const fontBytes = await fetch(apiUrl("../../../../../public/fonts/NotoSansJP-VariableFont_wght.ttf")).then((r) =>
         r.arrayBuffer()
       );
       const font = await pdfDoc.embedFont(fontBytes);

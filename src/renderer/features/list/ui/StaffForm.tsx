@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button, Form, Input, Modal, Select } from "antd";
+import { apiUrl } from "../../../../lib/api";
 
 type StaffFormValues = {
   name:              string;
@@ -19,7 +20,7 @@ export default function StaffForm({ onSuccess }: Props) {  // ← ここが抜�
   const onFinish = async (values: StaffFormValues) => {
     setLoading(true);
     try {
-      const res = await fetch("/api/staff", {
+      const res = await fetch(apiUrl("/api/staff"), {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
         body:    JSON.stringify(values),

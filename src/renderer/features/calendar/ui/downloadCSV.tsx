@@ -4,6 +4,7 @@ import { handleDownloadCSV } from "../state/useCalendar";
 import { useState } from "react";
 import { PDFDocument, rgb, StandardFonts, PDFPage } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit" 
+import { apiUrl } from "../../../../lib/api";
 
 // DownloadButton.tsx
 type VisibleData = {
@@ -25,7 +26,7 @@ export const DownloadButton = ({ data }: Props) => {
   const handleDownload = async () => {
     setDl(true)
     try {
-      const res = await fetch('/api/download/csv', {
+      const res = await fetch(apiUrl('/api/download/csv'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
@@ -48,7 +49,7 @@ export const DownloadButton = ({ data }: Props) => {
     try {
       const pdfDoc = await PDFDocument.create()
       pdfDoc.registerFontkit(fontkit) 
-      const fontBytes = await fetch('../../../../../public/fonts/NotoSansJP-VariableFont_wght.ttf').then(r => r.arrayBuffer())
+      const fontBytes = await fetch(apiUrl('../../../../../public/fonts/NotoSansJP-VariableFont_wght.ttf')).then(r => r.arrayBuffer())
       const font = await pdfDoc.embedFont(fontBytes)
 
       const ROW_HEIGHT = 20
