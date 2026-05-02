@@ -6,11 +6,11 @@ import dayjs from "dayjs";
 
 export default function Shift() {
   const [open, setOpen] = useState(false);
+  const [tableKey, setTableKey] = useState(0);
 
   return (
     <div className="layout">
       <div className="list">
-
         <Button type="primary" onClick={() => setOpen(true)}>
           職員を追加
         </Button>
@@ -20,13 +20,15 @@ export default function Shift() {
           open={open}
           onCancel={() => setOpen(false)}
           footer={null}
-          destroyOnHidden  
+          destroyOnHidden
         >
-          <StaffForm onSuccess={() => setOpen(false)} />
+          <StaffForm onSuccess={() => {
+            setOpen(false);
+            setTableKey(k => k + 1);  // ★ テーブルを再mount→再fetch
+          }} />
         </Modal>
 
-        <UserColumn value={dayjs()} />
-
+        <UserColumn key={tableKey} value={dayjs()} />
       </div>
     </div>
   );

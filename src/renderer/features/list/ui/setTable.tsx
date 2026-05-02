@@ -1,40 +1,53 @@
 import { Table } from "antd";
-import data from "../../../../backend/data/users/base.json";
+import { useState, useEffect } from "react";
 import type { ColumnsType } from "antd/es/table";
 import type { Dayjs } from "dayjs";
+import { apiUrl } from "../../../../lib/api";
 
-function getAllUsers(basedata: typeof data.basedata): string[] {
+type StaffRecord = {
+  staffId: string;
+  name: string;
+  details: Record<string, { user: string }>;
+};
+
+function getAllUsers(basedata: StaffRecord[]): string[] {
   const userSet = new Set<string>();
   for (const staff of basedata) {
-    for (const entry of Object.values(staff.details)) {
-      userSet.add(entry.user);
+    for (const entry of Object.values(staff.details ?? {})) {
+      if (entry.user) userSet.add(entry.user);
     }
   }
   return [...userSet].sort();
 }
 
-// ★ 修正点: 日付一致 → 同月内に1件でも担当があればtrue
 function isAssignedInMonth(
-  staff: typeof data.basedata[number],
+  staff: StaffRecord,
   userName: string,
   value: Dayjs
 ): boolean {
   const targetYear  = value.year();
-  const targetMonth = value.month(); // 0始まり
-
-  return Object.entries(staff.details).some(([dateKey, entry]) => {
+  const targetMonth = value.month();
+  return Object.entries(staff.details ?? {}).some(([dateKey, entry]) => {
     if (entry.user !== userName) return false;
-    // dateKey は "YYYY-MM-DD" 形式
     const [y, m] = dateKey.split("-").map(Number);
-    return y === targetYear && (m - 1) === targetMonth; // monthは0始まりに合わせる
+    return y === targetYear && (m - 1) === targetMonth;
   });
 }
 
 export default function UserColumn({ value }: { value: Dayjs }) {
+  const [staffList, setStaffList] = useState<StaffRecord[]>([]);
 
-  const allUsers = getAllUsers(data.basedata);
+  // ★ 静的importをやめてAPIから取得
+  useEffect(() => {
+    fetch(apiUrl("/api/staff"))
+      .then(res => res.json())
+      .then(setStaffList)
+      .catch(err => console.error("職員一覧fetch失敗:", err));
+  }, []);
 
-  const weekColumns: ColumnsType<any> = [
+  const allUsers = getAllUsers(staffList);
+
+  const weekColumns: ColumnsType<StaffRecord> = [
     {
       title: '職員',
       dataIndex: 'name',
@@ -47,16 +60,16 @@ export default function UserColumn({ value }: { value: Dayjs }) {
       key: userName,
       width: 80,
       align: 'center' as const,
-      render(_: any, record: typeof data.basedata[number]) {
+      render(_: any, record: StaffRecord) {
         return isAssignedInMonth(record, userName, value) ? '○' : '';
       },
     })),
   ];
 
-    return (
-    <Table<any>
+  return (
+    <Table<StaffRecord>
       columns={weekColumns}
-      dataSource={data.basedata}
+      dataSource={staffList}
       rowKey="staffId"
       bordered
       size="middle"
