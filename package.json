@@ -24,14 +24,16 @@
   "files": [
     "dist/**/*",
     "electron/**/*",
-    "resources/server.cjs",
     "package.json"
   ],
   "extraResources": [
     {
+      "from": "resources/server.cjs",
+      "to": "server.cjs"
+    },
+    {
       "from": "src/backend/data",
-      "to": "data",
-      "filter": ["**/*"]
+      "to": "data"
     }
   ],
   "asar": false,
