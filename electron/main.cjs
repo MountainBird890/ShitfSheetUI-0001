@@ -6,27 +6,33 @@ const http = require("node:http");
 
 let serverProcess = null;
 
+// ★ logPathをグローバルで定義（起動直後から使えるように）
+let logPath;
+
 function startServer() {
-  const base = app.isPackaged ? process.resourcesPath : path.join(__dirname, "..");  // ✅ ビルド済みJSを node で実行
+  logPath = path.join(app.getPath("userData"), "debug.log");
+
+  // ★ まず現在の全パス情報を書き出す
+  fs.writeFileSync(logPath, [
+    `isPackaged: ${app.isPackaged}`,
+    `__dirname: ${__dirname}`,
+    `resourcesPath: ${process.resourcesPath}`,
+    `execPath: ${process.execPath}`,
+    `cwd: ${process.cwd()}`,
+  ].join("\n") + "\n");
+
   const serverPath = app.isPackaged
-    ? path.join(process.resourcesPath, "server.cjs")   // ビルド後
-    : path.join(__dirname, "../src/backend/domain/utils/server.ts"); // 開発時
+    ? path.join(process.resourcesPath, "server.cjs")
+    : path.join(__dirname, "../src/backend/domain/utils/server.ts");
 
-  const command = app.isPackaged
-    ? process.execPath.replace("介護勤務管理.exe", "resources/node/node.exe")
-    : (process.platform === "win32" ? "tsx.cmd" : "tsx");
-
-  // パッケージ済みはnodeで直接実行、開発時はtsxで実行
   const [cmd, args] = app.isPackaged
     ? ["node", [serverPath]]
     : [(process.platform === "win32" ? "tsx.cmd" : "tsx"), [serverPath]];
 
-
-  const logPath = path.join(app.getPath("userData"), "debug.log");
-  fs.writeFileSync(logPath, `cmd: ${cmd}\nargs: ${args}\nbase: ${base}\n`);
+  fs.appendFileSync(logPath, `cmd: ${cmd}\nargs: ${JSON.stringify(args)}\nserverPath exists: ${fs.existsSync(serverPath)}\n`);
 
   serverProcess = spawn(cmd, args, {
-    stdio: "inherit",
+    stdio: ["ignore", "pipe", "pipe"],  // ★ pipeに変更してstdout/stderrをキャプチャ
     shell: true,
     env: {
       ...process.env,
@@ -35,12 +41,13 @@ function startServer() {
     }
   });
 
-  serverProcess.on("error", (err) => {
-    fs.appendFileSync(logPath, `\nserver error: ${err.message}`);
-  });
+  // ★ サーバーの出力をログに記録
+  serverProcess.stdout?.on("data", (d) => fs.appendFileSync(logPath, `[stdout] ${d}`));
+  serverProcess.stderr?.on("data", (d) => fs.appendFileSync(logPath, `[stderr] ${d}`));
+  serverProcess.on("error", (err) => fs.appendFileSync(logPath, `[spawn error] ${err.message}\n`));
+  serverProcess.on("exit", (code) => fs.appendFileSync(logPath, `[exit] code: ${code}\n`));
 }
 
-// サーバー起動を待ってからウィンドウを開く
 function waitForServer(url, retries = 20, interval = 500) {
   return new Promise((resolve, reject) => {
     const check = (n) => {
@@ -69,9 +76,11 @@ function createWindow() {
 
 app.whenReady().then(async () => {
   startServer();
-  await waitForServer("http://localhost:3000/api/staff")  // 起動待ち
-    .catch(() => console.error("Fastify起動タイムアウト"));
-
+  await waitForServer("http://localhost:3000/api/staff")
+    .catch((err) => {
+      if (logPath) fs.appendFileSync(logPath, `[waitForServer failed] ${err.message}\n`);
+      console.error("Fastify起動タイムアウト");
+    });
   createWindow();
 });
 
