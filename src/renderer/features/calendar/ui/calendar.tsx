@@ -37,7 +37,7 @@ const CalendarInner: React.FC = () => {
   useEffect(() => { fetchData(); }, []);
 
   const staffOptions = data.map((staff) => ({
-    value: staff.name,
+    value: staff.staffId,
     label: staff.name,
   }));
 
