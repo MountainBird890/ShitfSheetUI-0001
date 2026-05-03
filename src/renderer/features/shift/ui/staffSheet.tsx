@@ -1,11 +1,11 @@
 import dayjs, { Dayjs } from "dayjs"
-import data from '../../../../backend/data/users/base.json'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { OpenCard, HandleCard } from "../state/useShift";
 import { Badge, Calendar, Drawer, Select, Button, type BadgeProps, type CalendarProps } from "antd";
 import jaJP from 'antd/es/calendar/locale/ja_JP';
 import DaysColumns from "./StaffShift";
 import { DownloadButton } from "./download";
+import { apiUrl } from "../../../../lib/api";
 
 dayjs.locale('ja');
 
@@ -23,10 +23,13 @@ type StaffWork = {
   details: Record<string, DetailEntry>;
 }
 
-const StaffCalendar: React.FC<{ staffId: string, onMonthChange: (month: Dayjs) => void  }> = ({ staffId, onMonthChange }) => {
-    const useData = data.basedata as unknown as StaffWork[];
-    const { openCard } = OpenCard();
-    const staff = useData.find((s) => s.staffId === staffId);
+const StaffCalendar: React.FC<{
+  staffId: string;
+  staffData: StaffWork[];
+  onMonthChange: (month: Dayjs) => void;
+}> = ({ staffId, staffData, onMonthChange }) => {
+  const { openCard } = OpenCard();
+  const staff = staffData.find((s) => s.staffId === staffId); 
 
 
 
@@ -97,44 +100,61 @@ const ShiftCard: React.FC = () => {
 };
 
 const StaffSheetCalendar: React.FC = () => {
-    const useData = data.basedata as unknown as StaffWork[];
-    const [selectedStaffId, setSelectedStaffId] = useState<string>("1");
-    const [currentMonth, setCurrentMonth] = useState<Dayjs>(dayjs())
+  const [useData, setUseData] = useState<StaffWork[]>([]);
 
-    const selectOptions = useData.map((s) => ({
-        value: s.staffId,
-        label: s.name,
+  const fetchData = () => {
+    fetch(apiUrl('/api/staff'))
+      .then(res => res.json())
+      .then(setUseData)
+      .catch(err => console.error('fetch失敗:', err));
+  };
+
+  useEffect(() => { fetchData(); }, []);
+
+  const [selectedStaffId, setSelectedStaffId] = useState<string>("");
+  const [currentMonth, setCurrentMonth] = useState<Dayjs>(dayjs());
+
+  // selectedStaffIdの初期値をデータ取得後に設定
+  useEffect(() => {
+    if (useData.length > 0 && !selectedStaffId) {
+      setSelectedStaffId(useData[0].staffId);
+    }
+  }, [useData]);
+
+  // 以下はuseDataをstateから参照するだけで変更なし
+  const selectOptions = useData.map((s) => ({ value: s.staffId, label: s.name }));
+  const selectedStaff = useData.find((s) => s.staffId === selectedStaffId);
+  const monthPrefix = currentMonth.format("YYYY-MM");
+  const visibleData = Object.entries(selectedStaff?.details ?? {})
+    .filter(([date]) => date.startsWith(monthPrefix))
+    .map(([date, detail]) => ({
+      staffId: selectedStaff?.staffId ?? "",
+      name: selectedStaff?.name ?? "",
+      user: detail.user,
+      date,
+      start: dayjs(detail.start).format("HH:mm"),
+      end: dayjs(detail.end).format("HH:mm"),
+      type: detail.type,
     }));
 
- const selectedStaff = useData.find((s) => s.staffId === selectedStaffId)
-
-  const monthPrefix = currentMonth.format("YYYY-MM")
-const visibleData = Object.entries(selectedStaff?.details ?? {})
-  .filter(([date]) => date.startsWith(monthPrefix))
-  .map(([date, detail]) => ({
-    staffId: selectedStaff?.staffId ?? "",
-    name: selectedStaff?.name ?? "",
-    user: detail.user,
-    date,
-    start: dayjs(detail.start).format("HH:mm"),
-    end: dayjs(detail.end).format("HH:mm"),
-    type: detail.type,
-  }))
-
-    return (
-        <HandleCard>
-            <Select
-                options={selectOptions}
-                value={selectedStaffId}
-                onChange={(value) => setSelectedStaffId(value)}
-                style={{textAlign:"center", width: 200, marginBottom: 16 }}
-                placeholder="職員を選択"
-            />
-            <DownloadButton data={visibleData} /> 
-            <StaffCalendar staffId={selectedStaffId} onMonthChange={(month) => setCurrentMonth(month)} />
-            <ShiftCard />
-        </HandleCard>
-    );
+  return (
+    <HandleCard>
+      <Select
+        options={selectOptions}
+        value={selectedStaffId}
+        onChange={(value) => setSelectedStaffId(value)}
+        style={{ textAlign: "center", width: 200, marginBottom: 16 }}
+        placeholder="職員を選択"
+      />
+      <DownloadButton data={visibleData} />
+      <StaffCalendar
+        staffId={selectedStaffId}
+        staffData={useData}  // ← propsで渡す
+        onMonthChange={(month) => setCurrentMonth(month)}
+      />
+      <ShiftCard />
+    </HandleCard>
+  );
 };
 
 export default StaffSheetCalendar;

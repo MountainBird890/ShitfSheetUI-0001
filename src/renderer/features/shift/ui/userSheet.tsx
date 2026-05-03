@@ -1,11 +1,11 @@
 import dayjs, { Dayjs } from "dayjs";
-import data from '../../../../backend/data/users/base.json';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Badge, Calendar, Select, Drawer, type CalendarProps } from "antd";
 import jaJP from 'antd/es/calendar/locale/ja_JP';
 import { DownloadButton } from "./download";
 import { OpenCard, HandleCard } from "../state/useShift"; // ← 追加
 import UserDaysColumns from "./UserShift";
+import { apiUrl } from "../../../../lib/api";
 
 dayjs.locale('ja');
 
@@ -28,8 +28,8 @@ const ShiftCard: React.FC<{
   selectedUser: string;
   currentMonth: Dayjs;
   onClose: () => void;
-}> = ({ open, selectedUser, currentMonth, onClose }) => {
-  const useData = data.basedata as unknown as StaffWork[];
+  allStaff: StaffWork[];
+}> = ({ open, selectedUser, currentMonth, onClose, allStaff }) => {
 
   return (
     <Drawer
@@ -39,7 +39,7 @@ const ShiftCard: React.FC<{
       size={800}
     >
       <UserDaysColumns
-        allStaff={useData}
+        allStaff={allStaff}
         selectedUser={selectedUser}
         value={currentMonth}
       />
@@ -49,7 +49,15 @@ const ShiftCard: React.FC<{
 
 // ---- メイン ----
 const UserSheetCalendarInner: React.FC = () => {
-  const useData = data.basedata as unknown as StaffWork[];
+    const [useData, setUseData] = useState<StaffWork[]>([]);
+
+  useEffect(() => {
+    fetch(apiUrl('/api/staff'))
+      .then(res => res.json())
+      .then(setUseData)
+      .catch(err => console.error('fetch失敗:', err));
+  }, []);
+
   const [currentMonth, setCurrentMonth] = useState<Dayjs>(dayjs());
   const { openCard } = OpenCard();
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -57,12 +65,19 @@ const UserSheetCalendarInner: React.FC = () => {
   const userOptions = Array.from(
     new Set(
       useData.flatMap((staff) =>
-        Object.values(staff.details).map((d) => d.user)
+        Object.values(staff.details ?? {}).map((d) => d.user)
       )
     )
   ).map((user) => ({ value: user, label: user }));
 
-  const [selectedUser, setSelectedUser] = useState<string>(userOptions[0]?.value ?? '');
+  const [selectedUser, setSelectedUser] = useState<string>('');
+
+  // データ取得後に初期値を設定
+  useEffect(() => {
+    if (userOptions.length > 0 && !selectedUser) {
+      setSelectedUser(userOptions[0].value);
+    }
+  }, [userOptions]);
 
   const monthPrefix = currentMonth.format("YYYY-MM");
   const visibleData = useData.flatMap((staff) =>
@@ -136,11 +151,12 @@ const UserSheetCalendarInner: React.FC = () => {
         locale={jaJP}
         onPanelChange={(val) => setCurrentMonth(val)}
       />
-      <ShiftCard
+<ShiftCard
   open={drawerOpen}
   selectedUser={selectedUser}
   currentMonth={currentMonth}
   onClose={() => setDrawerOpen(false)}
+  allStaff={useData}  // ← 追加
 />
     </>
   );
