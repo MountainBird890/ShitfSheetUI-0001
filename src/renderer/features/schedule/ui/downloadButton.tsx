@@ -85,9 +85,8 @@ export default function DownloadButton() {
     try {
       const pdfDoc = await PDFDocument.create();
       pdfDoc.registerFontkit(fontkit);
-      const fontBytes = await fetch(apiUrl("../../../../../public/fonts/NotoSansJP-VariableFont_wght.ttf")).then((r) =>
-        r.arrayBuffer()
-      );
+      const fontBytes = await fetch(apiUrl('/api/fonts/NotoSansJP-VariableFont_wght.ttf'))
+    .then(r => r.arrayBuffer());
       const font = await pdfDoc.embedFont(fontBytes);
 
       const ROW_HEIGHT = 20;
