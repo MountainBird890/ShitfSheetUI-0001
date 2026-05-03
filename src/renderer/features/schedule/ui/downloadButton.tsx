@@ -1,10 +1,9 @@
 import { Button, Space } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PDFDocument, rgb, PDFPage } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 import dayjs from "dayjs";
-import data from "../../../../backend/data/users/base.json";
 import { useSchedule } from "../state/useSchedule";
 import { apiUrl } from "../../../../lib/api";
 
@@ -33,13 +32,18 @@ type RowData = {
 
 export default function DownloadButton() {
   const { currentMonth } = useSchedule();
+  const [allStaff, setAllStaff] = useState<StaffWork[]>([]);
   const [dlCsv, setDlCsv] = useState(false);
   const [dlPdf, setDlPdf] = useState(false);
 
-  const allStaff = data.basedata as unknown as StaffWork[];
-  const monthPrefix = currentMonth.format("YYYY-MM");
+  useEffect(() => {
+    fetch(apiUrl('/api/staff'))
+      .then(res => res.json())
+      .then(setAllStaff)
+      .catch(err => console.error('fetch失敗:', err));
+  }, []);
 
-  // 当月分のデータを収集
+  const monthPrefix = currentMonth.format("YYYY-MM");
   const visibleData: RowData[] = allStaff.flatMap((staff) =>
     Object.entries(staff.details ?? {})
       .filter(([date]) => date.startsWith(monthPrefix))
