@@ -52,13 +52,13 @@ const CalendarInner: React.FC = () => {
         dateKey: targetDate,
         staffRecord: staff,
       }];
-    }).filter((item) => !search || item.content.includes(search));
+    }).filter((item) => !search || item.staffId === search);
   };
 
   // ★ 現在月でフィルタ（CSV問題の修正）
   const visibleData = data.flatMap((staff) =>
     Object.entries(staff.details ?? {})
-      .filter(([date]) => dayjs(date).isSame(currentMonth, 'month'))  // ← 追加
+      .filter(([date]) => dayjs(date).isSame(currentMonth, 'month'))
       .map(([date, detail]) => ({
         staffId: staff.staffId,
         name: staff.name,
@@ -68,7 +68,7 @@ const CalendarInner: React.FC = () => {
         end: detail.end ? dayjs(detail.end).format('HH:mm') : '',
         type: detail.type ?? '',
       }))
-  ).filter((item) => !search || item.name.includes(search));
+  ).filter((item) => !search || item.staffId === search);
 
   const dateCellRender = (value: Dayjs) => {
     const listData = getListData(value);
