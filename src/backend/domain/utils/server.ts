@@ -30,7 +30,10 @@ type UpdateScheduleBody = Static<typeof UpdateScheduleBodySchema>;
 const RESOURCES_PATH = process.env.RESOURCES_PATH ?? "";
 
 const DATA_PATH = process.env.NODE_ENV === "production"
-  ? path.join(process.env.RESOURCES_PATH ?? "", "data", "users", "base.json")
+  ? path.join(
+      path.dirname(process.env.RESOURCES_PATH ?? ""),
+      "appdata", "users", "base.json"
+    )
   : path.resolve(process.cwd(), "src/backend/data/users/base.json");
 
 async function readData(): Promise<{ basedata: Record<string, unknown>[] }> {
@@ -46,13 +49,13 @@ async function ensureDataFile() {
   if (process.env.NODE_ENV !== "production") return;
   try {
     await fs.access(DATA_PATH);
-    // ファイルが存在すれば何もしない
   } catch {
-    // 存在しなければ初期データをコピー
-    const srcPath = path.join(RESOURCES_PATH, "data_default", "users", "base.json");
+    const srcPath = path.join(
+      process.env.RESOURCES_PATH ?? "",
+      "data_default", "users", "base.json"
+    );
     await fs.mkdir(path.dirname(DATA_PATH), { recursive: true });
     await fs.copyFile(srcPath, DATA_PATH);
-    console.log("初期データをコピーしました");
   }
 }
 
