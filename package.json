@@ -28,8 +28,8 @@
   ],
 "extraResources": [
   { "from": "resources/server.cjs", "to": "server.cjs" },
-  { "from": "src/backend/data", "to": "data" },
-  { "from": "public/fonts", "to": "fonts" }
+  { "from": "public/fonts", "to": "fonts" },
+  { "from": "src/backend/data", "to": "data_default" }
 ],
   "asar": false,
   "win": {

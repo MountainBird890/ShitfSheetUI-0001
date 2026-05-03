@@ -27,6 +27,8 @@ type UpdateScheduleBody = Static<typeof UpdateScheduleBodySchema>;
 
 // ---- Data file path ---------------------------------------------
 
+const RESOURCES_PATH = process.env.RESOURCES_PATH ?? "";
+
 const DATA_PATH = process.env.NODE_ENV === "production"
   ? path.join(process.env.RESOURCES_PATH ?? "", "data", "users", "base.json")
   : path.resolve(process.cwd(), "src/backend/data/users/base.json");
@@ -38,6 +40,20 @@ async function readData(): Promise<{ basedata: Record<string, unknown>[] }> {
 
 async function writeData(data: { basedata: Record<string, unknown>[] }): Promise<void> {
   await fs.writeFile(DATA_PATH, JSON.stringify(data, null, 2), "utf-8");
+}
+
+async function ensureDataFile() {
+  if (process.env.NODE_ENV !== "production") return;
+  try {
+    await fs.access(DATA_PATH);
+    // ファイルが存在すれば何もしない
+  } catch {
+    // 存在しなければ初期データをコピー
+    const srcPath = path.join(RESOURCES_PATH, "data_default", "users", "base.json");
+    await fs.mkdir(path.dirname(DATA_PATH), { recursive: true });
+    await fs.copyFile(srcPath, DATA_PATH);
+    console.log("初期データをコピーしました");
+  }
 }
 
 // ================================================================
@@ -348,10 +364,9 @@ server.get("/api/fonts/:name", async (request, reply) => {
 });
 
 // ---- Start ------------------------------------------------------
-
-server.listen({ port: 3000, host: "0.0.0.0" }, (err) => {
-  if (err) {
-    server.log.error(err);
-    process.exit(1);
-  }
-});
+(async () => {
+  await ensureDataFile();
+  server.listen({ port: 3000, host: "0.0.0.0" }, (err) => {
+    if (err) { server.log.error(err); process.exit(1); }
+  });
+})();
