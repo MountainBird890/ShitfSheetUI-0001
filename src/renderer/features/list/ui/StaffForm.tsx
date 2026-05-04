@@ -18,17 +18,6 @@ export default function StaffForm({ onSuccess }: Props) {
   const [modal, contextHolder]  = Modal.useModal();
   const [positionOptions, setPositionOptions] = useState<string[]>([]);  // ★追加
 
-  // ★ positionの選択肢をAPIから取得
-  useEffect(() => {
-    fetch(apiUrl("/api/staff"))
-      .then(res => res.json())
-      .then((list: { position?: string }[]) => {
-        const positions = [...new Set(list.map(s => s.position).filter(Boolean))] as string[];
-        setPositionOptions(positions);
-      })
-      .catch(err => console.error("position取得失敗:", err));
-  }, []);
-
   const onFinish = async (values: StaffFormValues) => {
     setLoading(true);
     try {
@@ -65,16 +54,16 @@ export default function StaffForm({ onSuccess }: Props) {
           <Input placeholder="例: 兵庫太郎" />
         </Form.Item>
 
-        {/* ★ InputからSelectに変更 */}
-        <Form.Item name="position" label="職種"
-          rules={[{ message: "職種を選択してください" }]}>
-          <Select
-            showSearch
-            allowClear
-            placeholder="職種を選択"
-            options={positionOptions.map(p => ({ value: p, label: p }))}
-          />
-        </Form.Item>
+<Form.Item name="position" label="職種"
+  rules={[{ message: "職種を選択してください" }]}>
+  <Select placeholder="職種を選択">
+    <Select.Option value="管理者">管理者</Select.Option>
+    <Select.Option value="サービス提供責任者">サービス提供責任者</Select.Option>
+    <Select.Option value="管理者・サ責">管理者・サ責</Select.Option>
+    <Select.Option value="訪問介護員">訪問介護員</Select.Option>
+    <Select.Option value="事務員">事務員</Select.Option>
+  </Select>
+</Form.Item>
 
         <Form.Item name="employmentType" label="勤務形態"
           rules={[{ message: "勤務形態を選択してください" }]}>
