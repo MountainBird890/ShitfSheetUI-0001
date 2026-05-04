@@ -17,7 +17,7 @@ let serverProcess = null;
 function startServer() {
   // ★ app.whenReady()後なのでここで初期化
   LOG_PATH = path.join(
-    process.env.PORTABLE_EXECUTABLE_DIR ?? app.getPath("userData"),
+    path.dirname(process.execPath),
     "debug.log"
   );
 
