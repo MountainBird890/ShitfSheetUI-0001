@@ -73,7 +73,7 @@ const CalendarInner: React.FC = () => {
   const dateCellRender = (value: Dayjs) => {
     const listData = getListData(value);
     return (
-      <ul className="events">
+      <ul className="events" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
         {listData.map((item) => (
           <li
             key={`${item.staffId}-${item.dateKey}`}

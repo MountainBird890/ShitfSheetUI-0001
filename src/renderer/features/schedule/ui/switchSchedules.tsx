@@ -11,8 +11,8 @@ export default function ToggleSchedule() {
     <>
       <Segmented
         options={[
-          { label: '職員軸', value: 'staff', icon: <TableOutlined /> },
-          { label: 'ご利用者軸', value: 'user', icon: <UserOutlined /> },
+          { label: '職員', value: 'staff', icon: <TableOutlined /> },
+          { label: 'ご利用者', value: 'user', icon: <UserOutlined /> },
         ]}
         value={mode}
         onChange={(val) => setMode(val as 'staff' | 'user')}

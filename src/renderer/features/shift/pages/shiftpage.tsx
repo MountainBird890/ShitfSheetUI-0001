@@ -6,7 +6,7 @@ export function Sheet() {
     return (
         <Tabs items={[
             { key: 'staff', label: '職員', children: <StaffSheetCalendar /> },
-            { key: 'user',  label: '利用者', children: <UserSheetCalendar /> },
+            { key: 'user',  label: 'ご利用者', children: <UserSheetCalendar /> },
         ]} />
     );
 }

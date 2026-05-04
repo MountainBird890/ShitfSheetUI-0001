@@ -33,7 +33,7 @@ const ShiftCard: React.FC<{
 
   return (
     <Drawer
-      title={`${selectedUser} 様のサービス提供予定詳細`}
+      title={`${selectedUser} 様のサービス提供予定`}
       open={open}
       onClose={onClose}
       size={800}
@@ -143,7 +143,7 @@ const UserSheetCalendarInner: React.FC = () => {
         value={selectedUser}
         onChange={(value) => setSelectedUser(value)}
         style={{ textAlign: "center", width: 200, marginBottom: 16 }}
-        placeholder="利用者を選択"
+        placeholder="ご利用者を選択"
       />
       <DownloadButton data={visibleData} />
       <Calendar

@@ -44,7 +44,7 @@ export default function DaysColumns({ staff, value }: Props) {
 
   const columns: ColumnsType<typeof tableData[number]> = [
     { title: '日付',   dataIndex: 'date', key: 'date', width: 100 },
-    { title: '介助者', dataIndex: 'user', key: 'user', width: 100 },
+    { title: '職員', dataIndex: 'user', key: 'user', width: 100 },
     { title: '開始',   dataIndex: 'start', key: 'start', width: 80 },
     { title: '終了',   dataIndex: 'end',   key: 'end',   width: 80 },
     { title: '種別',   dataIndex: 'type',  key: 'type',  width: 100 },
