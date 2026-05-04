@@ -36,14 +36,13 @@ const { Option } = Select;
 const { RangePicker } = DatePicker;
 
 const SERVICE_TYPES = [
-  { value: "見守り", color: "blue" },
-  { value: "外出支援", color: "green" },
-  { value: "生活", color: "orange" },
-  { value: "身体介護", color: "red" },
-  { value: "入浴介助", color: "cyan" },
-  { value: "食事介助", color: "purple" },
-  { value: "移乗介助", color: "magenta" },
-  { value: "その他", color: "default" },
+  { value: "身体介護", color: "blue" },
+  { value: "家事援助", color: "green" },
+  { value: "生活援助", color: "orange" },
+  { value: "重度訪問介護", color: "red" },
+  { value: "移動支援", color: "cyan" },
+  { value: "同行援護", color: "purple" },
+  { value: "行動援護", color: "magenta" },
 ];
 
 type AddFormValues = {
