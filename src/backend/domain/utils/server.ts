@@ -128,10 +128,10 @@ server.put<{
 // POST /api/staff — 職員新規追加
 const StaffBodySchema = Type.Object({
   name:              Type.String({ minLength: 1 }),
-  position:          Type.String({ minLength: 1 }),
-  "employment-type": Type.String({ minLength: 1 }),
-  qualifications:    Type.String(),
-  "work-place":      Type.String({ minLength: 1 }),
+  position:          Type.Optional(Type.String()),
+  "employment-type": Type.Optional(Type.String()),
+  qualifications:    Type.Optional(Type.String()),
+  "work-place":      Type.Optional(Type.String()),
 });
 
 server.post<{ Body: Static<typeof StaffBodySchema> }>(
@@ -148,10 +148,10 @@ server.post<{ Body: Static<typeof StaffBodySchema> }>(
     const newStaff = {
       staffId:           newStaffId,
       name:              request.body.name,
-      position:          request.body.position,
-      "employment-type": request.body["employment-type"],
-      qualifications:    request.body.qualifications,
-      "work-place":      request.body["work-place"],
+      position:          request.body.position          ?? "",
+      "employment-type": request.body["employment-type"] ?? "",
+      qualifications:    request.body.qualifications     ?? "",
+      "work-place":      request.body["work-place"]      ?? "",
       days:    { workingDays: 0, paidLeaveDays: 0 },
       hours:   {
         workingHours: 0, nightHours: 0, morningEveningHours: 0,
