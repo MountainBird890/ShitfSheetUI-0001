@@ -61,11 +61,11 @@ const onFinish = async (values: StaffFormValues) => {
           <Input placeholder="例: 兵庫太郎" />
         </Form.Item>
         <Form.Item name="position" label="職種"
-          rules={[{ required: true, message: "職種を入力してください" }]}>
+          rules={[{ message: "職種を入力してください" }]}>
           <Input placeholder="例: 管理者" />
         </Form.Item>
         <Form.Item name="employmentType" label="勤務形態"
-          rules={[{ required: true, message: "勤務形態を選択してください" }]}>
+          rules={[{ message: "勤務形態を選択してください" }]}>
           <Select placeholder="選択してください">
             <Select.Option value="A">A</Select.Option>
             <Select.Option value="B">B</Select.Option>
@@ -76,7 +76,7 @@ const onFinish = async (values: StaffFormValues) => {
           <Input placeholder="例: 介護福祉士" />
         </Form.Item>
         <Form.Item name="workPlace" label="兼務先"
-          rules={[{ required: true, message: "兼務先を入力してください" }]}>
+          rules={[{ message: "兼務先を入力してください" }]}>
           <Input placeholder="例: 特別養護老人ホーム兵庫" />
         </Form.Item>
         <Form.Item>
