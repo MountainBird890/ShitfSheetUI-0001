@@ -36,8 +36,8 @@ function startServer() {
   log(`serverPath exists: ${fs.existsSync(serverPath)}`);
 
   const [cmd, args] = app.isPackaged
-    ? ["node", [serverPath]]
-    : [(process.platform === "win32" ? "tsx.cmd" : "tsx"), [serverPath]];
+  ? [path.join(process.resourcesPath, "node", "node.exe"), [serverPath]]
+  : [(process.platform === "win32" ? "tsx.cmd" : "tsx"), [serverPath]];
 
   log(`cmd: ${cmd}`);
 
