@@ -40,10 +40,10 @@ function startServer() {
   : [(process.platform === "win32" ? "tsx.cmd" : "tsx"), [serverPath]];
 
   log(`cmd: ${cmd}`);
-
+// 午後はココを修正して、Electronアプリの子プロセスも落とすようにする。
   serverProcess = spawn(cmd, args, {
     stdio: ["ignore", "pipe", "pipe"],
-    shell: true,
+    shell: false,
     env: { ...process.env, NODE_ENV: "production", RESOURCES_PATH: process.resourcesPath },
   });
 
@@ -88,7 +88,14 @@ app.whenReady().then(async () => {
   createWindow();
 });
 
+app.on("before-quit", () => {
+  if (serverProcess) {
+    serverProcess.kill("SIGTERM");
+    serverProcess = null;
+  }
+});
+
 app.on("window-all-closed", () => {
-  if (serverProcess) serverProcess.kill();
+  if (serverProcess) serverProcess.kill("SIGTERM");
   if (process.platform !== "darwin") app.quit();
 });
