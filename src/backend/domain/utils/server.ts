@@ -175,6 +175,22 @@ server.post<{ Body: Static<typeof StaffBodySchema> }>(
   }
 );
 
+// DELETE /api/staff/:staffId — 論理削除
+server.delete<{ Params: { staffId: string } }>(
+  "/api/staff/:staffId",
+  async (request, reply) => {
+    const { staffId } = request.params;
+    const data = await readData();
+    const idx = data.basedata.findIndex(
+      (s) => (s as Record<string, unknown>).staffId === staffId
+    );
+    if (idx === -1) return reply.status(404).send({ message: "Staff not found" });
+    (data.basedata[idx] as Record<string, unknown>).active = false;
+    await writeData(data);
+    return reply.send({ ok: true, staffId });
+  }
+);
+
 // ---- CSVダウンロード -------------------------------------------
 
 const CsvBodySchema = Type.Array(Type.Object({
