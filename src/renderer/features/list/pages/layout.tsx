@@ -1,19 +1,25 @@
 import { useState } from "react";
-import { Button, Modal } from "antd";
+import { Button, Modal, Space } from "antd";
 import StaffForm from "../ui/StaffForm";
 import UserColumn from "../ui/setTable";
+import DeleteStaff from "../ui/deleteStaff";
 import dayjs from "dayjs";
 
 export default function Shift() {
   const [open, setOpen] = useState(false);
   const [tableKey, setTableKey] = useState(0);
 
+  const handleSuccess = () => setTableKey(k => k + 1);
+
   return (
     <div className="layout">
       <div className="list">
-        <Button type="primary" onClick={() => setOpen(true)}>
-          職員を追加
-        </Button>
+        <Space style={{ marginBottom: 16 }}>
+          <Button type="primary" onClick={() => setOpen(true)}>
+            職員を追加
+          </Button>
+          <DeleteStaff onSuccess={handleSuccess} />
+        </Space>
 
         <Modal
           title="職員を追加"
@@ -24,7 +30,7 @@ export default function Shift() {
         >
           <StaffForm onSuccess={() => {
             setOpen(false);
-            setTableKey(k => k + 1);  // ★ テーブルを再mount→再fetch
+            handleSuccess();
           }} />
         </Modal>
 

@@ -6,7 +6,7 @@ import { useSchedule } from "../state/useSchedule";
 import { apiUrl } from "../../../../lib/api";
 
 type DetailEntry = { user: string; start: string; end: string; type: string; }
-type StaffWork = { staffId: string; name: string; details: Record<string, DetailEntry>; }
+type StaffWork = { staffId: string; name: string; details: Record<string, DetailEntry>; active?: boolean; }
 
 export default function UserColumn() {
   const { currentMonth } = useSchedule();
@@ -15,7 +15,9 @@ export default function UserColumn() {
   useEffect(() => {
     fetch(apiUrl('/api/staff'))
       .then(res => res.json())
-      .then(setAllStaff)
+      .then((list: StaffWork[]) =>
+        setAllStaff(list.filter(s => s.active !== false))
+      )
       .catch(err => console.error('fetch失敗:', err));
   }, []);
 

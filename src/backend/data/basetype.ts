@@ -11,6 +11,7 @@ export const ScheduleDetailSchema = Type.Object({
 export const StaffWorkSchema = Type.Object({
   staffId: Type.String(),// 職員ID
   name: Type.String(),// 職員名
+  active: Type.Optional(Type.Boolean()), // listの職員を削除ボタンの判定用タグ
 
   days: Type.Object({
     workingDays: Type.Number(),// 労働日数

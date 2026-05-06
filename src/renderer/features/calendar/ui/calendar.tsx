@@ -25,14 +25,16 @@ const CalendarInner: React.FC = () => {
   const [currentMonth, setCurrentMonth] = useState(dayjs());
 
   // ★ データをAPIから取得
-  const fetchData = () => {
-    setLoading(true);
-    fetch(apiUrl('/api/staff'))
-      .then(res => res.json())
-      .then(setData)
-      .catch(err => console.error('fetch失敗:', err))
-      .finally(() => setLoading(false));
-  };
+const fetchData = () => {
+  setLoading(true);
+  fetch(apiUrl('/api/staff'))
+    .then(res => res.json())
+    .then((list: StaffWork[]) =>
+      setData(list.filter(s => s.active !== false))  // ← !=とスペースなし
+    )
+    .catch(err => console.error('fetch失敗:', err))
+    .finally(() => setLoading(false));
+};
 
   useEffect(() => { fetchData(); }, []);
 

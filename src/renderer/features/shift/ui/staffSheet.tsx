@@ -21,6 +21,7 @@ type StaffWork = {
   name: string;
   schedule: { date: string; type: string }[];
   details: Record<string, DetailEntry>;
+  active?: boolean;
 }
 
 const StaffCalendar: React.FC<{
@@ -105,7 +106,9 @@ const StaffSheetCalendar: React.FC = () => {
   const fetchData = () => {
     fetch(apiUrl('/api/staff'))
       .then(res => res.json())
-      .then(setUseData)
+      .then((list: StaffWork[]) =>
+        setUseData(list.filter(s => s.active !== false))
+      )
       .catch(err => console.error('fetch失敗:', err));
   };
 

@@ -42,6 +42,7 @@ interface StaffWork {
   counts:  { travelCount: number };
   amounts: Record<string, number>;
   details?: Record<string, ScheduleDetail>;
+  active?: boolean;
 }
 
 // サーバーから返ってくるサマリー型
@@ -155,7 +156,7 @@ useEffect(() => {
   fetch(apiUrl("/api/staff"))
     .then(res => res.json())
     .then((list: StaffWork[]) =>
-      setStaffList(list) // ← filterを削除
+      setStaffList(list.filter(s => s.active !== false)) // ← filterを削除
     )
     .catch(err => console.error("職員一覧fetch失敗:", err));
 }, []);

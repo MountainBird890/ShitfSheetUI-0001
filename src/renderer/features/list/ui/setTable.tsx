@@ -1,15 +1,10 @@
+// setTable.tsx
 import { Table, Button, Popconfirm  } from "antd";
 import { useState, useEffect } from "react";
 import type { ColumnsType } from "antd/es/table";
 import type { Dayjs } from "dayjs";
 import { apiUrl } from "../../../../lib/api";
-
-type StaffRecord = {
-  staffId: string;
-  name: string;
-  active?: boolean;
-  details: Record<string, { user: string }>;
-};
+import type { StaffRecord } from "../type/type";
 
 function getAllUsers(basedata: StaffRecord[]): string[] {
   const userSet = new Set<string>();
@@ -50,17 +45,6 @@ export default function UserColumn({ value }: { value: Dayjs }) {
 
   useEffect(() => { fetchStaff(); }, []);
 
-  const handleDelete = async (staffId: string) => {
-    try {
-      const res = await fetch(apiUrl(`/api/staff/${staffId}`), {
-        method: "DELETE",
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      fetchStaff();  // 削除後に再fetch
-    } catch (err) {
-      console.error("削除失敗:", err);
-    }
-  };
 
   const allUsers = getAllUsers(staffList);
 
@@ -81,27 +65,6 @@ export default function UserColumn({ value }: { value: Dayjs }) {
         return isAssignedInMonth(record, userName, value) ? '○' : '';
       },
     })),
-    // ★ 削除ボタン列を追加
-    {
-      title: '操作',
-      key: 'action',
-      width: 80,
-      fixed: 'right' as const,
-      render(_: any, record: StaffRecord) {
-        return (
-          <Popconfirm
-            title="職員を削除しますか？"
-            description="データは非表示になります（記録は保持されます）"
-            onConfirm={() => handleDelete(record.staffId)}
-            okText="削除"
-            cancelText="キャンセル"
-            okButtonProps={{ danger: true }}
-          >
-            <Button danger size="small">削除</Button>
-          </Popconfirm>
-        );
-      },
-    },
   ];
 
   return (

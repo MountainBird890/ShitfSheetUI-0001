@@ -20,6 +20,7 @@ type StaffWork = {
   staffId: string;
   name: string;
   details: Record<string, DetailEntry>;
+  active?: boolean;
 }
 
 // ---- ShiftCard ----
@@ -54,7 +55,9 @@ const UserSheetCalendarInner: React.FC = () => {
   useEffect(() => {
     fetch(apiUrl('/api/staff'))
       .then(res => res.json())
-      .then(setUseData)
+      .then((list: StaffWork[]) =>
+        setUseData(list.filter(s => s.active !== false))
+      )
       .catch(err => console.error('fetch失敗:', err));
   }, []);
 
