@@ -13,6 +13,7 @@ import dayjs from "dayjs";
 import type { Dayjs } from "dayjs";
 import "dayjs/locale/ja";
 import { apiUrl } from "../../../../lib/api";
+import KimukeitaiCsvDl from "./kinmuketaiaCsvDl";
 
 dayjs.locale("ja");
 
@@ -329,6 +330,9 @@ const totals = useMemo(() => {
           <Typography.Title level={4} style={{ margin: 0 }}>
             勤務形態表　{month.format("YYYY年M月")}
           </Typography.Title>
+        </Col>
+        <Col>
+        <KimukeitaiCsvDl staffList={staffList} month={month} />
         </Col>
         <Col>
           <DatePicker
