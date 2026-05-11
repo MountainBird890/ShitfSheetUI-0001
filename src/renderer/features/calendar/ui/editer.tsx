@@ -26,6 +26,7 @@ import dayjs, { Dayjs } from "dayjs";
 import "dayjs/locale/ja";
 import locale from "antd/es/date-picker/locale/ja_JP";
 import { useEditor } from "../state/useCalendar";
+import { apiUrl } from "../../../../lib/api";
 
 dayjs.locale("ja");
 
@@ -74,6 +75,23 @@ const ScheduleEditModal: React.FC = () => {
   const [form] = Form.useForm<EditFormValues>();
   const [loading, setLoading] = useState(false);
   const [dirty, setDirty] = useState(false);
+  const [userOptions, setUserOptions] = useState<string[]>([]);
+
+// ご利用者欄のプルダウン
+  useEffect(() => {
+  fetch(apiUrl("/api/staff"))
+    .then(res => res.json())
+    .then((list: { details?: Record<string, { user: string }> }[]) => {
+      const userSet = new Set<string>();
+      list.forEach(staff =>
+        Object.values(staff.details ?? {}).forEach(d => {
+          if (d.user) userSet.add(d.user);
+        })
+      );
+      setUserOptions([...userSet].sort());
+    })
+    .catch(err => console.error("利用者一覧fetch失敗:", err));
+}, []);
 
   // Populate form when modal opens
   useEffect(() => {
@@ -200,7 +218,15 @@ const ScheduleEditModal: React.FC = () => {
             name="user"
             rules={[{ required: true, message: "ご利用者を入力してください" }]}
           >
-            <Input placeholder="例：加藤" size="large" />
+              <Select
+              showSearch
+              placeholder="例：加藤"
+              size="large"
+              options={userOptions.map(u => ({ value: u, label: u }))}
+              filterOption={
+                (input, option) => (option?.label ?? "").includes(input)   
+              }
+              />
           </Form.Item>
 
           {/* サービス提供日時 */}

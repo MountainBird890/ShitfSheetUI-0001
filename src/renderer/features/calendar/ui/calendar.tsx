@@ -1,3 +1,4 @@
+// 今日は予定を削除ボタンを作る
 import { useState, useEffect } from 'react';
 import type { BadgeProps, CalendarProps } from 'antd';
 import { Badge, Calendar, Select, Space, Spin } from 'antd';
