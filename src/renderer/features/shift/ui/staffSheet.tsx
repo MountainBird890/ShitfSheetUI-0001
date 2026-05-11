@@ -127,6 +127,8 @@ const StaffSheetCalendar: React.FC = () => {
   // 以下はuseDataをstateから参照するだけで変更なし
   const selectOptions = useData.map((s) => ({ value: s.staffId, label: s.name }));
   const selectedStaff = useData.find((s) => s.staffId === selectedStaffId);
+  const monthLabel = currentMonth.format("YYYY年M月");
+const staffName = selectedStaff?.name ?? "";
   const monthPrefix = currentMonth.format("YYYY-MM");
   const visibleData = Object.entries(selectedStaff?.details ?? {})
     .filter(([date]) => date.startsWith(monthPrefix))
@@ -149,7 +151,11 @@ const StaffSheetCalendar: React.FC = () => {
         style={{ textAlign: "center", width: 200, marginBottom: 16 }}
         placeholder="職員を選択"
       />
-      <DownloadButton data={visibleData} />
+      <DownloadButton
+  data={visibleData}
+  fileName={`勤務表-${staffName}さん-${monthLabel}`}
+  label={`${staffName}さん　${monthLabel}`}
+/>
       <StaffCalendar
         staffId={selectedStaffId}
         staffData={useData}  // ← propsで渡す

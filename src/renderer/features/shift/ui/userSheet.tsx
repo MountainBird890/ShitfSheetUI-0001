@@ -83,6 +83,7 @@ const UserSheetCalendarInner: React.FC = () => {
   }, [userOptions]);
 
   const monthPrefix = currentMonth.format("YYYY-MM");
+  const monthLabel = currentMonth.format("YYYY年M月");
   const visibleData = useData.flatMap((staff) =>
     Object.entries(staff.details)
       .filter(([date, detail]) =>
@@ -148,7 +149,11 @@ const UserSheetCalendarInner: React.FC = () => {
         style={{ textAlign: "center", width: 200, marginBottom: 16 }}
         placeholder="ご利用者を選択"
       />
-      <DownloadButton data={visibleData} />
+      <DownloadButton
+  data={visibleData}
+  fileName={`勤務表-${selectedUser}様-${monthLabel}`}
+  label={`${selectedUser}様　${monthLabel}`}
+/>
       <Calendar
         cellRender={cellRender}
         locale={jaJP}
