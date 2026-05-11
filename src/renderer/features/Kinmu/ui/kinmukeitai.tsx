@@ -13,7 +13,7 @@ import dayjs from "dayjs";
 import type { Dayjs } from "dayjs";
 import "dayjs/locale/ja";
 import { apiUrl } from "../../../../lib/api";
-import KimukeitaiCsvDl from "./kinmuketaiaCsvDl";
+import KimukeitaiCsvDl from "./kinmuketaiCsvDl";
 
 dayjs.locale("ja");
 
