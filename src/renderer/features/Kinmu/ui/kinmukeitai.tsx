@@ -272,7 +272,7 @@ useEffect(() => {
       }),
       render: (_: unknown, record: StaffWork) => {
         const detail = record.details?.[dateStr];
-        if (!detail) return <span style={{ color: "#e8e8e8" }}>—</span>;
+        if (!detail) return <span style={{ color: "#e8e8e8" }}>0</span>;
 
         const bd     = calcShift(detail);
         const startT = dayjs(detail.start).format("HH:mm");
