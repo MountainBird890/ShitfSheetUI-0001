@@ -49,7 +49,7 @@ export default function StaffColumn() {
   });
 
   const columns: ColumnsType<any> = [
-    { title: 'ご利用者', dataIndex: 'user', key: 'user', width: 100, fixed: 'left' },
+    { title: 'ご利用者', dataIndex: 'user', key: 'user', width: 100, align: 'center', fixed: 'left' },
     ...[...Array(daysInMonth)].map((_, index) => {
       const day = startDate.add(index, 'day');
       const dateStr = day.format('YYYY-MM-DD');
@@ -57,10 +57,10 @@ export default function StaffColumn() {
         title: day.format('M/D(ddd)'),
         key: dateStr,
         children: [
-          { title: '職員', dataIndex: `${dateStr}_name`, key: `${dateStr}_name`, width: 100, render: (text: string) => text || '-' },
-          { title: '開始', dataIndex: `${dateStr}_start`, key: `${dateStr}_start`, width: 80, render: (text: string) => text ? dayjs(text).format('HH:mm') : '-' },
-          { title: '終了', dataIndex: `${dateStr}_end`, key: `${dateStr}_end`, width: 80, render: (text: string) => text ? dayjs(text).format('HH:mm') : '-' },
-          { title: '種別', dataIndex: `${dateStr}_type`, key: `${dateStr}_type`, width: 100, render: (text: string) => text || '-' },
+          { title: '職員', dataIndex: `${dateStr}_name`, key: `${dateStr}_name`, width: 100, align: 'center',  render: (text: string) => text || '-' },
+          { title: '開始', dataIndex: `${dateStr}_start`, key: `${dateStr}_start`, width: 80, align: 'center',  render: (text: string) => text ? dayjs(text).format('HH:mm') : '-' },
+          { title: '終了', dataIndex: `${dateStr}_end`, key: `${dateStr}_end`, width: 80, align: 'center',  render: (text: string) => text ? dayjs(text).format('HH:mm') : '-' },
+          { title: '種別', dataIndex: `${dateStr}_type`, key: `${dateStr}_type`, width: 100, align: 'center',  render: (text: string) => text || '-' },
         ],
       };
     }),
