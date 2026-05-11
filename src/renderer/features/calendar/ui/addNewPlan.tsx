@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   Form,
@@ -62,6 +62,7 @@ const AddNewPlanModal: React.FC<Props> = ({ staffOptions, onSuccess }) => {
   const [form] = Form.useForm<AddFormValues>();
   const [loading, setLoading] = useState(false);
   const [dirty, setDirty] = useState(false);
+  const [userOptions, setUserOptions] = useState<string[]>([]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -110,6 +111,22 @@ const AddNewPlanModal: React.FC<Props> = ({ staffOptions, onSuccess }) => {
 
   const typeColor = (t?: string) =>
     SERVICE_TYPES.find((s) => s.value === t)?.color ?? "default";
+
+  // ご利用者欄のプルダウン
+    useEffect(() => {
+    fetch(apiUrl("/api/staff"))
+      .then(res => res.json())
+      .then((list: { details?: Record<string, { user: string }> }[]) => {
+        const userSet = new Set<string>();
+        list.forEach(staff =>
+          Object.values(staff.details ?? {}).forEach(d => {
+            if (d.user) userSet.add(d.user);
+          })
+        );
+        setUserOptions([...userSet].sort());
+      })
+      .catch(err => console.error("利用者一覧fetch失敗:", err));
+  }, []);
 
   return (
     <>
@@ -212,7 +229,15 @@ const AddNewPlanModal: React.FC<Props> = ({ staffOptions, onSuccess }) => {
               name="user"
               rules={[{ required: true, message: "ご利用者を入力してください" }]}
             >
-              <Input placeholder="例：加藤" size="large" />
+                            <Select
+                            showSearch
+                            placeholder="ご利用者を選択"
+                            size="large"
+                            options={userOptions.map(u => ({ value: u, label: u }))}
+                            filterOption={
+                              (input, option) => (option?.label ?? "").includes(input)   
+                            }
+                            />
             </Form.Item>
 
             {/* サービス提供日時 */}

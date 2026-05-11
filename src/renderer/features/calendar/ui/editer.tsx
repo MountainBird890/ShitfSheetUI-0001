@@ -220,7 +220,7 @@ const ScheduleEditModal: React.FC = () => {
           >
               <Select
               showSearch
-              placeholder="例：加藤"
+              placeholder="ご利用者を選択"
               size="large"
               options={userOptions.map(u => ({ value: u, label: u }))}
               filterOption={
