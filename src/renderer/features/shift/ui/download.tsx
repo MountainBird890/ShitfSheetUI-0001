@@ -64,7 +64,7 @@ const handleDownloadCsv = async () => {
     try {
       const pdfDoc = await PDFDocument.create()
       pdfDoc.registerFontkit(fontkit)
-      const fontBytes = await fetch(apiUrl('/public/fonts/NotoSansJP-VariableFont_wght.ttf'))
+      const fontBytes = await fetch(apiUrl('../../../../../public/fonts/NotoSansJP-VariableFont_wght.ttf'))
         .then(r => r.arrayBuffer())
       const font = await pdfDoc.embedFont(fontBytes)
 
