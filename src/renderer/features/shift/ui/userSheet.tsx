@@ -6,6 +6,7 @@ import { DownloadButton } from "./download";
 import { OpenCard, HandleCard } from "../state/useShift"; // ← 追加
 import UserDaysColumns from "./UserShift";
 import { apiUrl } from "../../../../lib/api";
+import "../../../shared/index.css"
 
 dayjs.locale('ja');
 

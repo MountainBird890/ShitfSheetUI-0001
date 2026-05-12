@@ -14,6 +14,7 @@ import { DlState } from '../state/useCalendar';
 import AddNewPlanModal from './addNewPlan';
 import CopyScheduleModal from './copySchedule';
 import { apiUrl } from '../../../../lib/api';
+import '../../../shared/index.css'
 
 dayjs.locale('ja');
 

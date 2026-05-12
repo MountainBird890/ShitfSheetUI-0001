@@ -6,6 +6,7 @@ import jaJP from 'antd/es/calendar/locale/ja_JP';
 import DaysColumns from "./StaffShift";
 import { DownloadButton } from "./download";
 import { apiUrl } from "../../../../lib/api";
+import "../../../shared/index.css"
 
 dayjs.locale('ja');
 

@@ -1,0 +1,31 @@
+/* 曜日を中央揃えにし、サイズを大きくする */
+.ant-picker-calendar .ant-picker-content th {
+  text-align: center;
+  font-size: 16px;
+  padding-bottom: 10px;
+  padding-inline-end: 0 !important;
+}
+
+/* 日曜日の列 (1番目の列) */
+.ant-picker-content th:nth-child(1),
+.ant-picker-content td:nth-child(1) .ant-picker-cell-inner {
+  color: #ff4d4f !important; /* Antd標準の赤色系 */
+}
+
+/* 土曜日の列 (7番目の列) */
+.ant-picker-content th:nth-child(7),
+.ant-picker-content td:nth-child(7) .ant-picker-cell-inner {
+  color: #1890ff !important; /* Antd標準の青色系 */
+}
+
+/* 日付の数字を中央揃えにし、フォントサイズを調整する */
+.ant-picker-calendar .ant-picker-cell-inner {
+  display: flex;
+  justify-content: center; /* 水平中央 */
+  align-items: center;     /* 垂直中央 */
+  font-size: 18px;
+}
+
+.ant-picker-calendar .ant-picker-calendar-date-value {
+    text-align: center;
+}
