@@ -39,7 +39,7 @@ const { Sider, Content } = Layout;
 
 return(
     <Layout>
-        <Sider>
+        <Sider theme='light'>
             <Menu items={categories}/>
         </Sider>
         <Content>
