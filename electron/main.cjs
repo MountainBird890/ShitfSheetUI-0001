@@ -72,7 +72,6 @@ function createWindow() {
     autoHideMenuBar: true,  // メニューバーを非表示。アプリ名と右上バツボタンと縮小ボタンは残す。
     webPreferences: { nodeIntegration: false, contextIsolation: true },
   });
-  win.webContents.openDevTools();
   if (app.isPackaged) {
     win.loadURL(`file://${path.join(__dirname, "../dist/index.html").replace(/\\/g, "/")}`);
   } else {
