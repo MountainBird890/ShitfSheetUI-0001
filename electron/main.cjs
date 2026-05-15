@@ -69,6 +69,7 @@ function waitForServer(url, retries = 20, interval = 500) {
 function createWindow() {
   const win = new BrowserWindow({
     width: 1280, height: 800,
+    autoHideMenuBar: true,  // メニューバーを非表示。アプリ名と右上バツボタンと縮小ボタンは残す。
     webPreferences: { nodeIntegration: false, contextIsolation: true },
   });
   win.webContents.openDevTools();
