@@ -9,8 +9,6 @@ import jaJP from 'antd/es/calendar/locale/ja_JP';
 import type { StaffWork } from '../../../../backend/data/basetype';
 import { handleSearch, HandleScheduleEditor, useEditor } from '../state/useCalendar';
 import ScheduleEditModal from './editer';
-import { DownloadButton } from './downloadCSV';
-import { DlState } from '../state/useCalendar';
 import AddNewPlanModal from './addNewPlan';
 import CopyScheduleModal from './copySchedule';
 import { apiUrl } from '../../../../lib/api';
@@ -122,10 +120,6 @@ const fetchData = () => {
           onSuccess={handleSuccess}
         />
       </Space>
-
-      <DlState>
-        <DownloadButton data={visibleData} />
-      </DlState>
       <Calendar
         cellRender={cellRender}
         locale={jaJP}
