@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const { spawn } = require("node:child_process");
 const path = require("node:path");
 const fs = require("node:fs");
@@ -68,16 +68,35 @@ function waitForServer(url, retries = 20, interval = 500) {
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 1280, height: 800,
-    autoHideMenuBar: true,  // メニューバーを非表示。アプリ名と右上バツボタンと縮小ボタンは残す。
-    webPreferences: { nodeIntegration: false, contextIsolation: true },
+    width: 1280,
+    height: 800,
+    frame: false,          // ★ ネイティブフレームを完全に削除
+    webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true,
+      preload: path.join(__dirname, "preload.cjs"),  // ★ preloadを追加
+    },
   });
+  win.setMenu(null);
   if (app.isPackaged) {
     win.loadURL(`file://${path.join(__dirname, "../dist/index.html").replace(/\\/g, "/")}`);
   } else {
     win.loadURL("http://localhost:5173");
   }
 }
+
+// ウィンドウ操作のipcハンドラ（画面右上の縮小、拡大、閉じるボタン）
+ipcMain.on("window-minimize", () => {
+  BrowserWindow.getFocusedWindow()?.minimize();
+});
+ipcMain.on("window-maximize", () => {
+  const win = BrowserWindow.getFocusedWindow();
+  if (win?.isMaximized()) win.unmaximize();
+  else win?.maximize();
+});
+ipcMain.on("window-close", () => {
+  BrowserWindow.getFocusedWindow()?.close();
+});
 
 app.whenReady().then(async () => {
   startServer();  // ★ LOG_PATH初期化はここで行われる
