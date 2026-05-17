@@ -10,6 +10,7 @@ import type { StaffWork } from '../../../../backend/data/basetype';
 import { handleSearch, HandleScheduleEditor, useEditor } from '../state/useCalendar';
 import ScheduleEditModal from './editer';
 import AddNewPlanModal from './addNewPlan';
+import DeletePlan from './deletePlan';
 import CopyScheduleModal from './copySchedule';
 import { apiUrl } from '../../../../lib/api';
 import '../../../shared/index.css'
@@ -114,6 +115,7 @@ const fetchData = () => {
           style={{ width: 200 }}
         />
         <AddNewPlanModal staffOptions={staffOptions} onSuccess={handleSuccess} />
+        <DeletePlan currentMonth={currentMonth} onSuccess={handleSuccess} />
         <CopyScheduleModal
           currentYear={currentMonth.year()}
           currentMonth={currentMonth.month() + 1}

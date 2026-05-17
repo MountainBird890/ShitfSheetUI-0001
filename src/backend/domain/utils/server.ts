@@ -320,6 +320,29 @@ server.post<{ Body: Static<typeof AddScheduleBodySchema> }>(
   }
 );
 
+// ---- 予定削除 --------------------------------------------------
+// DELETE /api/staff/:staffId/schedule/:dateKey — 予定削除
+server.delete<{ Params: { staffId: string; dateKey: string } }>(
+  "/api/staff/:staffId/schedule/:dateKey",
+  async (request, reply) => {
+    const { staffId, dateKey } = request.params;
+    const data = await readData();
+    const idx = data.basedata.findIndex(
+      (s) => (s as Record<string, unknown>).staffId === staffId
+    );
+    if (idx === -1) return reply.status(404).send({ message: "Staff not found" });
+
+    const staff = data.basedata[idx] as Record<string, unknown>;
+    const details = (staff.details ?? {}) as Record<string, unknown>;
+    if (!details[dateKey]) return reply.status(404).send({ message: "Schedule not found" });
+
+    delete details[dateKey];
+    staff.details = details;
+    await writeData(data);
+    return reply.send({ ok: true, staffId, dateKey });
+  }
+);
+
 // ---- 月コピー --------------------------------------------------
 
 const CopyScheduleBodySchema = Type.Object({
