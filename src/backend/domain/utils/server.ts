@@ -386,7 +386,6 @@ server.delete<{ Params: { staffId: string; dateKey: string } }>(
 );
 
 // ---- 月コピー --------------------------------------------------
-// 午後はココを修正して、日付から曜日でコピーできるようにする。
 const CopyScheduleBodySchema = Type.Object({
   fromYear:  Type.Integer({ minimum: 2000, maximum: 2100 }),
   fromMonth: Type.Integer({ minimum: 1,    maximum: 12   }),
@@ -458,6 +457,59 @@ server.post<{ Body: Static<typeof CopyScheduleBodySchema> }>(
 
     await writeData(data);
     return reply.status(200).send({ ok: true, copiedDays });
+  }
+);
+
+// ---- 内勤・研修データ保存 --------------------------------------------------
+const InternalWorkBodySchema = Type.Object({
+  staffId:  Type.String({ minLength: 1 }),
+  dateKey:  Type.String({ pattern: "^\\d{4}-\\d{2}-\\d{2}$" }),
+  workType: Type.Union([Type.Literal("training"), Type.Literal("office")]),
+  start:    Type.String({ pattern: "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}$" }),
+  end:      Type.String({ pattern: "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}$" }),
+});
+
+server.post<{ Body: Static<typeof InternalWorkBodySchema> }>(
+  "/api/schedule/internal",
+  { schema: { body: InternalWorkBodySchema } },
+  async (request, reply) => {
+    const { staffId, dateKey, workType, start, end } = request.body;
+
+    // 時間計算（分 → 時間）
+    const startMin = new Date(start).getHours() * 60 + new Date(start).getMinutes();
+    const endMin   = new Date(end).getHours() * 60 + new Date(end).getMinutes();
+    const adjEnd   = endMin <= startMin ? endMin + 1440 : endMin;
+    const hours    = Math.round(((adjEnd - startMin) / 60) * 10) / 10;
+
+    const data = await readData();
+    const idx  = data.basedata.findIndex(
+      (s) => (s as Record<string, unknown>).staffId === staffId
+    );
+    if (idx === -1) return reply.status(404).send({ message: "Staff not found" });
+
+    const staff = data.basedata[idx] as Record<string, unknown>;
+    const hoursObj = (staff.hours ?? {}) as Record<string, number>;
+
+    if (workType === "training") {
+      hoursObj.careTrainingHours = (hoursObj.careTrainingHours ?? 0) + hours;
+    } else {
+      hoursObj.officeWorkHours = (hoursObj.officeWorkHours ?? 0) + hours;
+    }
+
+    staff.hours = hoursObj;
+
+    // detailsにも記録（カレンダーに表示させるため）
+    const details = (staff.details ?? {}) as Record<string, Record<string, string>>;
+    details[dateKey] = {
+      user:  workType === "training" ? "研修" : "内勤",
+      start,
+      end,
+      type:  workType === "training" ? "研修" : "内勤",
+    };
+    staff.details = details;
+
+    await writeData(data);
+    return reply.status(201).send({ ok: true, staffId, dateKey, hours });
   }
 );
 

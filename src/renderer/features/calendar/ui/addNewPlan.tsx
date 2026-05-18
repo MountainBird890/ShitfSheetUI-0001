@@ -14,6 +14,7 @@ import {
   Col,
   Card,
   message,
+  Radio
 } from "antd";
 import {
   UserOutlined,
@@ -63,13 +64,10 @@ const AddNewPlanModal: React.FC<Props> = ({ staffOptions, onSuccess }) => {
   const [loading, setLoading] = useState(false);
   const [dirty, setDirty] = useState(false);
   const [userOptions, setUserOptions] = useState<string[]>([]);
+  const [workMode, setWorkMode] = useState<"normal" | "training" | "office">("normal");
 
   const handleOpen = () => {
     setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
   };
 
   const handleSubmit = async () => {
@@ -81,7 +79,8 @@ const AddNewPlanModal: React.FC<Props> = ({ staffOptions, onSuccess }) => {
       const start = values.dateRange[0].format("YYYY-MM-DDTHH:mm");
       const end = values.dateRange[1].format("YYYY-MM-DDTHH:mm");
 
-      const res = await fetch(apiUrl("/api/schedule/add"), {
+      if(workMode === "normal"){
+        const res = await fetch(apiUrl("/api/schedule/add"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -98,9 +97,27 @@ const AddNewPlanModal: React.FC<Props> = ({ staffOptions, onSuccess }) => {
         const err = await res.json();
         throw new Error(err.error ?? "保存に失敗しました");
       }
+      } else {
+        const res = await fetch(apiUrl("/api/schedule/internal"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          staffId:  values.staffId,
+          dateKey,
+          workType: workMode === "training" ? "training" : "office",
+          start,
+          end,
+        }),
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error ?? "保存に失敗しました");
+      }
+      }
 
       message.success("予定を追加しました");
       setOpen(false);
+      setWorkMode("normal");
       onSuccess?.();
     } catch (e: any) {
       message.error(e.message ?? "エラーが発生しました");
@@ -108,6 +125,11 @@ const AddNewPlanModal: React.FC<Props> = ({ staffOptions, onSuccess }) => {
       setLoading(false);
     }
   };
+
+  const handleClose = () => {
+  setOpen(false);
+  setWorkMode("normal");
+};
 
   const typeColor = (t?: string) =>
     SERVICE_TYPES.find((s) => s.value === t)?.color ?? "default";
@@ -216,9 +238,27 @@ const AddNewPlanModal: React.FC<Props> = ({ staffOptions, onSuccess }) => {
               />
             </Form.Item>
 
+            {/* ★ 内勤・研修ラジオボタン */}
+            <Form.Item label={<span style={{ fontWeight: 600 }}>区分</span>}>
+            <Radio.Group
+            value={workMode}
+            onChange={e => {
+              setWorkMode(e.target.value);
+              form.resetFields(["user", "type"]);
+            }}
+            >
+              <Radio value="normal">通常</Radio>
+              <Radio value="office">内勤</Radio>
+              <Radio value="training">研修</Radio>
+            </Radio.Group>
+            </Form.Item>
+
             <Divider style={{ margin: "8px 0 16px" }} />
 
+            {/* 通常時のみ表示 */}
             {/* ご利用者 */}
+            {workMode === "normal" && (
+            <>
             <Form.Item
               label={
                 <Space size={6}>
@@ -239,8 +279,10 @@ const AddNewPlanModal: React.FC<Props> = ({ staffOptions, onSuccess }) => {
                             }
                             />
             </Form.Item>
+            </>
+            )}
 
-            {/* サービス提供日時 */}
+            {/* サービス提供日時 （常に表示） */}
             <Form.Item
               label={
                 <Space size={6}>
@@ -261,7 +303,9 @@ const AddNewPlanModal: React.FC<Props> = ({ staffOptions, onSuccess }) => {
               />
             </Form.Item>
 
+            {/* 通常時のみ表示 */}
             {/* 種別 */}
+            {workMode === "normal" && (
             <Form.Item
               label={
                 <Space size={6}>
@@ -282,6 +326,7 @@ const AddNewPlanModal: React.FC<Props> = ({ staffOptions, onSuccess }) => {
                 ))}
               </Select>
             </Form.Item>
+            )}
           </Form>
 
           {/* Preview card　コミット161から非表示中

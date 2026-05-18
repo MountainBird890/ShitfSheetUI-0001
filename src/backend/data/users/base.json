@@ -1691,7 +1691,7 @@
         "overtimeHours": 19,
         "emergencyPrevHours": 3,
         "emergencySameDayHours": 3,
-        "careTrainingHours": 5
+        "careTrainingHours": 7
       },
       "counts": {
         "travelCount": 3821
@@ -1750,7 +1750,8 @@
         "overtimeHours": 0,
         "emergencyPrevHours": 0,
         "emergencySameDayHours": 0,
-        "careTrainingHours": 0
+        "careTrainingHours": 0,
+        "officeWorkHours": 6
       },
       "counts": {
         "travelCount": 0
@@ -1770,7 +1771,14 @@
         "yearEndAllowance": 0,
         "specialBonus": 0
       },
-      "details": {}
+      "details": {
+        "2026-05-25": {
+          "user": "内勤",
+          "start": "2026-05-25T12:00",
+          "end": "2026-05-25T18:00",
+          "type": "内勤"
+        }
+      }
     },
     {
       "staffId": "22",
