@@ -26,6 +26,7 @@ export const StaffWorkSchema = Type.Object({
     emergencyPrevHours: Type.Number(),// 緊急前日
     emergencySameDayHours: Type.Number(),// 緊急当日
     careTrainingHours: Type.Number(),// 介護練習
+    officeWorkHours: Type.Number(),// 内勤時間
   }),
 
   counts: Type.Object({
