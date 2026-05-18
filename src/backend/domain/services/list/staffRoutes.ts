@@ -43,7 +43,7 @@ export async function staffRoutes(app: FastifyInstance) {
         days:    { workingDays: 0, paidLeaveDays: 0 },
         hours:   { workingHours: 0, nightHours: 0, morningEveningHours: 0,
                    overtimeHours: 0, emergencyPrevHours: 0,
-                   emergencySameDayHours: 0, careTrainingHours: 0 },
+                   emergencySameDayHours: 0, careTrainingHours: 0, officeWorkHours: 0 },
         counts:  { travelCount: 0 },
         amounts: { drivingAllowance: 0, specialAllowance1: 0, specialAllowance2: 0,
                    trainingAllowance: 0, bathingAllowance: 0, excretionAllowance: 0,
