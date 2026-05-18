@@ -214,7 +214,7 @@ const AddNewPlanModal: React.FC<Props> = ({ staffOptions, onSuccess }) => {
             form={form}
             layout="vertical"
             onValuesChange={() => setDirty(true)}
-            requiredMark="optional"
+            requiredMark={false}
           >
             {/* 職員選択 */}
             <Form.Item
