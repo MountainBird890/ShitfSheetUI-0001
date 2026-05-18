@@ -405,7 +405,6 @@ server.post<{ Body: Static<typeof CopyScheduleBodySchema> }>(
     }
 
     const fromPrefix = `${fromYear}-${String(fromMonth).padStart(2, "0")}`;
-    const toPrefix   = `${toYear}-${String(toMonth).padStart(2, "0")}`;
 
     const data = await readData();
     let copiedDays = 0;
@@ -419,8 +418,33 @@ server.post<{ Body: Static<typeof CopyScheduleBodySchema> }>(
       );
 
       for (const [fromDateKey, entry] of fromEntries) {
-        const day       = fromDateKey.slice(8, 10);
-        const toDateKey = `${toPrefix}-${day}`;
+        // ★ コピー元の曜日を取得（0=日, 1=月, ..., 6=土）
+        const fromDate = new Date(fromDateKey);
+        const fromDow = fromDate.getDay();
+
+        // ★ コピー先の月の同じ曜日の日付を全て探す
+        const toYear_ = toYear;
+        const toMonth_ = toMonth;
+        const firstDayOfToMonth = new Date(toYear_, toMonth_ - 1, 1);
+        const daysInToMonth = new Date(toYear_, toMonth_, 0).getDate();
+
+        // コピー先月の最初の同曜日を求める
+        const firstDow = firstDayOfToMonth.getDay();
+        let firstMatchDay = 1 + ((fromDow - firstDow + 7) % 7);
+
+        // 同曜日の全ての日付にコピー（1回だけコピーする場合は最初の1件のみ）
+        // ★ コピー元の日が何番目の同曜日かを求める
+        const fromDay = fromDate.getDate();
+        const weekIndex = Math.floor((fromDay - 1) / 7); // 0=第1週, 1=第2週...
+
+        // コピー先の同じ週番号・同じ曜日の日付を求める
+        const toDay = firstMatchDay + weekIndex * 7;
+
+        // 月末を超える場合はスキップ
+        if (toDay > daysInToMonth) continue;
+
+        const toDateKey = `${toYear_}-${String(toMonth_).padStart(2, "0")}-${String(toDay).padStart(2, "0")}`;
+        const toPrefix = `${toYear_}-${String(toMonth_).padStart(2, "0")}`;
         const newEntry: Record<string, string> = {};
         for (const [k, v] of Object.entries(entry)) {
           newEntry[k] = v.replace(fromPrefix, toPrefix);
