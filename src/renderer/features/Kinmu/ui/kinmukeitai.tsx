@@ -57,6 +57,7 @@ interface ApiMonthlySummary {
   careHours:           number;
   careRatio:           number;
   trainingHours:       number;
+  officeWorkHours:     number;
   travelHours:         number;
 }
 
@@ -112,6 +113,7 @@ const items = [
   { title: "介護時間",       value: s.careHours,            suffix: "h"  },
   { title: "介護率",         value: s.careRatio,            suffix: "%"  },
   { title: "研修時間",       value: s.trainingHours,        suffix: "h"  }, // ← 変更
+  { title: "内勤時間",       value: s.officeWorkHours,      suffix: "h"  },
   { title: "移動時間", value: s.travelHours, suffix: "h" },
 ];
   return (
@@ -237,6 +239,14 @@ useEffect(() => {
   },
 },
 {
+  title: "内勤時間(h)", key: "officeWorkHours",
+  width: 80, fixed: "left", align: "center",
+  render: (_, r) => {
+    const v = summaryMap[r.staffId]?.officeWorkHours ?? 0;
+    return v > 0 ? <Tag color="cyan">{v}h</Tag> : <span style={{ color: "#ccc" }}>0h</span>;
+  },
+},
+{
   title: "移動時間(h)", key: "travelHours",
   width: 80, fixed: "left", align: "center",
   render: (_, r) => {
@@ -316,6 +326,7 @@ const totals = useMemo(() => {
     workingHours:  list.reduce((s, r) => s + r.workingHours,  0),
     careHours:     list.reduce((s, r) => s + r.careHours,     0),
     trainingHours: list.reduce((s, r) => s + r.trainingHours, 0),
+    officeWorkHours: list.reduce((s, r) => s + r.officeWorkHours, 0), 
     travelHours: list.reduce((s, r) => s + r.travelHours, 0),
   };
 }, [summaryMap]);
@@ -353,6 +364,7 @@ const totals = useMemo(() => {
             { label: "総労働時間",  value: totals.workingHours,      suffix: "h"  },
             { label: "総介護時間",  value: totals.careHours,         suffix: "h"  },
             { label: "総研修時間", value: totals.trainingHours, suffix: "h"  },
+            { label: "総内勤時間", value: totals.officeWorkHours, suffix: "h" }, 
             { label: "総移動時間", value: totals.travelHours, suffix: "h" },
           ].map(it => (
             <Col key={it.label} xs={12} sm={8} md={4}>

@@ -18,7 +18,8 @@
         "overtimeHours": 4,
         "emergencyPrevHours": 1,
         "emergencySameDayHours": 1,
-        "careTrainingHours": 4
+        "careTrainingHours": 4,
+        "officeWorkHours": 12
       },
       "counts": {
         "travelCount": 3916
@@ -170,6 +171,30 @@
           "start": "2026-08-08T14:00",
           "end": "2026-08-08T16:00",
           "type": "生活援助"
+        },
+        "2026-05-05": {
+          "user": "内勤",
+          "start": "2026-05-05T09:00",
+          "end": "2026-05-05T15:00",
+          "type": "内勤"
+        },
+        "2026-05-07": {
+          "user": "研修",
+          "start": "2026-05-07T15:00",
+          "end": "2026-05-07T17:00",
+          "type": "研修"
+        },
+        "2026-05-19": {
+          "user": "内勤",
+          "start": "2026-05-19T09:00",
+          "end": "2026-05-19T15:00",
+          "type": "内勤"
+        },
+        "2026-05-21": {
+          "user": "研修",
+          "start": "2026-05-21T15:00",
+          "end": "2026-05-21T17:00",
+          "type": "研修"
         }
       }
     },
@@ -2019,6 +2044,47 @@
         "emergencyPrevHours": 0,
         "emergencySameDayHours": 0,
         "careTrainingHours": 0
+      },
+      "counts": {
+        "travelCount": 0
+      },
+      "amounts": {
+        "drivingAllowance": 0,
+        "specialAllowance1": 0,
+        "specialAllowance2": 0,
+        "trainingAllowance": 0,
+        "bathingAllowance": 0,
+        "excretionAllowance": 0,
+        "lodgingAllowance": 0,
+        "longStayAllowance": 0,
+        "commutingAllowance": 0,
+        "businessTripDay": 0,
+        "businessTripStay": 0,
+        "yearEndAllowance": 0,
+        "specialBonus": 0
+      },
+      "details": {}
+    },
+    {
+      "staffId": "26",
+      "name": "鎌倉太郎",
+      "position": "事務員",
+      "employment-type": "B",
+      "qualifications": "",
+      "work-place": "",
+      "days": {
+        "workingDays": 0,
+        "paidLeaveDays": 0
+      },
+      "hours": {
+        "workingHours": 0,
+        "nightHours": 0,
+        "morningEveningHours": 0,
+        "overtimeHours": 0,
+        "emergencyPrevHours": 0,
+        "emergencySameDayHours": 0,
+        "careTrainingHours": 0,
+        "officeWorkHours": 0
       },
       "counts": {
         "travelCount": 0

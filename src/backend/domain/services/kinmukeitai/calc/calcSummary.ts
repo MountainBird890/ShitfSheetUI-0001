@@ -17,6 +17,7 @@ export interface StaffWork {
     emergencyPrevHours:    number;
     emergencySameDayHours: number;
     careTrainingHours:     number;
+    officeWorkHours:       number;
   };
   counts:  { travelCount: number };
   amounts: Record<string, number>;
@@ -33,6 +34,7 @@ export interface MonthlySummary {
   careHours:           number;
   careRatio:           number;
   trainingHours:       number;
+  officeWorkHours:     number;
   travelHours:         number; // ← 移動回数→移動時間に変更
   dailyBreakdown: Record<string, {
     user:      string;
@@ -190,12 +192,13 @@ export function calcMonthlySummary(
     staffId:             staff.staffId,
     name:                staff.name,
     workingDays:         days.size || staff.days.workingDays,
-    workingHours:        wH,
+    workingHours:        toH(wm), // 介護時間＋内勤＋研修時間の合算
     nightHours:          toH(nm),
     morningEveningHours: toH(mm),
-    careHours:           toH(cm),
+    careHours:           toH(wm) - (staff.hours.officeWorkHours ?? 0) - staff.hours.careTrainingHours, // 介護時間オンリー
     careRatio:           wH > 0 ? Math.round((toH(cm) / wH) * 1000) / 10 : 0,
     trainingHours:       staff.hours.careTrainingHours,
+    officeWorkHours:     staff.hours.officeWorkHours ?? 0,  
     travelHours:         toH(tvm), // ← 移動時間（時間換算）
     dailyBreakdown,
   };
