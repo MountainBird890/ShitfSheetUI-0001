@@ -284,7 +284,7 @@ const AddNewPlanModal: React.FC<Props> = ({ staffOptions, onSuccess }) => {
             </Form.Item>
           </Form>
 
-          {/* Preview card */}
+          {/* Preview card　コミット161から非表示中
           {dirty && (
             <Card
               size="small"
@@ -321,6 +321,7 @@ const AddNewPlanModal: React.FC<Props> = ({ staffOptions, onSuccess }) => {
               </Row>
             </Card>
           )}
+          */}
         </div>
 
         {/* ── Footer ── */}

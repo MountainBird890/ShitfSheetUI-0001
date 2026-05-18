@@ -107,12 +107,12 @@ export function SearchState({children} : {children: ReactNode}){
 
 // Contextの型定義
 interface EditorContextValue {
-  open: boolean;
-  staff: StaffRecord | null;
-  dateKey: string | null;
-  openEditor: (staff: StaffRecord, dateKey: string) => void;
+  open:        boolean;
+  staff:       StaffRecord | null;
+  dateKey:     string | null;
+  openEditor:  (staff: StaffRecord, dateKey: string) => void;
   closeEditor: () => void;
-  handleSave: (staffId: string, dateKey: string, updated: ScheduleEntry, updatedName: string) => void;
+  handleSave:  (staffId: string, oldDateKey: string, updated: ScheduleEntry, updatedName: string) => void;
 }
 
 const EditorContext = createContext<EditorContextValue | null>(null);
@@ -138,24 +138,25 @@ export function HandleScheduleEditor({ children }: { children: React.ReactNode }
 
   const closeEditor = () => setOpen(false);
 
-  const handleSave = async(
-    staffId: string,
-    dateKey: string,
-    updated: ScheduleEntry,
-    updatedName: string
-  ) => {
+const handleSave = async (
+  staffId:     string,
+  oldDateKey:  string,
+  updated:     ScheduleEntry,
+  updatedName: string
+) => {
+  const res = await fetch(apiUrl(`/api/staff/${staffId}/schedule/edit`), {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name:       updatedName,
+      entry:      updated,
+      oldDateKey,
+    }),
+  });
 
-const res = await fetch(apiUrl(`/api/staff/${staffId}/schedule/${dateKey}`), {
-  method: 'PUT',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ name: updatedName, entry: updated }),
-})
-    if(!res.ok){
-        throw new Error('保存に失敗しました');
-    };
-    console.log('保存完了');
-    closeEditor();
-  };
+  if (!res.ok) throw new Error('保存に失敗しました');
+  closeEditor();
+};
 
   return (
     <EditorContext.Provider value={{ open, staff, dateKey, openEditor, closeEditor, handleSave }}>

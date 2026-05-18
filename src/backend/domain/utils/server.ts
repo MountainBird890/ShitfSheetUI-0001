@@ -96,7 +96,7 @@ server.get<{ Params: { staffId: string } }>(
   }
 );
 
-// PUT /api/staff/:staffId/schedule/:dateKey
+// PUT /api/staff/:staffId/schedule/:dateKey ー useShift.tsxで使用
 server.put<{
   Params: { staffId: string; dateKey: string };
   Body: UpdateScheduleBody;
@@ -122,6 +122,48 @@ server.put<{
     await writeData(data);
 
     return reply.send({ staffId, dateKey, updated: entry });
+  }
+);
+
+// PUT /api/staff/:staffId/schedule/edit — 日付変更対応の編集ルート ー useCalendar.tsxのediter.tsxコンテキストで使用
+const EditScheduleBodySchema = Type.Object({
+  name:       Type.String({ minLength: 1 }),
+  entry:      ScheduleEntrySchema,
+  oldDateKey: Type.String({ pattern: "^\\d{4}-\\d{2}-\\d{2}$" }),
+});
+
+server.put<{
+  Params: { staffId: string };
+  Body: Static<typeof EditScheduleBodySchema>;
+}>(
+  "/api/staff/:staffId/schedule/edit",
+  { schema: { body: EditScheduleBodySchema } },
+  async (request, reply) => {
+    const { staffId }              = request.params;
+    const { name, entry, oldDateKey } = request.body;
+
+    const newDateKey = entry.start.slice(0, 10);
+
+    const data = await readData();
+    const idx  = data.basedata.findIndex(
+      (s) => (s as Record<string, unknown>).staffId === staffId
+    );
+    if (idx === -1) return reply.status(404).send({ message: "Staff not found" });
+
+    const staff   = data.basedata[idx] as Record<string, unknown>;
+    const details = (staff.details ?? {}) as Record<string, unknown>;
+
+    // 古いキーを削除（日付が変わった場合のみ）
+    if (oldDateKey !== newDateKey && details[oldDateKey]) {
+      delete details[oldDateKey];
+    }
+
+    details[newDateKey] = entry;
+    staff.details       = details;
+    staff.name          = name;
+
+    await writeData(data);
+    return reply.send({ staffId, oldDateKey, newDateKey, updated: entry });
   }
 );
 
@@ -344,7 +386,7 @@ server.delete<{ Params: { staffId: string; dateKey: string } }>(
 );
 
 // ---- 月コピー --------------------------------------------------
-
+// 午後はココを修正して、日付から曜日でコピーできるようにする。
 const CopyScheduleBodySchema = Type.Object({
   fromYear:  Type.Integer({ minimum: 2000, maximum: 2100 }),
   fromMonth: Type.Integer({ minimum: 1,    maximum: 12   }),

@@ -116,6 +116,7 @@ const ScheduleEditModal: React.FC = () => {
       setLoading(true);
 
       const updated: ScheduleEntry = {
+        // ここにdetails直下の年月日を追加する。
         user: values.user,
         start: values.dateRange[0].format("YYYY-MM-DDTHH:mm"),
         end: values.dateRange[1].format("YYYY-MM-DDTHH:mm"),
@@ -273,7 +274,7 @@ const ScheduleEditModal: React.FC = () => {
           </Form.Item>
         </Form>
 
-        {/* Preview card */}
+        {/* Preview card コミット161から非表示中
         {dirty && (
           <Card
             size="small"
@@ -305,6 +306,7 @@ const ScheduleEditModal: React.FC = () => {
             </Row>
           </Card>
         )}
+         */}
       </div>
 
       {/* ── Footer ── */}

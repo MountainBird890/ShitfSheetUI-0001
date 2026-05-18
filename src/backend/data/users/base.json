@@ -158,12 +158,6 @@
           "end": "2026-04-22T13:00",
           "type": "生活"
         },
-        "2026-05-12": {
-          "user": "加藤高明",
-          "start": "2026-05-12T09:00",
-          "end": "2026-05-12T18:00",
-          "type": "食事介助"
-        },
         "2026-05-23": {
           "user": "小林",
           "start": "2026-05-23T08:00",
@@ -175,6 +169,12 @@
           "start": "2026-05-22T10:00",
           "end": "2026-05-22T13:00",
           "type": "生活"
+        },
+        "2026-05-26": {
+          "user": "加藤高明",
+          "start": "2026-05-26T09:00",
+          "end": "2026-05-26T18:00",
+          "type": "食事介助"
         }
       },
       "2026-04-22": {
@@ -182,6 +182,12 @@
         "start": "2026-04-22T12:45",
         "end": "2026-04-22T18:00",
         "type": "移乗介助"
+      },
+      "2026-05-12": {
+        "user": "加藤高明",
+        "start": "2026-05-18T09:00",
+        "end": "2026-05-18T18:00",
+        "type": "食事介助"
       }
     },
     {
@@ -288,17 +294,23 @@
         "specialBonus": 0
       },
       "details": {
-        "2026-04-21": {
-          "user": "伉岡",
-          "start": "2026-04-21T09:00",
-          "end": "2026-04-21T15:00",
-          "type": "医療"
-        },
         "2026-05-21": {
           "user": "伉岡",
           "start": "2026-05-21T09:00",
           "end": "2026-05-21T15:00",
           "type": "医療"
+        },
+        "2026-05-24": {
+          "user": "伊藤",
+          "start": "2026-05-24T13:00",
+          "end": "2026-05-24T19:00",
+          "type": "移動支援"
+        },
+        "2026-05-17": {
+          "user": "加藤",
+          "start": "2026-05-17T14:00",
+          "end": "2026-05-17T18:00",
+          "type": "重度訪問介護"
         }
       }
     },
@@ -352,7 +364,19 @@
           "start": "2026-05-13T08:00",
           "end": "2026-05-13T13:00",
           "type": "見守り"
+        },
+        "2026-05-17": {
+          "user": "加藤高明",
+          "start": "2026-05-17T09:00",
+          "end": "2026-05-17T15:00",
+          "type": "身体介護"
         }
+      },
+      "2026-05-17": {
+        "user": "加藤高明",
+        "start": "2026-05-23T09:00",
+        "end": "2026-05-23T21:00",
+        "type": "重度訪問介護"
       }
     },
     {
@@ -1422,6 +1446,65 @@
       },
       "details": {},
       "active": false
+    },
+    {
+      "staffId": "0",
+      "name": "",
+      "position": "",
+      "employment-type": "",
+      "qualifications": "",
+      "work-place": "",
+      "days": {
+        "workingDays": 0,
+        "paidLeaveDays": 0
+      },
+      "hours": {
+        "workingHours": 0,
+        "nightHours": 0,
+        "morningEveningHours": 0,
+        "overtimeHours": 0,
+        "emergencyPrevHours": 0,
+        "emergencySameDayHours": 0,
+        "careTrainingHours": 0
+      },
+      "counts": {
+        "travelCount": 0
+      },
+      "amounts": {
+        "drivingAllowance": 0,
+        "specialAllowance1": 0,
+        "specialAllowance2": 0,
+        "trainingAllowance": 0,
+        "bathingAllowance": 0,
+        "excretionAllowance": 0,
+        "lodgingAllowance": 0,
+        "longStayAllowance": 0,
+        "commutingAllowance": 0,
+        "businessTripDay": 0,
+        "businessTripStay": 0,
+        "yearEndAllowance": 0,
+        "specialBonus": 0
+      },
+      "details": {
+        "0001-01-01": {
+          "user": "ジョージ・ワシントン",
+          "start": "",
+          "end": "",
+          "type": ""
+        },
+        "0001-01-02": {
+          "user": "ジョン・アダムズ",
+          "start": "",
+          "end": "",
+          "type": ""
+        },
+        "0001-01-03": {
+          "user": "トーマス・ジェファーソン",
+          "start": "",
+          "end": "",
+          "type": ""
+        }
+      }
     }
   ]
 }
