@@ -198,7 +198,7 @@ server.post<{ Body: Static<typeof StaffBodySchema> }>(
       hours:   {
         workingHours: 0, nightHours: 0, morningEveningHours: 0,
         overtimeHours: 0, emergencyPrevHours: 0,
-        emergencySameDayHours: 0, careTrainingHours: 0,
+        emergencySameDayHours: 0, careTrainingHours: 0, officeWorkHours: 0,
       },
       counts:  { travelCount: 0 },
       amounts: {
