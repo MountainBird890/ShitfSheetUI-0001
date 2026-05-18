@@ -228,13 +228,14 @@ const AddNewPlanModal: React.FC<Props> = ({ staffOptions, onSuccess }) => {
               rules={[{ required: true, message: "職員を選択してください" }]}
             >
               <Select
-                showSearch
+                showSearch={{
+                filterOption:(input, option) =>
+                  (option?.label ?? "").includes(input)
+                }}
                 placeholder="職員を選択"
                 size="large"
                 options={staffOptions}
-                filterOption={(input, option) =>
-                  (option?.label ?? "").includes(input)
-                }
+
               />
             </Form.Item>
 
@@ -270,13 +271,13 @@ const AddNewPlanModal: React.FC<Props> = ({ staffOptions, onSuccess }) => {
               rules={[{ required: true, message: "ご利用者を入力してください" }]}
             >
                             <Select
-                            showSearch
+                            showSearch={{
+                              filterOption:
+                              (input, option) => (option?.label ?? "").includes(input)
+                            }}
                             placeholder="ご利用者を選択"
                             size="large"
                             options={userOptions.map(u => ({ value: u, label: u }))}
-                            filterOption={
-                              (input, option) => (option?.label ?? "").includes(input)   
-                            }
                             />
             </Form.Item>
             </>
