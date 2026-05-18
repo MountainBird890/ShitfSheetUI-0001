@@ -131,11 +131,11 @@ const CopyScheduleModal: React.FC<Props> = ({
         </div>
 
         {/* ── Body ── */}
-        <Space direction="vertical" size={16} style={{ width: "100%" }}>
+        <Space orientation="vertical" size={16} style={{ width: "100%" }}>
           <Alert
             type="info"
             showIcon
-            message={
+            title={
               <Text style={{ fontSize: 13 }}>
                 <b>{currentLabel}</b> の全スタッフの予定を、日付の「日」を維持したまま
                 コピー先の月に複製します。
@@ -167,7 +167,7 @@ const CopyScheduleModal: React.FC<Props> = ({
             <Alert
               type="warning"
               showIcon
-              message={`${targetMonth.year()}年${targetMonth.month() + 1}月 の同日に既存データがある場合は上書きされます`}
+              title={`${targetMonth.year()}年${targetMonth.month() + 1}月 の同日に既存データがある場合は上書きされます`}
             />
           )}
         </Space>
