@@ -513,13 +513,30 @@ server.post<{ Body: Static<typeof InternalWorkBodySchema> }>(
 );
 
 // ---- 日本語フォント ------------------------------------------------------
+// 本番環境でエラーが出るときは
+// server.get("/api/fonts/:name", async (request, reply) => {
+// const { name } = request.params as { name: string };
+// const fontPath = path.join(process.env.RESOURCES_PATH ?? "", "fonts", name);
+// const stream = createReadStream(fontPath);
+// reply.header("Content-Type", "font/ttf");
+// return reply.send(stream);
+// });
+// ↑を使う
 
 server.get("/api/fonts/:name", async (request, reply) => {
   const { name } = request.params as { name: string };
-  const fontPath = path.join(process.env.RESOURCES_PATH ?? "", "fonts", name);
-  const stream = createReadStream(fontPath);
-  reply.header("Content-Type", "font/ttf");
-  return reply.send(stream);
+
+  const fontPath = process.env.NODE_ENV === "production"
+    ? path.join(process.env.RESOURCES_PATH ?? "", "fonts", name)
+    : path.resolve(process.cwd(), "public/fonts", name);
+
+  try {
+    const stream = createReadStream(fontPath);
+    reply.header("Content-Type", "font/ttf");
+    return reply.send(stream);
+  } catch (err) {
+    return reply.status(404).send({ message: `Font not found: ${name}` });
+  }
 });
 
 // ---- Start ------------------------------------------------------
