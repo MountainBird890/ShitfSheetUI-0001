@@ -117,6 +117,20 @@ const UserSheetCalendarInner: React.FC = () => {
   ).sort((a, b) => a.startTime.localeCompare(b.startTime)
     );
   };
+  //今日は、一括PDFダウンロードが、staffSheet.tsxと同じ構成だから、ご利用者側を1人分PDFダウンロードと同じ構成にする。
+  const allVisibleData = useData.flatMap((staff) =>
+  Object.entries(staff.details ?? {})
+    .filter(([date]) => date.startsWith(monthPrefix))
+    .map(([date, detail]) => ({
+      staffId: staff.staffId,
+      name: staff.name,
+      user: detail.user,
+      date,
+      start: dayjs(detail.start).format("HH:mm"),
+      end: dayjs(detail.end).format("HH:mm"),
+      type: detail.type,
+    }))
+);
 
   const dateCellRender = (value: Dayjs) => {
     const listData = getListData(value);
@@ -154,6 +168,8 @@ const UserSheetCalendarInner: React.FC = () => {
   data={visibleData}
   fileName={`勤務表-${selectedUser}様-${monthLabel}`}
   label={`${selectedUser}様　${monthLabel}`}
+    allData={allVisibleData}
+  allDataLabel={`勤務表_${monthLabel}`}
 />
       <Calendar
         cellRender={cellRender}

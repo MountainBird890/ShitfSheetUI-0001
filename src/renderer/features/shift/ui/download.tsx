@@ -17,13 +17,16 @@ type VisibleData = {
 
 type Props = {
   data: VisibleData[]
-  fileName: string    // ★ 追加
-  label: string       // ★ 追加（PDF上の名前表示用）
+  fileName: string
+  label: string
+  allData?: VisibleData[]
+  allDataLabel?: string 
 }
 
-export const DownloadButton = ({ data, fileName, label }: Props) => {
+export const DownloadButton = ({ data, fileName, label, allData, allDataLabel }: Props) => {
   const [dlCsv, setDlCsv] = useState(false)
   const [dlPdf, setDlPdf] = useState(false)
+  const [dlAllPdf, setDlAllPdf] = useState(false)
 
   // ★ 日付昇順ソート
   const sortedData = [...data].sort((a, b) => a.date.localeCompare(b.date))
@@ -163,7 +166,90 @@ const handleDownloadCsv = async () => {
     } finally {
       setDlPdf(false)
     }
-  }
+  };
+
+    // ★ --- 一括PDF ---
+  const handleDownloadAllPdf = async () => {
+    if (!allData || allData.length === 0) return;
+    setDlAllPdf(true);
+    try {
+      const pdfDoc = await PDFDocument.create();
+      pdfDoc.registerFontkit(fontkit);
+      const fontBytes = await fetch(apiUrl('/api/fonts/NotoSansJP-VariableFont_wght.ttf'))
+        .then(r => r.arrayBuffer());
+      const font = await pdfDoc.embedFont(fontBytes);
+
+      const ROW_HEIGHT = 20;
+      const MARGIN = 40;
+      const COL_WIDTHS = [80, 120, 60, 60, 80, 100];
+      const HEADERS = ['日付', '氏名', '開始', '終了', 'ご利用者', '種別'];
+      const PAGE_WIDTH = COL_WIDTHS.reduce((a, b) => a + b, 0) + MARGIN * 2;
+      const ROWS_PER_PAGE = 30;
+
+      // ★ 氏名でグループ化して職員ごとにページを分ける
+      const grouped = allData.reduce<Record<string, VisibleData[]>>((acc, row) => {
+        const key = row.name;
+        if (!acc[key]) acc[key] = [];
+        acc[key].push(row);
+        return acc;
+      }, {});
+
+      for (const [name, rows] of Object.entries(grouped)) {
+        const sorted = [...rows].sort((a, b) => a.date.localeCompare(b.date));
+        const totalPages = Math.ceil(sorted.length / ROWS_PER_PAGE) || 1;
+
+        for (let i = 0; i < totalPages; i++) {
+          const page: PDFPage = pdfDoc.addPage([PAGE_WIDTH, 842]);
+          const { height } = page.getSize();
+
+          page.drawText(`${allDataLabel ?? '勤務表'}　${name}`, {
+            x: MARGIN, y: height - MARGIN, size: 14, font, color: rgb(0, 0, 0),
+          });
+          page.drawText(`${i + 1} / ${totalPages} ページ`, {
+            x: PAGE_WIDTH - MARGIN - 70, y: height - MARGIN, size: 10, font, color: rgb(0.4, 0.4, 0.4),
+          });
+
+          const startY = height - MARGIN - ROW_HEIGHT * 2;
+          let x = MARGIN;
+          HEADERS.forEach((header, hi) => {
+            page.drawRectangle({ x, y: startY, width: COL_WIDTHS[hi], height: ROW_HEIGHT, color: rgb(0.2, 0.4, 0.8) });
+            page.drawText(header, { x: x + 4, y: startY + 5, size: 10, font, color: rgb(1, 1, 1) });
+            x += COL_WIDTHS[hi];
+          });
+
+          const pageRows = sorted.slice(i * ROWS_PER_PAGE, (i + 1) * ROWS_PER_PAGE);
+          pageRows.forEach((row, rowIdx) => {
+            const y = startY - ROW_HEIGHT * (rowIdx + 1);
+            const cells = [row.date, row.name, row.start, row.end, row.user, row.type];
+            let cx = MARGIN;
+            if (rowIdx % 2 === 0) {
+              page.drawRectangle({
+                x: MARGIN, y,
+                width: COL_WIDTHS.reduce((a, b) => a + b, 0),
+                height: ROW_HEIGHT, color: rgb(0.95, 0.95, 0.95),
+              });
+            }
+            cells.forEach((cell, ci) => {
+              page.drawText(cell ?? '', { x: cx + 4, y: y + 5, size: 9, font, color: rgb(0, 0, 0) });
+              cx += COL_WIDTHS[ci];
+            });
+          });
+        }
+      }
+
+      const pdfBytes = await pdfDoc.save();
+      const blob = new Blob([pdfBytes.buffer as ArrayBuffer], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${allDataLabel ?? '勤務表'}_一括.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } finally {
+      setDlAllPdf(false);
+    }
+  };
+
 
   return (
     <Space>
@@ -173,6 +259,11 @@ const handleDownloadCsv = async () => {
       <Button icon={<DownloadOutlined />} loading={dlPdf} onClick={handleDownloadPdf}>
         PDFダウンロード
       </Button>
+      {allData && (
+        <Button icon={<DownloadOutlined />} loading={dlAllPdf} onClick={handleDownloadAllPdf}>
+          一括PDFダウンロード
+        </Button>
+      )}
     </Space>
   )
 }

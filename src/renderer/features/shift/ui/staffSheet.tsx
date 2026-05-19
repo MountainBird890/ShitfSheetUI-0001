@@ -167,6 +167,20 @@ const staffName = selectedStaff?.name ?? "";
       type: detail.type,
     }));
 
+    const allVisibleData = useData.flatMap((staff) =>
+  Object.entries(staff.details ?? {})
+    .filter(([date]) => date.startsWith(monthPrefix))
+    .map(([date, detail]) => ({
+      staffId: staff.staffId,
+      name: staff.name,
+      user: detail.user,
+      date,
+      start: dayjs(detail.start).format("HH:mm"),
+      end: dayjs(detail.end).format("HH:mm"),
+      type: detail.type,
+    }))
+);
+
   return (
     <HandleCard>
       <Select
@@ -180,6 +194,8 @@ const staffName = selectedStaff?.name ?? "";
   data={visibleData}
   fileName={`勤務表-${staffName}さん-${monthLabel}`}
   label={`${staffName}さん　${monthLabel}`}
+    allData={allVisibleData}
+  allDataLabel={`勤務表_${monthLabel}`}
 />
       <StaffCalendar
         staffId={selectedStaffId}
