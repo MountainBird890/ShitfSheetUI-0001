@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
 import { useState, useEffect } from "react";
-import { Badge, Calendar, Select, Drawer, type CalendarProps } from "antd";
+import { Badge, Calendar, Select, Drawer, DatePicker, type CalendarProps } from "antd";
 import jaJP from 'antd/es/calendar/locale/ja_JP';
 import { DownloadButton } from "./download";
 import { OpenCard, HandleCard } from "../state/useShift"; // ← 追加
@@ -158,6 +158,25 @@ const UserSheetCalendarInner: React.FC = () => {
       <Calendar
         cellRender={cellRender}
         locale={jaJP}
+        headerRender={({value, onChange}) => (
+          <>
+          <div style={{padding: '10px', display: 'flex', justifyContent: 'end'}}>
+          <DatePicker
+          locale={jaJP}
+          picker='month'
+          format='YYYY年M月'
+          value={value}
+          onChange={(date) => {
+            if(date){
+              onChange(date);
+              setCurrentMonth(date);
+            }
+          }}
+          />
+          </div>
+          </>
+        )}
+        onSelect={(date: Dayjs) => setCurrentMonth(date)}
         onPanelChange={(val) => setCurrentMonth(val)}
       />
 <ShiftCard

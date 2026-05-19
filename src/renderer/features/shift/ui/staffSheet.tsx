@@ -30,6 +30,7 @@ const StaffCalendar: React.FC<{
   staffData: StaffWork[];
   onMonthChange: (month: Dayjs) => void;
 }> = ({ staffId, staffData, onMonthChange }) => {
+  const [currentMonth, setCurrentMonth] = useState<Dayjs>(dayjs());
   const { openCard } = OpenCard();
   const staff = staffData.find((s) => s.staffId === staffId); 
 
@@ -77,7 +78,29 @@ const StaffCalendar: React.FC<{
     };
 
     return(
-      <Calendar cellRender={cellRender} locale={jaJP} onPanelChange={(val) => onMonthChange(val)} />
+      <Calendar
+      cellRender={cellRender}
+      locale={jaJP}
+      headerRender={({value, onChange}) => (
+          <>
+          <div style={{padding: '10px', display: 'flex', justifyContent: 'end'}}>
+          <DatePicker
+          locale={jaJP}
+          picker='month'
+          format='YYYY年M月'
+          value={value}
+          onChange={(date) => {
+            if(date){
+              onChange(date);
+              setCurrentMonth(date);
+            }
+          }}
+          />
+          </div>
+          </>
+        )}
+        onSelect={(date: Dayjs) => setCurrentMonth(date)}
+      onPanelChange={(val) => onMonthChange(val)} />
     );
 };
 
