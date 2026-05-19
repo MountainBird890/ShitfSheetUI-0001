@@ -71,7 +71,7 @@ export default function DownloadButton() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `勤務表_${currentMonth.format("YYYY年M月")}.csv`;
+      a.download = `スケジュール一覧_${currentMonth.format("YYYY年M月")}.csv`;
       a.click();
       URL.revokeObjectURL(url);
     } finally {
@@ -100,7 +100,7 @@ export default function DownloadButton() {
         const page: PDFPage = pdfDoc.addPage([PAGE_WIDTH, 842]);
         const { height } = page.getSize();
 
-        page.drawText(`勤務表　${currentMonth.format("YYYY年M月")}`, {
+        page.drawText(`スケジュール一覧　${currentMonth.format("YYYY年M月")}`, {
           x: MARGIN,
           y: height - MARGIN,
           size: 14,
@@ -175,7 +175,7 @@ export default function DownloadButton() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `勤務表_${currentMonth.format("YYYY年M月")}.pdf`;
+      a.download = `スケジュール一覧_${currentMonth.format("YYYY年M月")}.pdf`;
       a.click();
       URL.revokeObjectURL(url);
     } finally {
