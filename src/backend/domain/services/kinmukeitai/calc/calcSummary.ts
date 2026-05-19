@@ -94,39 +94,20 @@ interface RawEntry {
   type:  string;
 }
 
-function extractEntries(dayRecord: Record<string, string>): RawEntry[] {
-  // サフィックスなし（1件目）を取得
-  const base: RawEntry[] = [];
-  if (dayRecord.start && dayRecord.end) {
-    base.push({
-      start: dayRecord.start,
-      end:   dayRecord.end,
-      user:  dayRecord.user  ?? "",
-      type:  dayRecord.type  ?? "",
-    });
-  }
-
-  // -2, -3, -4... のサフィックス付きを収集
-  const nums = Object.keys(dayRecord)
-    .map(k => { const m = k.match(/^start-(\d+)$/); return m ? parseInt(m[1]) : null; })
-    .filter((n): n is number => n !== null)
-    .sort((a, b) => a - b);
-
-  for (const n of nums) {
-    const s = dayRecord[`start-${n}`];
-    const e = dayRecord[`end-${n}`];
-    if (s && e) {
-      base.push({
-        start: s,
-        end:   e,
-        user:  dayRecord[`user-${n}`]  ?? "",
-        type:  dayRecord[`type-${n}`]  ?? "",
-      });
-    }
-  }
-
-  // 開始時刻でソート（移動時間計算のため）
-  return base.sort((a, b) => toMin(a.start) - toMin(b.start));
+function extractEntries(
+  details: Record<string, Record<string, string>>,
+  dateKey: string  // "2026-05-05" 形式
+): RawEntry[] {
+  return Object.entries(details)
+    .filter(([k]) => k.startsWith(dateKey))
+    .map(([, entry]) => ({
+      start: entry.start ?? "",
+      end:   entry.end   ?? "",
+      user:  entry.user  ?? "",
+      type:  entry.type  ?? "",
+    }))
+    .filter(e => e.start && e.end)
+    .sort((a, b) => toMin(a.start) - toMin(b.start));
 }
 
 // ─── 同日複数予定間の移動時間を計算 ─────────────────────────
@@ -152,14 +133,18 @@ export function calcMonthlySummary(
   month: number
 ): MonthlySummary {
   const prefix  = `${year}-${String(month).padStart(2, "0")}`;
-  const entries = Object.entries(staff.details ?? {}).filter(([k]) => k.startsWith(prefix));
+  const dateDays = [...new Set(
+  Object.keys(staff.details ?? {})
+    .filter(k => k.startsWith(prefix))
+    .map(k => k.slice(0, 10))
+)];
 
   let wm = 0, nm = 0, mm = 0, cm = 0, tvm = 0;
   const days = new Set<string>();
   const dailyBreakdown: MonthlySummary["dailyBreakdown"] = {};
 
-  for (const [date, dayRecord] of entries) {
-    const rawEntries = extractEntries(dayRecord as Record<string, string>);
+for (const date of dateDays) {
+  const rawEntries = extractEntries(staff.details ?? {}, date);
     const travelMin  = calcTravelMin(rawEntries);
     tvm += travelMin;
 
