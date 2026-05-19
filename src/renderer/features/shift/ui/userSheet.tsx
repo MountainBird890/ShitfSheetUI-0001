@@ -103,33 +103,33 @@ const UserSheetCalendarInner: React.FC = () => {
 
   const getListData = (value: Dayjs) => {
     const targetDate = value.format('YYYY-MM-DD');
-    return useData.flatMap((staff) => {
-      const detail = staff.details[targetDate];
-      if (!detail || detail.user !== selectedUser) return [];
-      return [{
+    return useData.flatMap((staff) => 
+        Object.entries(staff.details ?? {})
+      .filter(([key, detail]) =>
+        key.startsWith(targetDate) && detail.user === selectedUser
+      )
+      .map(([key, detail]) => ({
+        key,
         staffName: staff.name,
-        staffId: staff.staffId,
-        dateKey: targetDate,
-        detail,
-        staffRecord: staff,
-      }];
-    });
+        startTime: detail.start ? dayjs(detail.start).format('HH:mm') : '',
+        dateKey:   key,
+      }))
+  ).sort((a, b) => a.startTime.localeCompare(b.startTime)
+    );
   };
 
   const dateCellRender = (value: Dayjs) => {
     const listData = getListData(value);
     return (
-      <ul className="events" style={{listStyle:'none'}}>
+      <ul className="events" style={{listStyle:'none', margin: 0, padding: 0 }}>
         {listData.map((item) => (
           <li
-            key={`${item.staffId}-${item.dateKey}`}
+            key={item.key}
             onClick={() => setDrawerOpen(true)}
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: 'pointer', fontSize: 11, lineHeight: 1.6 }}
           >
-            <Badge
-              status="processing"
-              text={`${item.staffName} / ${dayjs(item.detail.start).format('HH:mm')}〜${dayjs(item.detail.end).format('HH:mm')} / ${item.detail.type}`}
-            />
+          <span style={{ color: '#1677ff', marginRight: 4 }}>{item.startTime}</span>
+          <span>{item.staffName}</span>
           </li>
         ))}
       </ul>

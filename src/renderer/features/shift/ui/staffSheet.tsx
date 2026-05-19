@@ -40,32 +40,33 @@ const StaffCalendar: React.FC<{
         const targetDate = value.format('YYYY-MM-DD');
         if (!staff) return [];
 
-        const detail = staff.details[targetDate];
-        if (!detail) return [];
+  const entries = Object.entries(staff.details ?? {})
+    .filter(([key]) => key.startsWith(targetDate))
+    .map(([key, detail]) => ({
+      key,
+      startTime: detail.start ? dayjs(detail.start).format('HH:mm') : '',
+      user:      detail.user,
+      type:      detail.type,
+      staffRecord: staff,
+      dateKey:   key,
+    }))
+    .sort((a, b) => a.startTime.localeCompare(b.startTime));
 
-        return [{
-            staffName: staff.name,
-            staffId: staff.staffId,
-            dateKey: targetDate,
-            detail,
-            staffRecord: staff,
-        }];
-    };
+  return entries;
+};
 
     const dateCellRender = (value: Dayjs) => {
         const listData = getListData(value);
         return (
-            <ul className="events" style={{listStyle:'none'}}>
+            <ul className="events" style={{listStyle:'none', margin: 0, padding: 0 }}>
                 {listData.map((item) => (
                     <li
-                        key={`${item.staffId}-${item.dateKey}`}
+                        key={item.key}
                         onClick={() => openCard(item.staffRecord, item.dateKey)}
-                        style={{ cursor: 'pointer' }}
+                        style={{ cursor: 'pointer', fontSize: 11, lineHeight: 1.6 }}
                     >
-                        <Badge
-                            status="processing"
-                            text={`${item.detail.user} / ${item.detail.type}`}
-                        />
+          <span style={{ color: '#1677ff', marginRight: 4 }}>{item.startTime}</span>
+          <span>{item.user}</span>
                     </li>
                 ))}
             </ul>

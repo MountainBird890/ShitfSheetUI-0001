@@ -336,25 +336,16 @@ server.post<{ Body: Static<typeof AddScheduleBodySchema> }>(
 
     const staff    = data.basedata[idx] as Record<string, unknown>;
     const details  = (staff.details ?? {}) as Record<string, Record<string, string>>;
-    const existing = details[dateKey];
+    const existingNums = Object.keys(details)
+      .filter(k => k.startsWith(dateKey))
+      .map(k => {
+        const m = k.match(/^.+-(\d{3})$/);
+        return m ? parseInt(m[1]) : 0;
+      });
+    const nextNum = existingNums.length > 0 ? Math.max(...existingNums) + 1 : 1;
+    const newKey  = `${dateKey}-${String(nextNum).padStart(3, "0")}`;
 
-    if (!existing) {
-      details[dateKey] = { user, start, end, type };
-    } else {
-      const nums = Object.keys(existing)
-        .map((k) => {
-          const m = k.match(/^user(?:-(\d+))?$/);
-          return m ? (m[1] ? parseInt(m[1]) : 1) : null;
-        })
-        .filter((n): n is number => n !== null);
-
-      const nextNum = Math.max(...nums) + 1;
-      const suffix  = `-${nextNum}`;
-      existing[`user${suffix}`]  = user;
-      existing[`start${suffix}`] = start;
-      existing[`end${suffix}`]   = end;
-      existing[`type${suffix}`]  = type;
-    }
+    details[newKey] = { user, start, end, type };
 
     staff.details = details;
     await writeData(data);
@@ -500,6 +491,14 @@ server.post<{ Body: Static<typeof InternalWorkBodySchema> }>(
 
     // detailsにも記録（カレンダーに表示させるため）
     const details = (staff.details ?? {}) as Record<string, Record<string, string>>;
+        const existingNums = Object.keys(details)
+      .filter(k => k.startsWith(dateKey))
+      .map(k => {
+        const m = k.match(/^.+-(\d{3})$/);
+        return m ? parseInt(m[1]) : 0;
+      });
+    const nextNum = existingNums.length > 0 ? Math.max(...existingNums) + 1 : 1;
+    const newKey  = `${dateKey}-${String(nextNum).padStart(3, "0")}`;
     details[dateKey] = {
       user:  workType === "training" ? "研修" : "内勤",
       start,
