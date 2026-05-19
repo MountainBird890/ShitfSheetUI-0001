@@ -1,7 +1,7 @@
 // 今日は予定を削除ボタンを作る
 import { useState, useEffect } from 'react';
 import type { BadgeProps, CalendarProps } from 'antd';
-import { Badge, Calendar, Select, Space, Spin } from 'antd';
+import { Badge, Calendar, Select, Space, Spin, DatePicker } from 'antd';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import 'dayjs/locale/ja';
@@ -14,6 +14,7 @@ import DeletePlan from './deletePlan';
 import CopyScheduleModal from './copySchedule';
 import { apiUrl } from '../../../../lib/api';
 import '../../../shared/index.css'
+import { Value } from '@sinclair/typebox/value';
 
 dayjs.locale('ja');
 
@@ -126,6 +127,24 @@ const fetchData = () => {
         cellRender={cellRender}
         locale={jaJP}
         onPanelChange={(val) => setCurrentMonth(val)}
+        headerRender={({value, onChange}) => (
+          <>
+          <div style={{padding: '10px', display: 'flex', justifyContent: 'end'}}>
+          <DatePicker
+          picker='month'
+          format='YYYY年M月'
+          value={value}
+          onChange={(date) => {
+            if(date){
+              onChange(date);
+              setCurrentMonth(date);
+            }
+          }}
+          />
+          </div>
+          </>
+        )}
+        onSelect={(date: Dayjs) => setCurrentMonth(date)}
       />
       <ScheduleEditModal />
     </Spin>
